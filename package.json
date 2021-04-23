@@ -1,0 +1,18 @@
+{
+  "name": "30-days-of-appwrite",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.7",
+    "svelte": "^3.35.0",
+    "vite": "^2.1.5"
+  },
+  "dependencies": {
+    "appwrite": "^2.0.0",
+    "svelte-spa-router": "^3.1.0"
+  }
+}
