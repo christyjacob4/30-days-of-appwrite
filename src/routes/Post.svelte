@@ -20,12 +20,12 @@
   <h1>
     {post.title}
   </h1>
+  <Author user={post.userId} />
   <img
     class="cover"
     src={`https://picsum.photos/id/${params.slug}/1024/600`}
     alt=""
   />
-  <Author user={post.userId} />
   <section class="content">
     {post.body}
   </section>

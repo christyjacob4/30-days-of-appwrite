@@ -9,17 +9,17 @@
   ).then((r) => r.json());
 </script>
 
-<div class="author">
+<a class="author" href={`#/profile/${user}`}>
   {#await fetchUser}
     <Loading />
   {:then author}
     <Avatar src={`https://i.pravatar.cc/100?img=${user}`} />
     <h3>{author.name}</h3>
   {/await}
-</div>
+</a>
 
 <style>
-  div.author {
+  a.author {
     display: flex;
     align-items: center;
     gap: 1rem;
