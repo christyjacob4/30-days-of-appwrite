@@ -1,19 +1,18 @@
 <script>
-    export let href;
+  export let href;
 </script>
+
 <a {href}>
   <slot />
 </a>
 
 <style>
   a {
-
     display: inline-block;
     cursor: pointer;
-    padding: .75rem 1.5rem;
+    padding: 0.75rem 1.5rem;
     background-color: green;
-    color: white;
-    border-radius: .5rem;
-
+    color: white !important;
+    border-radius: 0.5rem;
   }
 </style>

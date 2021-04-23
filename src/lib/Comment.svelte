@@ -1,11 +1,11 @@
 <script>
-    export let body, email;
+  export let body, email;
 </script>
 
 <small>
-    <b>{email}</b>
+  <b>{email}</b>
 </small>
 <p>
-    {body}
+  {body}
 </p>
-<hr>
+<hr />

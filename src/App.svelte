@@ -1,25 +1,46 @@
 <script>
+  import { onMount } from "svelte";
+
   import Router from "svelte-spa-router";
+  import { api } from "./appwrite";
 
   import Navigation from "./lib/Navigation.svelte";
   import Create from "./routes/Create.svelte";
   import Index from "./routes/Index.svelte";
   import Login from "./routes/Login.svelte";
+  import Logout from "./routes/Logout.svelte";
   import NotFound from "./routes/NotFound.svelte";
   import Post from "./routes/Post.svelte";
   import Profile from "./routes/Profile.svelte";
   import Register from "./routes/Register.svelte";
+  import { state } from "./store";
 
   const routes = {
     "/": Index,
     "/create": Create,
     "/login": Login,
+    "/logout": Logout,
     "/register": Register,
-    "/profile/:id?": Profile,
+    "/profile/:id": Profile,
     "/post/:slug": Post,
 
     "*": NotFound,
   };
+
+  onMount(async () => {
+    try {
+      const user = await api.getAccount();
+      state.update((n) => {
+        n.user = user;
+        return n;
+      });
+    } catch (error) {
+      state.update((n) => {
+        n.user = null;
+        return n;
+      });
+    }
+  });
 </script>
 
 <main>

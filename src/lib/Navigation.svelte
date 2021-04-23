@@ -1,11 +1,17 @@
 <script>
-  import { link } from "svelte-spa-router";
+  import { state } from "../store";
+import { link } from "svelte-spa-router";
 </script>
 
 <nav>
   <a href="/" class="logo" use:link>Logo</a>
+  {#if $state.user}
+  <a href={`/profile/${$state.user.$id}`} use:link>{$state.user.name}</a>
+  <a href="/logout" use:link>Logout</a>
+  {:else}
   <a href="/login" use:link>Login</a>
   <a href="/register" use:link>Register</a>
+  {/if}
 </nav>
 
 <style>

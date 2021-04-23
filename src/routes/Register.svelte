@@ -1,12 +1,54 @@
-<h1>Register</h1>
+<script>
+  import { api } from "../appwrite";
 
-<label for="name"><b>Name</b></label>
-<input type="text" placeholder="Enter Name" name="name" required />
+  let name,
+    mail,
+    pass = "";
 
-<label for="mail"><b>E-Mail</b></label>
-<input type="email" placeholder="Enter E-Mail" name="mail" required />
+  const submit = async () => {
+    try {
+      await api.register(name, mail, pass);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+</script>
 
-<label for="pass"><b>Password</b></label>
-<input type="password" placeholder="Enter Password" name="pass" required />
+<h1>Login</h1>
+<form on:submit|preventDefault={submit}>
+  <label for="mail"><b>Name</b></label>
+  <input
+    bind:value={name}
+    type="text"
+    placeholder="Enter Name"
+    name="name"
+    required
+  />
 
-<button type="submit">Login</button>
+  <label for="mail"><b>E-Mail</b></label>
+  <input
+    bind:value={mail}
+    type="email"
+    placeholder="Enter E-mail"
+    name="mail"
+    required
+  />
+
+  <label for="pass"><b>Password</b></label>
+  <input
+    bind:value={pass}
+    type="password"
+    placeholder="Enter Password"
+    name="pass"
+    required
+  />
+
+  <button type="submit">Register</button>
+</form>
+
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
