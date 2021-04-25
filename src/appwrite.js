@@ -6,6 +6,13 @@ sdk.setEndpoint("https://demo.appwrite.io/v1").setProject("607dd16494c6b");
 
 export const api = {
     getAccount: async () => sdk.account.get(),
+    loginWithGoogle: async () => {
+        try {
+            await sdk.account.createOAuth2Session('google', 'http://localhost:3000', 'http://localhost:3000');
+        } catch (error) {
+            throw error;
+        }
+    },
     login: async (mail, pass) => {
         try {
             await sdk.account.createSession(mail, pass);

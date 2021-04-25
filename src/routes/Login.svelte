@@ -13,6 +13,14 @@
       console.log(error.message);
     }
   };
+
+  const loginWithGoogle = async () => {
+    try {
+      await api.loginWithGoogle();
+    } catch(error) {
+      console.log(error.message);
+    }
+  }
 </script>
 <div>
   <h1>Login</h1>
@@ -36,6 +44,7 @@
     />
   
     <button type="submit">Login</button>
+    <button on:click|preventDefault={loginWithGoogle}>Login With Google</button>
   </form>
 </div>
 
