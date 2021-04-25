@@ -22,7 +22,7 @@ export const api = {
             throw error;
         }
     },
-    register: async (name, mail, pass) => {
+    register: async (mail, pass, name) => {
         try {
             await sdk.account.create(mail, pass, name);
             await api.login(mail, pass)
