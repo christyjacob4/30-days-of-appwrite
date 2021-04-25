@@ -1,5 +1,6 @@
 <script>
   import { api } from "../appwrite";
+  import { replace } from 'svelte-spa-router';
 
   let mail,
     pass = "";
@@ -7,7 +8,7 @@
   const submit = async () => {
     try {
       await api.login(mail, pass);
-      window.location.href = '/';
+      replace('/');
     } catch (error) {
       console.log(error.message);
     }
