@@ -7,6 +7,7 @@
   const submit = async () => {
     try {
       await api.login(mail, pass);
+      window.location.href = '/';
     } catch (error) {
       console.log(error.message);
     }
