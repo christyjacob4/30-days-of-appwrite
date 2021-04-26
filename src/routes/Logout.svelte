@@ -1,10 +1,10 @@
 <script>
-  import Loading from "../lib/Loading.svelte";
-  import { api } from "../appwrite";
+    import Loading from "../lib/Loading.svelte";
+    import { api } from "../appwrite";
 </script>
 
 {#await api.logout()}
-  <Loading />
+    <Loading />
 {:then log}
-  <h1>Successfully logged out!</h1>
+    <h1>Successfully logged out!</h1>
 {/await}
