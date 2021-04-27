@@ -1,0 +1,9 @@
+{
+    "arrowParens": "avoid",
+    "semi": true,
+    "tabWidth": 4,
+    "svelteSortOrder" : "options-scripts-markup-styles",
+    "svelteStrictMode": false,
+    "svelteBracketNewLine": false,
+    "svelteAllowShorthand": true
+  }

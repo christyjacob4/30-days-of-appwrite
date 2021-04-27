@@ -25,7 +25,7 @@ export const api = {
     register: async (name, mail, pass) => {
         try {
             await sdk.account.create(mail, pass, name);
-            await api.login(mail, pass)
+            await api.login(mail, pass);
         } catch (error) {
             throw error;
         }
@@ -41,5 +41,5 @@ export const api = {
                 return n;
             });
         }
-    }
-}
+    },
+};

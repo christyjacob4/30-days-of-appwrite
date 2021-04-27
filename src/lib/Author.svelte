@@ -1,27 +1,27 @@
 <script>
-  import Avatar from "./Avatar.svelte";
-  import Loading from "./Loading.svelte";
+    import Avatar from "./Avatar.svelte";
+    import Loading from "./Loading.svelte";
 
-  export let user;
+    export let user;
 
-  const fetchUser = fetch(
-    `https://jsonplaceholder.cypress.io/users/${user}`
-  ).then((r) => r.json());
+    const fetchUser = fetch(
+        `https://jsonplaceholder.cypress.io/users/${user}`
+    ).then(r => r.json());
 </script>
 
 <a class="author" href={`#/profile/${user}`}>
-  {#await fetchUser}
-    <Loading />
-  {:then author}
-    <Avatar src={`https://i.pravatar.cc/100?img=${user}`} />
-    <h3>{author.name}</h3>
-  {/await}
+    {#await fetchUser}
+        <Loading />
+    {:then author}
+        <Avatar src={`https://i.pravatar.cc/100?img=${user}`} />
+        <h3>{author.name}</h3>
+    {/await}
 </a>
 
 <style>
-  a.author {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
+    a.author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
 </style>
