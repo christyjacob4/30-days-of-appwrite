@@ -8,7 +8,11 @@ export const api = {
     getAccount: async () => sdk.account.get(),
     loginWithGoogle: async () => {
         try {
-            await sdk.account.createOAuth2Session('google', 'http://localhost:3000', 'http://localhost:3000');
+            await sdk.account.createOAuth2Session(
+                "google",
+                "http://localhost:3000",
+                "http://localhost:3000"
+            );
         } catch (error) {
             throw error;
         }
@@ -32,7 +36,7 @@ export const api = {
     register: async (mail, pass, name) => {
         try {
             await sdk.account.create(mail, pass, name);
-            await api.login(mail, pass)
+            await api.login(mail, pass);
         } catch (error) {
             throw error;
         }
@@ -48,5 +52,5 @@ export const api = {
                 return n;
             });
         }
-    }
-}
+    },
+};

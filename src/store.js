@@ -1,6 +1,6 @@
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
 export const state = writable({
     user: null,
-    theme: null
+    theme: null,
 });
