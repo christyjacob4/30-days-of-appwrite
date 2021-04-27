@@ -4,7 +4,7 @@
     import "../../node_modules/easymde/dist/easymde.min.css";
 
     onMount(() => {
-        let easyMDE = new EasyMDE();
+        let easyMDE = new EasyMDE({element: document.getElementById('content')});
     });
 </script>
 
