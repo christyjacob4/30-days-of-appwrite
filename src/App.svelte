@@ -6,6 +6,7 @@
 
     import Navigation from "./lib/Navigation.svelte";
     import Create from "./routes/Create.svelte";
+    import CreateProfile from "./routes/CreateProfile.svelte";
     import Index from "./routes/Index.svelte";
     import Login from "./routes/Login.svelte";
     import Logout from "./routes/Logout.svelte";
@@ -21,6 +22,7 @@
         "/login": Login,
         "/logout": Logout,
         "/register": Register,
+        "/profile/create": CreateProfile,
         "/profile/:id": Profile,
         "/post/:slug": Post,
 

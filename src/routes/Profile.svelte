@@ -1,16 +1,17 @@
 <script>
+    import { link } from "svelte-spa-router";
     import Preview from "../lib/Preview.svelte";
 
     import Avatar from "../lib/Avatar.svelte";
 
     import Loading from "../lib/Loading.svelte";
 
+    import { api } from "../appwrite";
+    
     export let params = {};
 
-    const fetchUser = fetch(
-        `https://jsonplaceholder.cypress.io/users/${params.id}`
-    ).then(r => r.json());
-
+    const fetchUser = api.fetchUser(params.id);
+    const getAvatar = (name) => api.getAvatar(name);
     const fetchPosts = fetch(
         `https://jsonplaceholder.cypress.io/users/${params.id}/posts`
     ).then(r => r.json());
@@ -20,8 +21,12 @@
     {#await fetchUser}
         <Loading />
     {:then author}
-        <Avatar src={`https://i.pravatar.cc/100?img=${params.id}`} />
+        <Avatar src={getAvatar(author.name)} />
         <h3>{author.name}</h3>
+    {:catch error}
+        <p>Public profile not found
+            <a classname="button" href="/profile/create" use:link>Create Public Profile</a>
+        </p>
     {/await}
 </section>
 <h1>Latest Posts</h1>
@@ -49,5 +54,14 @@
         align-items: auto;
         align-content: start;
         gap: 1rem;
+    }
+    a {
+        border: none;
+        padding: 10px;
+        color: white;
+        font-weight: bold;
+    }
+    a:hover {
+        text-decoration: underline;
     }
 </style>
