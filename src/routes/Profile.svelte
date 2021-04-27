@@ -17,27 +17,30 @@
     ).then(r => r.json());
 </script>
 
-<section class="author">
+<section>
     {#await fetchUser}
         <Loading />
     {:then author}
-        <Avatar src={getAvatar(author.name)} />
-        <h3>{author.name}</h3>
+        <section class="author">
+            <Avatar src={getAvatar(author.name)} />
+            <h3>{author.name}</h3>
+        </section>
+        <h1>Latest Posts</h1>
+        <a class="button" href="/create" use:link>Create</a>
+        <section class="latest">
+            {#await fetchPosts}
+                <Loading />
+            {:then posts}
+                {#each posts as post}
+                    <Preview {...post} />
+                {/each}
+            {/await}
+        </section>
     {:catch error}
         <p>
             Public profile not found
             <a classname="button" href="/profile/create" use:link>Create Public Profile</a>
         </p>
-    {/await}
-</section>
-<h1>Latest Posts</h1>
-<section class="latest">
-    {#await fetchPosts}
-        <Loading />
-    {:then posts}
-        {#each posts as post}
-            <Preview {...post} />
-        {/each}
     {/await}
 </section>
 
@@ -64,5 +67,16 @@
     }
     a:hover {
         text-decoration: underline;
+    }
+    a.button {
+        margin-top: 20px;
+        background-color: #f02e65;
+        border: none;
+        padding: 10px;
+        color: white;
+        font-weight: bold;
+    }
+    a.button:hover {
+        background-color: #f02e65aa;
     }
 </style>
