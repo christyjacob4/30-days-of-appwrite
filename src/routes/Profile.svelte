@@ -7,11 +7,11 @@
     import Loading from "../lib/Loading.svelte";
 
     import { api } from "../appwrite";
-    
+
     export let params = {};
 
     const fetchUser = api.fetchUser(params.id);
-    const getAvatar = (name) => api.getAvatar(name);
+    const getAvatar = name => api.getAvatar(name);
     const fetchPosts = fetch(
         `https://jsonplaceholder.cypress.io/users/${params.id}/posts`
     ).then(r => r.json());
@@ -24,8 +24,10 @@
         <Avatar src={getAvatar(author.name)} />
         <h3>{author.name}</h3>
     {:catch error}
-        <p>Public profile not found
-            <a classname="button" href="/profile/create" use:link>Create Public Profile</a>
+        <p>
+            Public profile not found
+            <a classname="button" href="/profile/create" use:link
+                >Create Public Profile</a>
         </p>
     {/await}
 </section>

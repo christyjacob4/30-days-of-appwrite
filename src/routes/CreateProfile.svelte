@@ -6,7 +6,7 @@
     const submit = async () => {
         try {
             //create
-            await api.createUser($state.user.$id,name);
+            await api.createUser($state.user.$id, name);
             replace(`/profile/${$state.user.$id}`);
         } catch (error) {
             console.log(error.message);
@@ -17,7 +17,7 @@
 <form on:submit|preventDefault={submit}>
     {#if $state.user}
         <label for="name">Diaplay Name</label>
-        <input type="text" name="name" bind:value={name}>
+        <input type="text" name="name" bind:value={name} />
         <button type="submit">Create</button>
     {/if}
 </form>

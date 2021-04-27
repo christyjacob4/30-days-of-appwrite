@@ -58,15 +58,23 @@ export const api = {
         return sdk.avatars.getInitials(name);
     },
     fetchUser: async id => {
-        let res = await sdk.database.listDocuments(profilesCollection, [`user=${id}`], 1);
+        let res = await sdk.database.listDocuments(
+            profilesCollection,
+            [`user=${id}`],
+            1
+        );
         if (res.sum == 1) return res.documents[0];
         else throw Error("Not found");
-
     },
     createUser: async (id, name) => {
-        return sdk.database.createDocument(profilesCollection, {
-            user: id,
-            name: name,
-        }, ['*'], [`user:${id}`]);
-    }
+        return sdk.database.createDocument(
+            profilesCollection,
+            {
+                user: id,
+                name: name,
+            },
+            ["*"],
+            [`user:${id}`]
+        );
+    },
 };
