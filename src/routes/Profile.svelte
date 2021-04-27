@@ -15,12 +15,13 @@
     const fetchPosts = fetch(
         `https://jsonplaceholder.cypress.io/users/${params.id}/posts`
     ).then(r => r.json());
+    const all = Promise.all([fetchUser, fetchPosts]);
 </script>
 
 <section>
-    {#await fetchUser}
+    {#await all}
         <Loading />
-    {:then author}
+    {:then [author, posts]}
         <section class="author">
             <Avatar src={getAvatar(author.name)} />
             <h3>{author.name}</h3>
@@ -28,13 +29,9 @@
         <h1>Latest Posts</h1>
         <a class="button" href="/create" use:link>Create</a>
         <section class="latest">
-            {#await fetchPosts}
-                <Loading />
-            {:then posts}
-                {#each posts as post}
-                    <Preview {...post} />
-                {/each}
-            {/await}
+            {#each posts as post}
+                <Preview {...post} />
+            {/each}
         </section>
     {:catch error}
         <p>
