@@ -5,9 +5,9 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "check": "svelte-check",
-    "prettier": "prettier --write --plugin-search-dir= ./src/**/*.{js,svelte}",
-    "prettier:dry": "prettier --check --plugin-search-dir= ./src/**/*.{js,svelte}"
+    "check": "svelte-check --fail-on-warnings --fail-on-hints",
+    "prettier": "prettier --write ./src/**/*.{js,svelte}",
+    "prettier:dry": "prettier --check ./src/**/*.{js,svelte}"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.7",
