@@ -9,19 +9,27 @@
         title = "",
         files,
         easyMDE,
+        message = "",
+        loading = false,
         content = "";
     onMount(() => {
         easyMDE = new EasyMDE({ element: document.getElementById("content") });
     });
     const submit = async () => {
         let cover = "";
-        if (files.length == 1) {
+        message = "";
+        loading = true;
+
+        if (files && files.length == 1) {
             let file = await api.uploadFile(files[0], $state.user.$id);
             cover = file.$id;
         }
         let content = easyMDE.value();
         if (title.trim() == "" || content.trim() == "") {
+            message = "Title and content are both required";
             console.log("title and content are both required");
+            loading = false;
+            return;
         }
         console.log({
             title: title,
@@ -44,20 +52,35 @@
                 $state.user.$id,
                 $state.profile.$id
             );
+            easyMDE.value("");
+            title = "";
+            content = "";
+            files = [];
             console.log("post created successfully");
+            message = "Post created successfully";
         } catch (error) {
             console.log(error);
+            message = error;
+        } finally {
+            loading = false;
         }
     };
 </script>
 
 <section>
     <h2>Create Post</h2>
+    {#if message}
+        <div class="alert">{message}</div>
+    {/if}
     <form on:submit|preventDefault={submit}>
         <label for="cover">Cover</label>
         <input type="file" bind:files />
         <label for="title">Title</label>
-        <input type="text" placeholder="Enter title" bind:value={title} />
+        <input
+            required
+            type="text"
+            placeholder="Enter title"
+            bind:value={title} />
         <label for="content">Content</label>
         <textarea
             bind:value={content}
@@ -71,7 +94,8 @@
             <option value={false}>Draft</option>
             <option value={true}>Published</option>
         </select>
-        <button class="button" type="submit">Create</button>
+        <button disabled={loading ? true : false} class="button" type="submit"
+            >Create</button>
     </form>
 </section>
 
@@ -82,5 +106,9 @@
     }
     label {
         margin-top: 1rem;
+    }
+    .alert {
+        background-color: #ff000066;
+        padding: 1rem;
     }
 </style>

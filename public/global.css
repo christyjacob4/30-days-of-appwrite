@@ -24,3 +24,6 @@ input:active {
 .button:hover {
 	background-color: #f02e65aa;
 }
+.button:disabled {
+	background-color: #cfcfcf;
+}
