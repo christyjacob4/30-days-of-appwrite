@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from 'svelte';
     import { link } from "svelte-spa-router";
     import Preview from "../lib/Preview.svelte";
     import MyPost from "../lib/MyPost.svelte";
@@ -12,14 +13,15 @@
 
     export let params = {};
 
-    const fetchUser = api.fetchUser(params.id);
+    const fetchUser = id => api.fetchUser(id);
     const getAvatar = name => api.getAvatar(name);
-    const fetchPosts = api.fetchUserPosts(params.id).then(r => r.documents);
-    const all = Promise.all([fetchUser, fetchPosts]);
+    const fetchPosts = id => api.fetchUserPosts(id).then(r => r.documents);
+    let all = id => Promise.all([fetchUser(id), fetchPosts(id)]);
+
 </script>
 
 <section>
-    {#await all}
+    {#await all(params.id)}
         <Loading />
     {:then [author, posts]}
         <section class="author">
