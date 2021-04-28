@@ -1,6 +1,6 @@
 <script>
     import Loading from "../lib/Loading.svelte";
-    import * as marked from "marked";
+    import md from 'snarkdown';
     import Author from "../lib/Author.svelte";
     import Comment from "../lib/Comment.svelte";
     import { api } from "../appwrite";
@@ -25,7 +25,7 @@
         src={`https://picsum.photos/id/${params.slug}/1024/600`}
         alt="" />
     <section class="content">
-        {@html marked(post.text)}
+        {@html md(post.text)}
     </section>
     <h2>Comments</h2>
     <section class="comments">
