@@ -92,5 +92,8 @@ export const api = {
     fetchPosts: (limit, offset) => {
         return sdk.database.listDocuments(postsCollection,[], limit, offset, 'created_at','DESC','int');
     },
+    fetchUserPosts: (userId) => {
+        return sdk.database.listDocuments(postsCollection,[`user_id=${userId}`],100,0,'created_at','DESC');
+    },
     fetchPost: id => sdk.database.getDocument(postsCollection,id)
 };

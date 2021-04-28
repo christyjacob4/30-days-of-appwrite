@@ -12,9 +12,7 @@
 
     const fetchUser = api.fetchUser(params.id);
     const getAvatar = name => api.getAvatar(name);
-    const fetchPosts = fetch(
-        `https://jsonplaceholder.cypress.io/users/${params.id}/posts`
-    ).then(r => r.json());
+    const fetchPosts = api.fetchUserPosts(params.id).then(r => r.documents);
     const all = Promise.all([fetchUser, fetchPosts]);
 </script>
 
@@ -30,7 +28,7 @@
         <a class="button" href="/create" use:link>Create</a>
         <section class="latest">
             {#each posts as post}
-                <Preview {...post} />
+                <Preview post={post} />
             {/each}
         </section>
     {:catch error}
