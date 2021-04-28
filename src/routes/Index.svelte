@@ -37,7 +37,9 @@
             {#each featured as feature}
                 <a class="card" href={`#/post/${feature.$id}`}>
                     {#if feature.cover}
-                        <img src={api.getThumbnail(feature.cover)} alt="" />
+                        <img
+                            src={api.getThumbnail(feature.cover, 600, 400)}
+                            alt="" />
                     {/if}
                     <h2>{feature.title}</h2>
                 </a>

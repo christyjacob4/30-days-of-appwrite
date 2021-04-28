@@ -5,7 +5,10 @@
 
 <a href={`#/post/${post.$id}`}>
     {#if post.cover}
-        <img class="cover" src={api.getThumbnail(post.cover)} alt="" />
+        <img
+            class="cover"
+            src={api.getThumbnail(post.cover, 400, 250)}
+            alt="" />
     {/if}
     <h2>{post.title}</h2>
 </a>
