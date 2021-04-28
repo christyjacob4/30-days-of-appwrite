@@ -30,6 +30,8 @@
                     title: title,
                     text: content,
                     published: published,
+                    user_id: $state.user.$id,
+                    created_at: new Date().getTime(),
                 },
                 $state.user.$id,
                 $state.profile.$id

@@ -89,4 +89,8 @@ export const api = {
             "append"
         );
     },
+    fetchPosts: (limit, offset) => {
+        return sdk.database.listDocuments(postsCollection,[], limit, offset, 'created_at','DESC','int');
+    },
+    fetchPost: id => sdk.database.getDocument(postsCollection,id)
 };

@@ -3,12 +3,11 @@
 
     import Author from "../lib/Author.svelte";
     import Comment from "../lib/Comment.svelte";
+    import { api } from "../appwrite";
 
     export let params = {};
 
-    let postFetch = fetch(
-        `https://jsonplaceholder.cypress.io/posts/${params.slug}`
-    ).then(r => r.json());
+    let postFetch = api.fetchPost(params.slug);
     let commentsFetch = fetch(
         `https://jsonplaceholder.cypress.io/posts/${params.slug}/comments`
     ).then(r => r.json());
@@ -20,13 +19,13 @@
     <h1>
         {post.title}
     </h1>
-    <Author user={post.userId} />
+    <Author user={post.user_id} />
     <img
         class="cover"
         src={`https://picsum.photos/id/${params.slug}/1024/600`}
         alt="" />
     <section class="content">
-        {post.body}
+        {post.text}
     </section>
     <h2>Comments</h2>
     <section class="comments">

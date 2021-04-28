@@ -1,11 +1,10 @@
 <script>
-    export let id;
-    export let title;
+    export let post;
 </script>
 
-<a href={`#/post/${id}`}>
-    <img class="cover" src={`https://picsum.photos/id/${id}/1024/600`} alt="" />
-    <h2>{title}</h2>
+<a href={`#/post/${post.$id}`}>
+    <img class="cover" src={`https://picsum.photos/id/${post.$id}/1024/600`} alt="" />
+    <h2>{post.title}</h2>
 </a>
 
 <style>
