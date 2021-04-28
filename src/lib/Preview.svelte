@@ -3,7 +3,10 @@
 </script>
 
 <a href={`#/post/${post.$id}`}>
-    <img class="cover" src={`https://picsum.photos/id/${post.$id}/1024/600`} alt="" />
+    <img
+        class="cover"
+        src={`https://picsum.photos/id/${post.$id}/1024/600`}
+        alt="" />
     <h2>{post.title}</h2>
 </a>
 

@@ -1,12 +1,13 @@
 <script>
-    import * as marked from 'marked';
+    import * as marked from "marked";
     import Loading from "../lib/Loading.svelte";
     import Action from "../lib/Action.svelte";
     import Author from "../lib/Author.svelte";
     import Preview from "../lib/Preview.svelte";
     import { api } from "../appwrite";
 
-    const data = api.fetchPosts(25,0)
+    const data = api
+        .fetchPosts(25, 0)
         .then(r => r.documents)
         .then(posts => {
             return {
@@ -46,7 +47,7 @@
     <h1>Latest</h1>
     <section class="latest">
         {#each latest as post}
-            <Preview post={post} />
+            <Preview {post} />
         {/each}
     </section>
 {/await}

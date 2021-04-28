@@ -1,6 +1,6 @@
 <script>
     import Loading from "../lib/Loading.svelte";
-    import * as marked from 'marked';
+    import * as marked from "marked";
     import Author from "../lib/Author.svelte";
     import Comment from "../lib/Comment.svelte";
     import { api } from "../appwrite";
