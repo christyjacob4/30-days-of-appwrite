@@ -113,5 +113,6 @@ export const api = {
     fetchPost: id => sdk.database.getDocument(postsCollection, id),
     uploadFile: (file, userId) =>
         sdk.storage.createFile(file, ["*"], [`user:${userId}`]),
-    getThumbnail: id => sdk.storage.getFilePreview(id, 1000, 600),
+    getThumbnail: (id, width = 1000, height = 600) =>
+        sdk.storage.getFilePreview(id, width, height),
 };
