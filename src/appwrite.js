@@ -2,6 +2,7 @@ import Appwrite from "appwrite";
 import { state } from "./store";
 
 const profilesCollection = "60851dd82cf5c";
+const postsCollection = "60851e144f170";
 const sdk = new Appwrite();
 sdk.setEndpoint("https://demo.appwrite.io/v1").setProject("607dd16494c6b");
 
@@ -63,7 +64,7 @@ export const api = {
             [`user=${id}`],
             1
         );
-        if (res.sum == 1) return res.documents[0];
+        if (res.sum > 0 && res.documents.length > 0) return res.documents[0];
         else throw Error("Not found");
     },
     createUser: async (id, name) => {
@@ -75,6 +76,17 @@ export const api = {
             },
             ["*"],
             [`user:${id}`]
+        );
+    },
+    createPost: async (data, userId, profileId) => {
+        return sdk.database.createDocument(
+            postsCollection,
+            data,
+            ["*"],
+            [`user:${userId}`],
+            profileId,
+            "posts",
+            "append"
         );
     },
 };

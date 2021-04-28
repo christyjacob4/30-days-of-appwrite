@@ -34,9 +34,11 @@
             {/each}
         </section>
     {:catch error}
+        {error}
         <p>
             Public profile not found
-            <a classname="button" href="/profile/create" use:link>Create Public Profile</a>
+            <a classname="button" href="/profile/create" use:link
+                >Create Public Profile</a>
         </p>
     {/await}
 </section>

@@ -38,7 +38,19 @@
             });
         } catch (error) {
             state.update(n => {
-                n.user = null;
+                n.user = n.user;
+                return n;
+            });
+        }
+        try {
+            const profile = await api.fetchUser($state.user.$id);
+            state.update(n => {
+                n.profile = profile;
+                return n;
+            });
+        } catch (error) {
+            state.update(n => {
+                n.profile = null;
                 return n;
             });
         }
