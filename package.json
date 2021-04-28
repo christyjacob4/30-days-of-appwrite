@@ -5,13 +5,16 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "prettier": "prettier --write --plugin-search-dir= ./src/**/*.{js,svelte}"
+    "check": "svelte-check",
+    "prettier": "prettier --write --plugin-search-dir= ./src/**/*.{js,svelte}",
+    "prettier:dry": "prettier --check --plugin-search-dir= ./src/**/*.{js,svelte}"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.7",
     "prettier": "^2.2.1",
     "prettier-plugin-svelte": "^2.2.0",
     "svelte": "^3.35.0",
+    "svelte-check": "^1.5.2",
     "vite": "^2.1.5"
   },
   "dependencies": {
