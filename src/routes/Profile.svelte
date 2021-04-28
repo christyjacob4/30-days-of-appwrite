@@ -35,8 +35,7 @@
         {error}
         <p>
             Public profile not found
-            <a classname="button" href="/profile/create" use:link
-                >Create Public Profile</a>
+            <a href="/profile/create" use:link>Create Public Profile</a>
         </p>
     {/await}
 </section>
@@ -63,16 +62,5 @@
     }
     a:hover {
         text-decoration: underline;
-    }
-    a.button {
-        margin-top: 20px;
-        background-color: #f02e65;
-        border: none;
-        padding: 10px;
-        color: white;
-        font-weight: bold;
-    }
-    a.button:hover {
-        background-color: #f02e65aa;
     }
 </style>

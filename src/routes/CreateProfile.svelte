@@ -18,7 +18,7 @@
     {#if $state.user}
         <label for="name">Diaplay Name</label>
         <input type="text" name="name" bind:value={name} />
-        <button type="submit">Create</button>
+        <button class="button" type="submit">Create</button>
     {/if}
 </form>
 

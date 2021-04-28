@@ -41,7 +41,7 @@
             name="pass"
             required />
 
-        <button type="submit">Register</button>
+        <button class="button" type="submit">Register</button>
     </form>
 </div>
 

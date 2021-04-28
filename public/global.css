@@ -1,25 +1,26 @@
 label {
-    margin-top: 10px;
-    margin-bottom: 5px;
-  }
-  input {
-    border: none;
-    line-height: 32px;
-    padding-left: 10px;
-    padding-right: 10px;
-    outline: 2px solid transparent;
-  }
-  input:focus, input:active {
-    outline: 2px solid #f02e65;
-  }
-  button {
-    margin-top: 20px;
-    background-color: #f02e65;
-    border: none;
-    padding: 10px;
-    color: white;
-    font-weight: bold;
-  }
-  button:hover {
-    background-color: #f02e65aa;
-  }
+	margin-top: 1rem;
+	margin-bottom: 0.5rem;
+}
+input {
+	border: none;
+	line-height: 1.2rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	outline: 2px solid transparent;
+}
+input:focus,
+input:active {
+	outline: 2px solid #f02e65;
+}
+.button {
+	margin-top: 20px;
+	background-color: #f02e65;
+	border: none;
+	padding: 10px;
+	color: white;
+	font-weight: bold;
+}
+.button:hover {
+	background-color: #f02e65aa;
+}

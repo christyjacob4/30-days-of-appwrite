@@ -61,7 +61,7 @@
             <option value={false}>Draft</option>
             <option value={true}>Published</option>
         </select>
-        <button type="submit">Create</button>
+        <button class="button" type="submit">Create</button>
     </form>
 </section>
 

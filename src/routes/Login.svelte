@@ -42,8 +42,8 @@
             name="pass"
             required />
 
-        <button type="submit">Login</button>
-        <button on:click|preventDefault={loginWithGoogle}
+        <button class="button" type="submit">Login</button>
+        <button class="button" on:click|preventDefault={loginWithGoogle}
             >Login With Google</button>
     </form>
 </div>
