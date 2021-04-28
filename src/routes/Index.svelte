@@ -1,4 +1,5 @@
 <script>
+    import * as marked from 'marked';
     import Loading from "../lib/Loading.svelte";
     import Action from "../lib/Action.svelte";
     import Author from "../lib/Author.svelte";
@@ -27,7 +28,7 @@
             <h2>{promoted.title}</h2>
             <Author user={promoted.user_id} />
             <p>
-                {promoted.text}
+                {@html marked(promoted.text)}
             </p>
             <Action href={`#/post/${promoted.$id}`}>Read more</Action>
         </div>

@@ -17,6 +17,7 @@
   "dependencies": {
     "appwrite": "^2.0.0",
     "easymde": "^2.15.0",
+    "marked": "^2.0.3",
     "svelte-spa-router": "^3.1.0"
   }
 }
