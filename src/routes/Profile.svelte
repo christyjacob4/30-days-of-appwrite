@@ -25,7 +25,7 @@
             <h3>{author.name}</h3>
         </section>
         <h1>Latest Posts</h1>
-        <a class="button" href="/create" use:link>Create</a>
+        <p><a class="button" href="/create" use:link>Create</a></p>
         <section class="latest">
             {#each posts as post}
                 <Preview post={post} />
@@ -49,12 +49,11 @@
     }
     section.latest {
         display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: flex-start;
         align-items: auto;
         align-content: start;
-        gap: 1rem;
+        gap: 0.5rem;
     }
     a {
         border: none;
