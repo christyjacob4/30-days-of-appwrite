@@ -5,6 +5,6 @@
 
 {#await api.logout()}
     <Loading />
-{:then log}
+{:then}
     <h1>Successfully logged out!</h1>
 {/await}
