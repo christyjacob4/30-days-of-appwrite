@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onMount } from "svelte";
     import { link } from "svelte-spa-router";
     import Preview from "../lib/Preview.svelte";
     import MyPost from "../lib/MyPost.svelte";
@@ -17,7 +17,6 @@
     const getAvatar = name => api.getAvatar(name);
     const fetchPosts = id => api.fetchUserPosts(id).then(r => r.documents);
     let all = id => Promise.all([fetchUser(id), fetchPosts(id)]);
-
 </script>
 
 <section>

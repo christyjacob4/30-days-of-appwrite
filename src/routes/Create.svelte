@@ -7,12 +7,18 @@
 
     let published = false,
         title = "",
+        files,
         easyMDE,
         content = "";
     onMount(() => {
         easyMDE = new EasyMDE({ element: document.getElementById("content") });
     });
     const submit = async () => {
+        let cover = "";
+        if (files.length == 1) {
+            let file = await api.uploadFile(files[0], $state.user.$id);
+            cover = file.$id;
+        }
         let content = easyMDE.value();
         if (title.trim() == "" || content.trim() == "") {
             console.log("title and content are both required");
@@ -23,6 +29,7 @@
             published: published,
             user: $state.user.$id,
             profile: $state.profile.$id,
+            cover: cover,
         });
         try {
             await api.createPost(
@@ -32,6 +39,7 @@
                     published: published,
                     user_id: $state.user.$id,
                     created_at: new Date().getTime(),
+                    cover: cover,
                 },
                 $state.user.$id,
                 $state.profile.$id
@@ -46,6 +54,8 @@
 <section>
     <h2>Create Post</h2>
     <form on:submit|preventDefault={submit}>
+        <label for="cover">Cover</label>
+        <input type="file" bind:files />
         <label for="title">Title</label>
         <input type="text" placeholder="Enter title" bind:value={title} />
         <label for="content">Content</label>

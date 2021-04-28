@@ -1,10 +1,13 @@
 <script>
     import { link } from "svelte-spa-router";
+    import { api } from "../appwrite";
     export let post;
 </script>
 
 <article class="card">
-    <img class="cover" src={`https://picsum.photos/id/1/1024/600`} alt="" />
+    {#if post.cover}
+        <img class="cover" src={api.getThumbnail(post.cover)} alt="" />
+    {/if}
     <h2>{post.title}</h2>
     <a href="/post/{post.$id}" use:link class="button">Preview</a>
     <a href="/edit" class="button">Edit</a>

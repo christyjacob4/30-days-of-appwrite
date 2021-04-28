@@ -1,6 +1,6 @@
 <script>
     import Loading from "../lib/Loading.svelte";
-    import md from 'snarkdown';
+    import md from "snarkdown";
     import Author from "../lib/Author.svelte";
     import Comment from "../lib/Comment.svelte";
     import { api } from "../appwrite";
@@ -20,10 +20,9 @@
         {post.title}
     </h1>
     <Author user={post.user_id} />
-    <img
-        class="cover"
-        src={`https://picsum.photos/id/${params.slug}/1024/600`}
-        alt="" />
+    {#if post.cover}
+        <img class="cover" src={api.getThumbnail(post.cover)} alt="" />
+    {/if}
     <section class="content">
         {@html md(post.text)}
     </section>

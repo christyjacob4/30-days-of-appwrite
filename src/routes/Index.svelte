@@ -23,9 +23,9 @@
 {:then { promoted, featured, latest }}
     <section class="top">
         <div class="promoted">
-            <img
-                src={`https://picsum.photos/id/${promoted.id}/1024/600`}
-                alt="" />
+            {#if promoted.cover}
+                <img src={api.getThumbnail(promoted.cover)} alt="" />
+            {/if}
             <h2>{promoted.title}</h2>
             <Author user={promoted.user_id} />
             <p>
@@ -36,9 +36,9 @@
         <div class="cards">
             {#each featured as feature}
                 <a class="card" href={`#/post/${feature.$id}`}>
-                    <img
-                        src={`https://picsum.photos/id/${feature.id}/1024/600`}
-                        alt="" />
+                    {#if feature.cover}
+                        <img src={api.getThumbnail(feature.cover)} alt="" />
+                    {/if}
                     <h2>{feature.title}</h2>
                 </a>
             {/each}
