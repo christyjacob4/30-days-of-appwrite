@@ -7,10 +7,7 @@
     import Loading from "../lib/Loading.svelte";
 
     export let params = {};
-    let postFetch = new Promise(() => {}).resolved;
-    if (params.slug) {
-        postFetch = api.fetchPost(params.slug);
-    }
+
     let published = false,
         title = "",
         files,
@@ -18,7 +15,16 @@
         message = "",
         loading = false,
         content = "";
+
+    let postFetch = async () => {
+        let post = await api.fetchPost(params.slug);
+        title = post.title;
+        easyMDE.value(post.text);
+    };
     onMount(() => {
+        if (params.slug) {
+            postFetch();
+        }
         easyMDE = new EasyMDE({ element: document.getElementById("content") });
     });
     const submit = async () => {
@@ -78,37 +84,31 @@
     {#if message}
         <div class="alert">{message}</div>
     {/if}
-    {#await postFetch}
-        <Loading />
-    {:then post}
-        <form on:submit|preventDefault={submit}>
-            <label for="cover">Cover</label>
-            <input type="file" bind:files />
-            <label for="title">Title</label>
-            <input
-                required
-                type="text"
-                placeholder="Enter title"
-                bind:value={title} />
-            <label for="content">Content</label>
-            <textarea
-                bind:value={content}
-                name="content"
-                id="content"
-                cols="30"
-                rows="10"
-                placeholder="Enter content" />
-            <label for="status">Status</label>
-            <select name="status" id="status" bind:value={published}>
-                <option value={false}>Draft</option>
-                <option value={true}>Published</option>
-            </select>
-            <button
-                disabled={loading ? true : false}
-                class="button"
-                type="submit">Create</button>
-        </form>
-    {/await}
+    <form on:submit|preventDefault={submit}>
+        <label for="cover">Cover</label>
+        <input type="file" bind:files />
+        <label for="title">Title</label>
+        <input
+            required
+            type="text"
+            placeholder="Enter title"
+            bind:value={title} />
+        <label for="content">Content</label>
+        <textarea
+            bind:value={content}
+            name="content"
+            id="content"
+            cols="30"
+            rows="10"
+            placeholder="Enter content" />
+        <label for="status">Status</label>
+        <select name="status" id="status" bind:value={published}>
+            <option value={false}>Draft</option>
+            <option value={true}>Published</option>
+        </select>
+        <button disabled={loading ? true : false} class="button" type="submit"
+            >Create</button>
+    </form>
 </section>
 
 <style>
