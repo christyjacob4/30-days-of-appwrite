@@ -25,6 +25,7 @@
         "/profile/create": CreateProfile,
         "/profile/:id": Profile,
         "/post/:slug": Post,
+        "/post/:slug/edit": Create,
 
         "*": NotFound,
     };

@@ -18,7 +18,7 @@
     {/if}
     <h2>{post.title}</h2>
     <a href="/post/{post.$id}" use:link class="button">Preview</a>
-    <a href="/edit" class="button">Edit</a>
+    <a href="/post/{post.$id}/edit" use:link class="button">Edit</a>
     <a
         href="/delete"
         on:click|preventDefault={() => deletePost(post.$id)}
