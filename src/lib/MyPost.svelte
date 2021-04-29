@@ -2,6 +2,11 @@
     import { link } from "svelte-spa-router";
     import { api } from "../appwrite";
     export let post;
+    const deletePost = async id => {
+        if (confirm("are you sure you want to delete?")) {
+            await api.deletePost(id);
+        }
+    };
 </script>
 
 <article class="card">
@@ -14,7 +19,10 @@
     <h2>{post.title}</h2>
     <a href="/post/{post.$id}" use:link class="button">Preview</a>
     <a href="/edit" class="button">Edit</a>
-    <a href="/delete" class="button">Delete</a>
+    <a
+        href="/delete"
+        on:click|preventDefault={() => deletePost(post.$id)}
+        class="button">Delete</a>
 </article>
 
 <style>

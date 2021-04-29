@@ -115,4 +115,5 @@ export const api = {
         sdk.storage.createFile(file, ["*"], [`user:${userId}`]),
     getThumbnail: (id, width = 1000, height = 600) =>
         sdk.storage.getFilePreview(id, width, height),
+    deletePost: id => sdk.database.deleteDocument(postsCollection, id),
 };
