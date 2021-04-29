@@ -89,6 +89,15 @@ export const api = {
             "append"
         );
     },
+    updatePost: async (id, data, userId) => {
+        return sdk.database.updateDocument(
+            postsCollection,
+            id,
+            data,
+            ["*"],
+            [`user:${userId}`],
+        );
+    },
     fetchPosts: (limit, offset) => {
         return sdk.database.listDocuments(
             postsCollection,
@@ -113,6 +122,7 @@ export const api = {
     fetchPost: id => sdk.database.getDocument(postsCollection, id),
     uploadFile: (file, userId) =>
         sdk.storage.createFile(file, ["*"], [`user:${userId}`]),
+    deleteFile: (id) => sdk.storage.deleteFile(id),
     getThumbnail: (id, width = 1000, height = 600) =>
         sdk.storage.getFilePreview(id, width, height),
     deletePost: id => sdk.database.deleteDocument(postsCollection, id),
