@@ -13,14 +13,14 @@
 
     export let params = {};
 
-    const fetchUser = id => api.fetchUser(id);
+    const fetchUser = () => api.fetchUser(params.id);
     const getAvatar = name => api.getAvatar(name);
-    const fetchPosts = id => api.fetchUserPosts(id).then(r => r.documents);
-    let all = id => Promise.all([fetchUser(id), fetchPosts(id)]);
+    const fetchPosts = () => api.fetchUserPosts(params.id).then(r => r.documents);
+    let all = Promise.all([fetchUser(), fetchPosts()]);
 </script>
 
 <section>
-    {#await all(params.id)}
+    {#await all}
         <Loading />
     {:then [author, posts]}
         <section class="author">
@@ -32,7 +32,7 @@
             <p><a class="button" href="/create" use:link>Create</a></p>
             <section class="my-post">
                 {#each posts as post}
-                    <MyPost {post} />
+                    <MyPost on:deleted={() => {all = Promise.all([fetchUser(), fetchPosts()]); console.log("deleted")} } {post} />
                 {/each}
             </section>
         {:else}
