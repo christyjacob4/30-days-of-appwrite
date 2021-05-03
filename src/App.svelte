@@ -5,6 +5,7 @@
     import { api } from "./appwrite";
 
     import Navigation from "./lib/Navigation.svelte";
+    import AcceptMembership from "./routes/AcceptMembership.svelte";
     import Create from "./routes/Create.svelte";
     import CreateProfile from "./routes/CreateProfile.svelte";
     import Index from "./routes/Index.svelte";
@@ -14,6 +15,8 @@
     import Post from "./routes/Post.svelte";
     import Profile from "./routes/Profile.svelte";
     import Register from "./routes/Register.svelte";
+    import Team from "./routes/Team.svelte";
+    import Teams from "./routes/Teams.svelte";
     import { state } from "./store";
 
     const routes = {
@@ -24,9 +27,11 @@
         "/register": Register,
         "/profile/create": CreateProfile,
         "/profile/:id": Profile,
+        "/profile/:id/teams": Teams,
+        "/profile/:id/teams/:teamId": Team,
         "/post/:slug": Post,
         "/post/:slug/edit": Create,
-
+        "/acceptTeamInvite": AcceptMembership,
         "*": NotFound,
     };
 
