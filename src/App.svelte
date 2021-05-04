@@ -16,7 +16,6 @@
     import Profile from "./routes/Profile.svelte";
     import Register from "./routes/Register.svelte";
     import Team from "./routes/Team.svelte";
-    import Teams from "./routes/Teams.svelte";
     import { state } from "./store";
 
     const routes = {
@@ -27,8 +26,7 @@
         "/register": Register,
         "/profile/create": CreateProfile,
         "/profile/:id": Profile,
-        "/profile/:id/teams": Teams,
-        "/profile/:id/teams/:teamId": Team,
+        "/teams/:id" : Team,
         "/post/:slug": Post,
         "/post/:slug/edit": Create,
         "/acceptTeamInvite": AcceptMembership,

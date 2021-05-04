@@ -11,30 +11,29 @@
     let name = "",
         email = "";
 
-    const getAvatar = name => api.getAvatar(name);
-    const fetchUser = () => api.fetchUser(params.id);
-    const fetchTeam = () => api.getTeam(params.teamId);
+    const fetchTeam = () => api.getTeam(params.id);
     const fetchMemberships = () =>
-        api.getMemberships(params.teamId).then(r => r.memberships);
+        api.getMemberships(params.id).then(r => r.memberships);
     const createMembership = (email, name) =>
         api.createMembership(
-            params.teamId,
+            params.id,
             email,
             ["guest"],
-            "http://localhost:3000/#/acceptTeamInvite",
+            `http://${window.location.host}/#/acceptTeamInvite`,
             name
         );
-    let all = Promise.all([fetchUser(), fetchTeam(), fetchMemberships()]);
+
+    let all = Promise.all([fetchTeam(), fetchMemberships()]);
 </script>
 
 <section>
     {#await all}
         <Loading />
-    {:then [author, team, memberships]}
-        <section class="author">
+    {:then [team, memberships]}
+        <!-- <section class="author">
             <Avatar src={getAvatar(author.name)} />
             <h3>{author.name}</h3>
-        </section>
+        </section> -->
 
         <section>
             <h1>{team.name}</h1>
@@ -54,11 +53,7 @@
                 <button
                     on:click={async () => {
                         await createMembership(email, name);
-                        all = Promise.all([
-                            fetchUser(),
-                            fetchTeam(),
-                            fetchMemberships(),
-                        ]);
+                        all = Promise.all([fetchTeam(), fetchMemberships()]);
                         console.log("membership created");
                     }}>➕ Add Member</button>
             </div>
@@ -66,36 +61,21 @@
             <ul>
                 {#each memberships as member}
                     <li>
+                        {window.location.host}
                         <div>
-                            <p>Name : {member.name}</p> 
-                            <p>Email: {member.email}</p> 
-                            <p>Invited on : {new Date(member.invited*1000)}</p> 
-                            <p>Joined on : {new Date(member.joined*1000)}</p> 
-                            <p>Confirmed : {member.confirm}</p> 
+                            <p>Name : {member.name}</p>
+                            <p>Email: {member.email}</p>
+                            <p>
+                                Invited on : {new Date(member.invited * 1000)}
+                            </p>
+                            <p>Joined on : {new Date(member.joined * 1000)}</p>
+                            <p>Confirmed : {member.confirm}</p>
                             <p>Roles : {member.roles}</p>
                         </div>
                     </li>
                 {/each}
             </ul>
         </section>
-
-        <!-- <section>
-            <h1>Create Team</h1>
-            <div>
-                <label for="team" />
-                <input
-                    type="text"
-                    name="team"
-                    placeholder="Enter Team Name"
-                    bind:value={name} />
-                <button
-                    on:click={async () => {
-                        await createTeam(name);
-                        all = Promise.all([fetchUser(), fetchTeams()]);
-                        console.log("team created");
-                    }}>Create Team</button>
-            </div>
-        </section> -->
     {:catch error}
         {error}
         <p>

@@ -13,16 +13,22 @@
 
     export let params = {};
 
+    let name;
+
     const fetchUser = () => api.fetchUser(params.id);
     const getAvatar = name => api.getAvatar(name);
-    const fetchPosts = () => api.fetchUserPosts(params.id).then(r => r.documents);
-    let all = Promise.all([fetchUser(), fetchPosts()]);
+    const fetchTeams = () => api.fetchUserTeams().then(r => r.teams);
+    const createTeam = name => api.createTeam(name);
+    const deleteTeam = id => api.deleteTeam(id);
+    const fetchPosts = () =>
+        api.fetchUserPosts(params.id).then(r => r.documents);
+    let all = Promise.all([fetchUser(), fetchPosts(), fetchTeams()]);
 </script>
 
 <section>
     {#await all}
         <Loading />
-    {:then [author, posts]}
+    {:then [author, posts, teams]}
         <section class="author">
             <Avatar src={getAvatar(author.name)} />
             <h3>{author.name}</h3>
@@ -32,8 +38,57 @@
             <p><a class="button" href="/create" use:link>Create</a></p>
             <section class="my-post">
                 {#each posts as post}
-                    <MyPost on:deleted={() => {all = Promise.all([fetchUser(), fetchPosts()]); console.log("deleted")} } {post} />
+                    <MyPost
+                        on:deleted={() => {
+                            all = Promise.all([
+                                fetchUser(),
+                                fetchPosts(),
+                                teams,
+                            ]);
+                            console.log("deleted");
+                        }}
+                        {post} />
                 {/each}
+            </section>
+
+            <section>
+                <h1>My Teams</h1>
+                <ul>
+                    {#each teams as team}
+                        <li>
+                            <a href={`/teams/${team.$id}`} use:link
+                                >{team.name}</a>
+                            <span
+                                on:click={async () => {
+                                    await deleteTeam(team["$id"]);
+                                    all = Promise.all([
+                                        author,
+                                        posts,
+                                        fetchTeams(),
+                                    ]);
+                                    console.log("Deleted team", team["$id"]);
+                                }}>❌</span>
+                        </li>
+                    {/each}
+                </ul>
+            </section>
+
+            <section>
+                <h1>Create Team</h1>
+                <div>
+                    <label for="team" />
+                    <input
+                        type="text"
+                        name="team"
+                        placeholder="Enter Team Name"
+                        bind:value={name} />
+                    <button
+                        on:click={async () => {
+                            await createTeam(name);
+                            all = Promise.all([author, posts, fetchTeams()]);
+                            console.log("team created");
+                        }}>Create Team</button>
+                </div>
             </section>
         {:else}
             <h1>Latest Posts</h1>

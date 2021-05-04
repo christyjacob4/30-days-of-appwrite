@@ -133,4 +133,6 @@ export const api = {
     getMemberships: teamId => sdk.teams.getMemberships(teamId),
     createMembership: (teamId, email, roles, url, name) =>
         sdk.teams.createMembership(teamId, email, roles, url, name),
+    updateMembership: (teamId, inviteId, userId, secret) =>
+        sdk.teams.updateMembershipStatus(teamId, inviteId, userId, secret),
 };
