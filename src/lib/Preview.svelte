@@ -1,11 +1,16 @@
 <script>
-    export let id;
-    export let title;
+    import { api } from "../appwrite";
+    export let post;
 </script>
 
-<a href={`#/post/${id}`}>
-    <img class="cover" src={`https://picsum.photos/id/${id}/1024/600`} alt="" />
-    <h2>{title}</h2>
+<a href={`#/post/${post.$id}`}>
+    {#if post.cover}
+        <img
+            class="cover"
+            src={api.getThumbnail(post.cover, 400, 250)}
+            alt="" />
+    {/if}
+    <h2>{post.title}</h2>
 </a>
 
 <style>
