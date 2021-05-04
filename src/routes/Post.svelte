@@ -24,7 +24,8 @@
         <img class="cover" src={api.getThumbnail(post.cover)} alt="" />
     {/if}
     <section class="content">
-        {@html md(post.text)} <!-- TODO line breaks not parsing -->
+        {@html md(post.text)}
+        <!-- TODO line breaks not parsing -->
     </section>
     <h2>Comments</h2>
     <section class="comments">
