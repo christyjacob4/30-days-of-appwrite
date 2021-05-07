@@ -19,7 +19,7 @@
             params.id,
             email,
             ["guest"],
-            `http://${window.location.host}/#/acceptTeamInvite`,
+            `http://${window.location.host}/#/acceptMembership`,
             name
         );
 

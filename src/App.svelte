@@ -29,7 +29,7 @@
         "/teams/:id" : Team,
         "/post/:slug": Post,
         "/post/:slug/edit": Create,
-        "/acceptTeamInvite": AcceptMembership,
+        "/acceptMembership": AcceptMembership,
         "*": NotFound,
     };
 
