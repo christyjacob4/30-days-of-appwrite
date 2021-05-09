@@ -1,58 +1,10 @@
 <script>
-    import md from "snarkdown";
-    import Loading from "../lib/Loading.svelte";
-    import Action from "../lib/Action.svelte";
-    import Author from "../lib/Author.svelte";
-    import Preview from "../lib/Preview.svelte";
-    import { api } from "../appwrite";
 
-    const data = api
-        .fetchPosts(25, 0)
-        .then(r => r.documents)
-        .then(posts => {
-            return {
-                promoted: posts[0],
-                featured: posts.slice(1, 5),
-                latest: posts.slice(5),
-            };
-        });
 </script>
 
-{#await data}
-    <Loading />
-{:then { promoted, featured, latest }}
-    <section class="top">
-        <div class="promoted">
-            {#if promoted.cover}
-                <img src={api.getThumbnail(promoted.cover)} alt="" />
-            {/if}
-            <h2>{promoted.title}</h2>
-            <Author user={promoted.user_id} />
-            <p>
-                {@html md(promoted.text)}
-            </p>
-            <Action href={`#/post/${promoted.$id}`}>Read more</Action>
-        </div>
-        <div class="cards">
-            {#each featured as feature}
-                <a class="card" href={`#/post/${feature.$id}`}>
-                    {#if feature.cover}
-                        <img
-                            src={api.getThumbnail(feature.cover, 600, 400)}
-                            alt="" />
-                    {/if}
-                    <h2>{feature.title}</h2>
-                </a>
-            {/each}
-        </div>
-    </section>
-    <h1>Latest</h1>
-    <section class="latest">
-        {#each latest as post}
-            <Preview {post} />
-        {/each}
-    </section>
-{/await}
+<section>
+    Hello world
+</section>
 
 <style>
     section.top {
