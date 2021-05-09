@@ -135,4 +135,6 @@ export const api = {
         sdk.teams.createMembership(teamId, email, roles, url, name),
     updateMembership: (teamId, inviteId, userId, secret) =>
         sdk.teams.updateMembershipStatus(teamId, inviteId, userId, secret),
+    deleteMembership: (teamId, inviteId) =>
+        sdk.teams.deleteMembership(teamId, inviteId)
 };

@@ -1,10 +1,7 @@
 <script>
-    import { onMount } from "svelte";
     import { link } from "svelte-spa-router";
-    import Avatar from "../lib/Avatar.svelte";
     import Loading from "../lib/Loading.svelte";
     import { api } from "../appwrite";
-    import { state } from "../store";
 
     export let params = {};
 
@@ -22,7 +19,6 @@
             `http://${window.location.host}/#/acceptMembership`,
             name
         );
-
     let all = Promise.all([fetchTeam(), fetchMemberships()]);
 </script>
 
@@ -36,7 +32,15 @@
         </section> -->
 
         <section>
-            <h1>{team.name}</h1>
+            <div>
+                <h1>{team.name}</h1>
+                <button
+                    on:click={async () => {
+                        api.deleteTeam(params.id).then(() => {
+                            window.history.go(-1);
+                        });
+                    }}>🗑</button>
+            </div>
             <div>
                 <label for="email" />
                 <input
@@ -61,7 +65,6 @@
             <ul>
                 {#each memberships as member}
                     <li>
-                        {window.location.host}
                         <div>
                             <p>Name : {member.name}</p>
                             <p>Email: {member.email}</p>
@@ -79,8 +82,8 @@
     {:catch error}
         {error}
         <p>
-            Public profile not found
-            <a href="/profile/create" use:link>Create Public Profile</a>
+            Team not found
+            <a href="/" use:link>Go Home</a>
         </p>
     {/await}
 </section>
