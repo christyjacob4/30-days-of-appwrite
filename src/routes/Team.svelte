@@ -16,7 +16,7 @@
             params.id,
             email,
             ["guest"],
-            `http://${window.location.host}/#/acceptMembership`,
+            `${window.origin}/#/acceptMembership`,
             name
         );
     let all = Promise.all([fetchTeam(), fetchMemberships()]);
@@ -26,20 +26,15 @@
     {#await all}
         <Loading />
     {:then [team, memberships]}
-        <!-- <section class="author">
-            <Avatar src={getAvatar(author.name)} />
-            <h3>{author.name}</h3>
-        </section> -->
-
         <section>
-            <div>
+            <div class="header">
                 <h1>{team.name}</h1>
                 <button
                     on:click={async () => {
                         api.deleteTeam(params.id).then(() => {
                             window.history.go(-1);
                         });
-                    }}>🗑</button>
+                    }}>❌</button>
             </div>
             <div>
                 <label for="email" />
@@ -89,4 +84,12 @@
 </section>
 
 <style>
+    .header {
+        display: flex;
+        align-items: center;
+    }
+
+    .header > button {
+        height: min-content;
+    }
 </style>
