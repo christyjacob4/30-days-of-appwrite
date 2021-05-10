@@ -19,7 +19,9 @@
     {#if $state.user}
         <a href={`/profile/${$state.user.$id}`} use:link>{$state.user.name}</a>
         {#if !$state.user.emailVerification}
-        <button on:click={startEmailVerification}>Not Verified ❌</button>
+            <button on:click={startEmailVerification}>Not Verified ❌</button>
+        {:else}
+            <p>Verified ✅</p>
         {/if}
         <a href="/logout" use:link>Logout</a>
     {:else}
