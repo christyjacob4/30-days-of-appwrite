@@ -15,6 +15,7 @@
     import Profile from "./routes/Profile.svelte";
     import Register from "./routes/Register.svelte";
     import ResetPassword from "./routes/ResetPassword.svelte";
+    import VerifyEmail from "./routes/VerifyEmail.svelte";
     import { state } from "./store";
 
     const routes = {
@@ -24,6 +25,7 @@
         "/logout": Logout,
         "/register": Register,
         "/resetPassword": ResetPassword,
+        "/verifyEmail": VerifyEmail,
         "/profile/create": CreateProfile,
         "/profile/:id": Profile,
         "/post/:slug": Post,

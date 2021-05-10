@@ -41,6 +41,12 @@ export const api = {
     completePasswordRecovery: async (userId, secret, pass, confirmPass) => { 
         await sdk.account.updateRecovery(userId, secret, pass, confirmPass) 
     },
+    createVerification: async (url) => {
+        await sdk.account.createVerification(url);
+    },
+    completeEmailVerification: async(userId, secret) => {
+        await sdk.account.updateVerification(userId, secret);
+    },
     register: async (mail, pass, name) => {
         try {
             await sdk.account.create(mail, pass, name);
