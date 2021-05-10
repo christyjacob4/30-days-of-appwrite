@@ -1,7 +1,7 @@
 <script>
     import { state } from "../store";
     import { link } from "svelte-spa-router";
-import { api } from "../appwrite";
+    import { api } from "../appwrite";
 
     const startEmailVerification = async () => {
         try {
