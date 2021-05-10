@@ -35,6 +35,12 @@ export const api = {
             throw error;
         }
     },
+    forgotPassword: async (email, url) => { 
+        await sdk.account.createRecovery(email, url) 
+    },
+    completePasswordRecovery: async (userId, secret, pass, confirmPass) => { 
+        await sdk.account.updateRecovery(userId, secret, pass, confirmPass) 
+    },
     register: async (mail, pass, name) => {
         try {
             await sdk.account.create(mail, pass, name);
@@ -95,7 +101,7 @@ export const api = {
             id,
             data,
             ["*"],
-            [`user:${userId}`],
+            [`user:${userId}`]
         );
     },
     fetchPosts: (limit, offset) => {
@@ -122,7 +128,7 @@ export const api = {
     fetchPost: id => sdk.database.getDocument(postsCollection, id),
     uploadFile: (file, userId) =>
         sdk.storage.createFile(file, ["*"], [`user:${userId}`]),
-    deleteFile: (id) => sdk.storage.deleteFile(id),
+    deleteFile: id => sdk.storage.deleteFile(id),
     getThumbnail: (id, width = 1000, height = 600) =>
         sdk.storage.getFilePreview(id, width, height),
     deletePost: id => sdk.database.deleteDocument(postsCollection, id),
