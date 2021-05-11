@@ -16,6 +16,7 @@
     import Profile from "./routes/Profile.svelte";
     import Register from "./routes/Register.svelte";
     import Team from "./routes/Team.svelte";
+    import Teams from "./routes/Teams.svelte";
     import { state } from "./store";
 
     const routes = {
@@ -26,7 +27,8 @@
         "/register": Register,
         "/profile/create": CreateProfile,
         "/profile/:id": Profile,
-        "/teams/:id" : Team,
+        "/profile/:id/teams" : Teams,
+        "/team/:id" : Team,
         "/post/:slug": Post,
         "/post/:slug/edit": Create,
         "/acceptMembership": AcceptMembership,
@@ -35,6 +37,7 @@
 
     onMount(async () => {
         try {
+            console.log("Calling getAccount");
             const user = await api.getAccount();
             state.update(n => {
                 n.user = user;

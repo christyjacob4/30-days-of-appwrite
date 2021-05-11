@@ -15,7 +15,7 @@
         api.createMembership(
             params.id,
             email,
-            ["guest"],
+            ["member"],
             `${window.origin}/#/acceptMembership`,
             name
         );
