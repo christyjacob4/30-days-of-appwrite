@@ -76,30 +76,5 @@
         align-items: center;
         gap: 1rem;
     }
-    section.latest {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: auto;
-        align-content: start;
-        gap: 1rem;
-    }
-    section.my-post {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: auto;
-        align-content: start;
-        gap: 0.5rem;
-    }
-    a {
-        border: none;
-        padding: 10px;
-        color: white;
-        font-weight: bold;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
+ 
 </style>
