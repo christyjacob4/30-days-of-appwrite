@@ -2,6 +2,7 @@
     import { link } from "svelte-spa-router";
     import Loading from "../lib/Loading.svelte";
     import { api } from "../appwrite";
+    import { state } from "../store";
 
     export let params = {};
 
@@ -19,6 +20,15 @@
             `${window.origin}/#/acceptMembership`,
             name
         );
+    const deleteMembership = async (teamId, membershipId) => {
+        try {
+            await api.deleteMembership(teamId, membershipId);
+            all = Promise.all([fetchTeam(), fetchMemberships()]);
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+
     let all = Promise.all([fetchTeam(), fetchMemberships()]);
 </script>
 
@@ -34,7 +44,7 @@
                         api.deleteTeam(params.id).then(() => {
                             window.history.go(-1);
                         });
-                    }}>❌</button>
+                    }}>❌ Delete Team</button>
             </div>
             <div>
                 <label for="email" />
@@ -61,7 +71,14 @@
                 {#each memberships as member}
                     <li>
                         <div>
-                            <p>Name : {member.name}</p>
+                            <div>
+                                <p>Name : {member.name}</p>
+                                {#if member.userId != $state.user.$id}
+                                <button on:click={() => deleteMembership(params.id, member.$id)}
+                                    >❌ Delete Member</button>
+                                    {/if}
+                            </div>
+
                             <p>Email: {member.email}</p>
                             <p>
                                 Invited on : {new Date(member.invited * 1000)}
