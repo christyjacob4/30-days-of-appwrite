@@ -54,5 +54,9 @@
     form {
         display: flex;
         flex-direction: column;
+        padding: 16px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        background: #fff;
     }
 </style>
