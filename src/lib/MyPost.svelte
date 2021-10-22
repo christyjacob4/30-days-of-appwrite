@@ -1,14 +1,14 @@
 <script>
-import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher } from "svelte";
 
     import { link } from "svelte-spa-router";
     import { api } from "../appwrite";
     export let post;
-    const dispatch = createEventDispatcher()
+    const dispatch = createEventDispatcher();
     const deletePost = async id => {
         if (confirm("are you sure you want to delete?")) {
             await api.deletePost(id);
-            dispatch('deleted');
+            dispatch("deleted");
         }
     };
 </script>

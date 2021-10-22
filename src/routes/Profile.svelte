@@ -15,7 +15,8 @@
 
     const fetchUser = () => api.fetchUser(params.id);
     const getAvatar = name => api.getAvatar(name);
-    const fetchPosts = () => api.fetchUserPosts(params.id).then(r => r.documents);
+    const fetchPosts = () =>
+        api.fetchUserPosts(params.id).then(r => r.documents);
     let all = Promise.all([fetchUser(), fetchPosts()]);
 </script>
 
@@ -32,7 +33,12 @@
             <p><a class="button" href="/create" use:link>Create</a></p>
             <section class="my-post">
                 {#each posts as post}
-                    <MyPost on:deleted={() => {all = Promise.all([fetchUser(), fetchPosts()]); console.log("deleted")} } {post} />
+                    <MyPost
+                        on:deleted={() => {
+                            all = Promise.all([fetchUser(), fetchPosts()]);
+                            console.log("deleted");
+                        }}
+                        {post} />
                 {/each}
             </section>
         {:else}

@@ -95,7 +95,7 @@ export const api = {
             id,
             data,
             ["*"],
-            [`user:${userId}`],
+            [`user:${userId}`]
         );
     },
     fetchPosts: (limit, offset) => {
@@ -122,7 +122,7 @@ export const api = {
     fetchPost: id => sdk.database.getDocument(postsCollection, id),
     uploadFile: (file, userId) =>
         sdk.storage.createFile(file, ["*"], [`user:${userId}`]),
-    deleteFile: (id) => sdk.storage.deleteFile(id),
+    deleteFile: id => sdk.storage.deleteFile(id),
     getThumbnail: (id, width = 1000, height = 600) =>
         sdk.storage.getFilePreview(id, width, height),
     deletePost: id => sdk.database.deleteDocument(postsCollection, id),
