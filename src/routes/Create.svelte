@@ -103,7 +103,7 @@
     {#if message}
         <div class="alert">{message}</div>
     {/if}
-    <form on:submit|preventDefault={submit}>
+    <form class="create-form" on:submit|preventDefault={submit}>
         <label for="cover">Cover</label>
         <input type="file" bind:files />
         {#if cover}
@@ -134,9 +134,12 @@
 </section>
 
 <style>
-    form {
+    .create-form {
         display: flex;
         flex-direction: column;
+        padding: 16px;
+        border: 1px solid #eee;
+        border-radius: 8px;
     }
     label {
         margin-top: 1rem;
