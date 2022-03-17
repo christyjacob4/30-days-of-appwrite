@@ -126,4 +126,5 @@ export const api = {
     getThumbnail: (id, width = 1000, height = 600) =>
         sdk.storage.getFilePreview(id, width, height),
     deletePost: id => sdk.database.deleteDocument(postsCollection, id),
+    getQRcode: text => sdk.avatars.getQR(text)
 };
