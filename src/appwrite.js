@@ -62,7 +62,7 @@ export const api = {
     fetchUser: async id => {
         let res = await sdk.database.listDocuments(
             profilesCollection,
-            [Query.equal("user_id", id)],
+            [Query.equal("user", id)],
             1
         );
         if (res.total > 0 && res.documents.length > 0) return res.documents[0];
@@ -73,7 +73,7 @@ export const api = {
             profilesCollection,
             "unique()",
             {
-                user_id: id,
+                user: id,
                 name: name,
             },
             ["role:all"],
