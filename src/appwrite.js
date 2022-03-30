@@ -3,7 +3,7 @@ import { state } from "./store";
 
 const profilesCollection = "60851dd82cf5c";
 const postsCollection = "60851e144f170";
-const bucketId = "624447d8b98a83a53b22";
+const bucketId = "default";
 const sdk = new Appwrite();
 sdk.setEndpoint("https://demo.appwrite.io/v1").setProject("607dd16494c6b");
 
