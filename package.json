@@ -15,7 +15,7 @@
     "vite": "^2.1.5"
   },
   "dependencies": {
-    "appwrite": "^2.0.0",
+    "appwrite": "^7.0.0",
     "easymde": "^2.15.0",
     "snarkdown": "^2.0.0",
     "svelte-spa-router": "^3.1.0"
