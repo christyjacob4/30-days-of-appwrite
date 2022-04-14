@@ -105,7 +105,7 @@ export const api = {
             limit,
             offset,
             undefined,
-            "after",
+            undefined,
             ["created_at"],
             ["DESC"]
         );
