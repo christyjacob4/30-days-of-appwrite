@@ -5,7 +5,10 @@ const profilesCollection = "60851dd82cf5c";
 const postsCollection = "60851e144f170";
 const bucketId = "default";
 const sdk = new Appwrite();
-sdk.setEndpoint("https://demo.appwrite.io/v1").setProject("607dd16494c6b");
+
+sdk
+    .setEndpoint("https://demo.appwrite.io/v1")
+    .setProject("607dd16494c6b");
 
 export const api = {
     getAccount: async () => sdk.account.get(),
@@ -36,17 +39,29 @@ export const api = {
             throw error;
         }
     },
+    forgotPassword: async (email, url) => { 
+        return await sdk.account.createRecovery(email, url) 
+    },
+    completePasswordRecovery: async (userId, secret, pass, confirmPass) => { 
+        return await sdk.account.updateRecovery(userId, secret, pass, confirmPass) 
+    },
+    createVerification: async (url) => {
+        return await sdk.account.createVerification(url);
+    },
+    completeEmailVerification: async(userId, secret) => {
+        return await sdk.account.updateVerification(userId, secret);
+    },
     register: async (mail, pass, name) => {
         try {
             await sdk.account.create("unique()", mail, pass, name);
-            await api.login(mail, pass);
+            return await api.login(mail, pass);
         } catch (error) {
             throw error;
         }
     },
     logout: async () => {
         try {
-            await sdk.account.deleteSession("current");
+            return await sdk.account.deleteSession("current");
         } catch (error) {
             console.log(error);
         } finally {
@@ -124,13 +139,13 @@ export const api = {
     },
     fetchPost: id => sdk.database.getDocument(postsCollection, id),
     uploadFile: (file, userId) =>
-        sdk.storage.createFile(bucketId, "unique()", file, ["role:all"], [`user:${userId}`]),
+        sdk.storage.createFile(bucketId, 'unique()', file, ['role:all'], [`user:${userId}`]),
     deleteFile: id => sdk.storage.deleteFile(bucketId, id),
     getThumbnail: (id, width = 1000, height = 600) =>
         sdk.storage.getFilePreview(bucketId, id, width, height),
     deletePost: id => sdk.database.deleteDocument(postsCollection, id),
     fetchUserTeams: () => sdk.teams.list(),
-    createTeam: name => sdk.teams.create(name),
+    createTeam: name => sdk.teams.create('unique()', name),
     deleteTeam: id => sdk.teams.delete(id),
     getTeam: id => sdk.teams.get(id),
     getMemberships: teamId => sdk.teams.getMemberships(teamId),

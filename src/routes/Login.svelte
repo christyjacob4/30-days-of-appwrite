@@ -21,6 +21,18 @@
             console.log(error.message);
         }
     };
+
+    const forgotPassword = async () => {
+        const url = `${window.location.origin}/#/resetPassword`
+        console.log(url);
+        try {
+            await api.forgotPassword(mail, url)
+            alert("Recovery Email Sent")
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
 </script>
 
 <div>
@@ -45,6 +57,8 @@
         <button class="button" type="submit">Login</button>
         <button class="button" on:click|preventDefault={loginWithGoogle}
             >Login With Google</button>
+        <button class="button" on:click|preventDefault={forgotPassword}
+            >Forgot Password?</button>
     </form>
 </div>
 

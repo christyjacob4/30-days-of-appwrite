@@ -15,6 +15,8 @@
     import Post from "./routes/Post.svelte";
     import Profile from "./routes/Profile.svelte";
     import Register from "./routes/Register.svelte";
+    import ResetPassword from "./routes/ResetPassword.svelte";
+    import VerifyEmail from "./routes/VerifyEmail.svelte";
     import Team from "./routes/Team.svelte";
     import Teams from "./routes/Teams.svelte";
     import { state } from "./store";
@@ -25,6 +27,8 @@
         "/login": Login,
         "/logout": Logout,
         "/register": Register,
+        "/resetPassword": ResetPassword,
+        "/verifyEmail": VerifyEmail,
         "/profile/create": CreateProfile,
         "/profile/:id": Profile,
         "/profile/:id/teams" : Teams,

@@ -65,7 +65,9 @@
         {error}
         <p>
             Public profile not found
-            <a href="/profile/create" use:link>Create Public Profile</a>
+            <button class="button">
+                <a href="/profile/create" use:link>Create Public Profile</a>
+            </button>
         </p>
     {/await}
 </section>
