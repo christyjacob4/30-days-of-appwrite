@@ -3,9 +3,8 @@
     import { api } from "../appwrite";
     import { state } from "../store";
     import { onMount } from "svelte";
-    import { replace } from 'svelte-spa-router';
+    import { replace } from "svelte-spa-router";
     import "../../node_modules/easymde/dist/easymde.min.css";
-    import Loading from "../lib/Loading.svelte";
 
     export let params = {};
 
@@ -16,7 +15,7 @@
         message = "",
         loading = false,
         cover,
-        post,
+        post = {},
         content = "";
 
     let postFetch = async () => {
@@ -29,16 +28,19 @@
         if (params.slug) {
             postFetch();
         }
-        easyMDE = new EasyMDE({ element: document.getElementById("content"), renderingConfig: {
-            singleLineBreaks: true,
-        } });
+        easyMDE = new EasyMDE({
+            element: document.getElementById("content"),
+            renderingConfig: {
+                singleLineBreaks: true,
+            },
+        });
     });
     const submit = async () => {
         message = "";
         loading = true;
 
         if (files && files.length == 1) {
-            if(params.slug) {
+            if (params.slug) {
                 await api.deleteFile(cover);
             }
             let file = await api.uploadFile(files[0], $state.user.$id);
@@ -61,24 +63,21 @@
         });
         try {
             let data = {
-                    title: title,
-                    text: content,
-                    published: published,
-                    user_id: $state.user.$id,
-                    created_at: params.slug ? post.created_at :  new Date().getTime(),
-                    cover: cover,
-                };
-            if(params.slug) {
+                title: title,
+                text: content,
+                published: published,
+                user_id: $state.user.$id,
+                created_at: params.slug
+                    ? post.created_at
+                    : new Date().getTime(),
+                cover: cover,
+            };
+            if (params.slug) {
                 //update
-                await api.updatePost(params.slug,data,$state.user.$id)
-                replace('/profile/'+$state.user.$id);
-
+                await api.updatePost(params.slug, data, $state.user.$id);
+                replace("/profile/" + $state.user.$id);
             } else {
-                await api.createPost(
-                    data,
-                    $state.user.$id,
-                    $state.profile.$id
-                );
+                await api.createPost(data, $state.user.$id, $state.profile.$id);
                 easyMDE.value("");
                 title = "";
                 content = "";
@@ -104,14 +103,11 @@
     {#if message}
         <div class="alert">{message}</div>
     {/if}
-    <form on:submit|preventDefault={submit}>
+    <form class="create-form" on:submit|preventDefault={submit}>
         <label for="cover">Cover</label>
         <input type="file" bind:files />
         {#if cover}
-        <img
-            class="cover"
-            src={api.getThumbnail(cover, 400, 250)}
-            alt="" />
+            <img class="cover" src={api.getThumbnail(cover, 400, 250)} alt="" />
         {/if}
         <label for="title">Title</label>
         <input
@@ -133,14 +129,17 @@
             <option value={true}>Published</option>
         </select>
         <button disabled={loading ? true : false} class="button" type="submit"
-            >{ params.slug ? 'Save' : 'Create'}</button>
+            >{params.slug ? "Save" : "Create"}</button>
     </form>
 </section>
 
 <style>
-    form {
+    .create-form {
         display: flex;
         flex-direction: column;
+        padding: 16px;
+        border: 1px solid #eee;
+        border-radius: 8px;
     }
     label {
         margin-top: 1rem;

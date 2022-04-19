@@ -58,53 +58,64 @@
     section.top {
         display: flex;
         justify-content: space-evenly;
-        gap: 1rem;
+        gap: 16px;
+        margin: 2em 0;
     }
 
     section.latest {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
         align-items: auto;
         align-content: start;
-        gap: 1rem;
+        gap: 16px;
+        margin-bottom: 2em;
     }
 
     img {
         width: 100%;
     }
 
+    .promoted {
+        padding: 16px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        background-color: white;
+    }
+
     .promoted img {
-        border-radius: 0.5rem;
+        border-radius: 8px;
     }
 
     .cards {
         display: flex;
         flex-direction: column;
-        gap: 3rem;
+        gap: 16px;
     }
 
     .cards .card {
         font-size: 0.75rem;
         display: flex;
-        border-radius: 0.5rem;
-        align-items: center;
-        gap: 0.5rem;
+        border-radius: 8px;
+        gap: 16px;
         background-color: white;
         transition: all 0.2s;
+        padding: 16px;
+        border: 1px solid #eee;
+        border-radius: 8px;
     }
 
     .cards .card:hover {
         background-color: #f02e65;
         color: white;
-        transform: scale(1.05);
+        transform: scale(1.02);
     }
 
     .card img {
-        width: 50%;
+        width: 45%;
         height: 100%;
-        border-radius: 0.5rem;
+        border-radius: 8px;
         object-fit: cover;
     }
 </style>
