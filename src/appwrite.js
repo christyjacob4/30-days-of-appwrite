@@ -40,28 +40,28 @@ export const api = {
         }
     },
     forgotPassword: async (email, url) => { 
-        await sdk.account.createRecovery(email, url) 
+        return await sdk.account.createRecovery(email, url) 
     },
     completePasswordRecovery: async (userId, secret, pass, confirmPass) => { 
-        await sdk.account.updateRecovery(userId, secret, pass, confirmPass) 
+        return await sdk.account.updateRecovery(userId, secret, pass, confirmPass) 
     },
     createVerification: async (url) => {
-        await sdk.account.createVerification(url);
+        return await sdk.account.createVerification(url);
     },
     completeEmailVerification: async(userId, secret) => {
-        await sdk.account.updateVerification(userId, secret);
+        return await sdk.account.updateVerification(userId, secret);
     },
     register: async (mail, pass, name) => {
         try {
             await sdk.account.create("unique()", mail, pass, name);
-            await api.login(mail, pass);
+            return await api.login(mail, pass);
         } catch (error) {
             throw error;
         }
     },
     logout: async () => {
         try {
-            await sdk.account.deleteSession("current");
+            return await sdk.account.deleteSession("current");
         } catch (error) {
             console.log(error);
         } finally {
