@@ -5,7 +5,10 @@ const profilesCollection = "60851dd82cf5c";
 const postsCollection = "60851e144f170";
 const bucketId = "default";
 const sdk = new Appwrite();
-sdk.setEndpoint("https://demo.appwrite.io/v1").setProject("607dd16494c6b");
+
+sdk
+    .setEndpoint("https://demo.appwrite.io/v1")
+    .setProject("607dd16494c6b");
 
 export const api = {
     getAccount: async () => sdk.account.get(),
