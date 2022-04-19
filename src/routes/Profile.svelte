@@ -13,6 +13,8 @@
 
     export let params = {};
 
+    let name;
+
     const fetchUser = () => api.fetchUser(params.id);
     const getAvatar = name => api.getAvatar(name);
     const fetchPosts = () =>

@@ -129,5 +129,16 @@ export const api = {
     getThumbnail: (id, width = 1000, height = 600) =>
         sdk.storage.getFilePreview(bucketId, id, width, height),
     deletePost: id => sdk.database.deleteDocument(postsCollection, id),
+    fetchUserTeams: () => sdk.teams.list(),
+    createTeam: name => sdk.teams.create(name),
+    deleteTeam: id => sdk.teams.delete(id),
+    getTeam: id => sdk.teams.get(id),
+    getMemberships: teamId => sdk.teams.getMemberships(teamId),
+    createMembership: (teamId, email, roles, url, name) =>
+        sdk.teams.createMembership(teamId, email, roles, url, name),
+    updateMembership: (teamId, inviteId, userId, secret) =>
+        sdk.teams.updateMembershipStatus(teamId, inviteId, userId, secret),
+    deleteMembership: (teamId, inviteId) =>
+        sdk.teams.deleteMembership(teamId, inviteId),
     getQRcode: text => sdk.avatars.getQR(text)
 };
