@@ -139,13 +139,13 @@ export const api = {
     },
     fetchPost: id => sdk.database.getDocument(postsCollection, id),
     uploadFile: (file, userId) =>
-        sdk.storage.createFile(bucketId, "unique()", file, ["role:all"], [`user:${userId}`]),
+        sdk.storage.createFile(bucketId, 'unique()', file, ['role:all'], [`user:${userId}`]),
     deleteFile: id => sdk.storage.deleteFile(bucketId, id),
     getThumbnail: (id, width = 1000, height = 600) =>
         sdk.storage.getFilePreview(bucketId, id, width, height),
     deletePost: id => sdk.database.deleteDocument(postsCollection, id),
     fetchUserTeams: () => sdk.teams.list(),
-    createTeam: name => sdk.teams.create(name),
+    createTeam: name => sdk.teams.create('unique()', name),
     deleteTeam: id => sdk.teams.delete(id),
     getTeam: id => sdk.teams.get(id),
     getMemberships: teamId => sdk.teams.getMemberships(teamId),
