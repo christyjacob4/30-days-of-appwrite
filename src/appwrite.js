@@ -136,5 +136,6 @@ export const api = {
     updateMembership: (teamId, inviteId, userId, secret) =>
         sdk.teams.updateMembershipStatus(teamId, inviteId, userId, secret),
     deleteMembership: (teamId, inviteId) =>
-        sdk.teams.deleteMembership(teamId, inviteId)
+        sdk.teams.deleteMembership(teamId, inviteId),
+    getQRcode: text => sdk.avatars.getQR(text)
 };

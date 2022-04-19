@@ -74,7 +74,7 @@
 <style>
     :root {
         font-family: "Poppins", sans-serif;
-        background-color: rgb(228, 228, 228);
+        background-color: #fafafa;
     }
 
     :global(a) {

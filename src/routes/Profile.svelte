@@ -37,10 +37,7 @@
                 {#each posts as post}
                     <MyPost
                         on:deleted={() => {
-                            all = Promise.all([
-                                fetchUser(),
-                                fetchPosts()
-                            ]);
+                            all = Promise.all([fetchUser(), fetchPosts()]);
                             console.log("deleted");
                         }}
                         {post} />

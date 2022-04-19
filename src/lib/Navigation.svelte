@@ -20,6 +20,10 @@
         grid-area: navigation;
         display: flex;
         align-items: center;
+        position: sticky;
+        top: 0;
+        background-color: #fafafa;
+        border-bottom: 1px solid #eee;
     }
 
     a {

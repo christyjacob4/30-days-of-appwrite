@@ -15,27 +15,31 @@
 
 <style>
     img.cover {
-        width: 100%;
+        width: 50%;
         border-radius: 0.5rem;
     }
 
     a {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: flex-start;
-        align-items: center;
+        /* align-items: center; */
         border-radius: 0.5rem;
         background-color: white;
-        max-width: 18rem;
+        /* max-width: 18rem; */
         font-size: 1.1rem;
         line-height: 2rem;
         transition: all 0.2s;
+        padding: 16px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        width: 45%;
     }
 
     a:hover {
         background-color: #f02e65;
         color: white;
-        transform: scale(1.05);
+        transform: scale(1.02);
     }
 
     h2 {
