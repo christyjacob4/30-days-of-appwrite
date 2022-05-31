@@ -2,6 +2,7 @@
 	export let id: string;
 	export let title: string;
 	export let type: string;
+	export let required: boolean;
 	export let placeholder: string;
 
 	// Validators should be taken from InputValidators ($lib/core/Input.ts)
@@ -70,8 +71,9 @@
 	<input
 		on:change={onChange}
 		on:input={onInput}
-		class={`rounded-md bg-generic-0 border border-neutral-5 px-4 py-3 text-neutral-200 placeholder-neutral-100 font-normal text-base outline-primary-50 ring-opacity-25 ${errorClasses}`}
+		class={`hover:border-neutral-30 rounded-md bg-generic-0 border border-neutral-5 px-4 py-3 text-neutral-120 placeholder-neutral-100 font-normal text-base outline-secondary-100 focus:ring-secondary-100 focus:ring focus:ring-opacity-25 ring-opacity-25 ${errorClasses}`}
 		{id}
+		{required}
 		{type}
 		{placeholder}
 	/>

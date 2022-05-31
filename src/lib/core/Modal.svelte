@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { modalStore } from '$lib/stores/modal';
+	import { fade } from 'svelte/transition';
 
 	export let title: string;
 	export let type: string;
@@ -7,7 +8,8 @@
 
 {#if $modalStore === type}
 	<div
-		class="fixed inset-0 bg-[#C4C4C4] bg-opacity-50 flex items-center justify-center"
+		transition:fade
+		class="fixed inset-0 bg-[#C4C4C4] bg-opacity-50 flex flex-col space-y-10 items-center justify-center"
 		on:click={modalStore.close}
 	>
 		<section
