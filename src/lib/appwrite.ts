@@ -10,19 +10,17 @@ const bucketId = "default";
 
 export type Post = {
     title: string,
-    cover?: string,
     text: string,
     published: boolean,
-    tags?: string[],
-    created_at: number,
-    user_id: string,
+    createdAt: number,
+    profileId: string,
+    cover?: string,
     readingTime?: string,
 } & Models.Document;
 
 export type Profile = {
     user: string,
     name: string,
-    posts?: string[]
 } & Models.Document;
 
 const sdk = new Appwrite();
@@ -32,6 +30,23 @@ sdk
     .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
 
 export const AppwriteService = {
+    createVerification: async () => {
+        return await sdk.account.createVerification(`${window.location.origin}/profile`);
+    },
+
+    completeEmailVerification: async (userId: string, secret: string) => {
+        return await sdk.account.updateVerification(userId, secret);
+    },
+
+    createPost: async (data: any) => {
+        return await sdk.database.createDocument(
+            postsCollection,
+            "unique()",
+            data,
+            ["role:all"], // Write permissions to user given automatically
+        );
+    },
+
     createProfile: async (id: string, name: string) => {
         return await sdk.database.createDocument(
             profilesCollection,
@@ -45,13 +60,9 @@ export const AppwriteService = {
         );
     },
 
-    getProfile: async (id: string | undefined = undefined) => {
-        let isSelf = id === undefined;
-
+    getSelfProfile: async () => {
         try {
-            if (isSelf) {
-                id = get(authStore)?.$id;
-            }
+            const id = get(authStore)?.$id
 
             if (!id) {
                 throw new Error("Account not found.");
@@ -63,27 +74,38 @@ export const AppwriteService = {
                 1
             );
 
-            const profile = profiles[0]
+            const profile = profiles[0];
 
             if (!profile) {
-                throw new Error("Profile not found. Create one first please.");
+                throw new Error("Profile not found. Please create one first.");
             }
 
-            if (isSelf) {
-                profileStore.login(profile);
-            }
-
+            profileStore.login(profile);
 
             return profile;
         } catch (err) {
-            if (isSelf) {
-                profileStore.logout();
-            }
+            profileStore.logout();
 
             throw err;
         }
     },
 
+    getProfileById: async (id: string) => {
+        try {
+            const profile = await sdk.database.getDocument<Profile>(
+                profilesCollection,
+                id
+            );
+
+            if (!profile) {
+                throw new Error("Profile not found.");
+            }
+
+            return profile;
+        } catch (err) {
+            throw err;
+        }
+    },
 
     getAccount: async () => {
         try {
@@ -99,8 +121,8 @@ export const AppwriteService = {
     loginWithGoogle: async () => {
         sdk.account.createOAuth2Session(
             "google",
-            window.location.origin,
-            window.location.origin
+            window.location.origin + '/profile',
+            window.location.origin + '/login'
         );
     },
 
@@ -130,21 +152,44 @@ export const AppwriteService = {
     getThumbnail: (id: string, width: number, height: number) => {
         return sdk.storage.getFilePreview(bucketId, id, width, height)
     },
+
     getAvatar: (name: string = "Unnamed") => {
         return sdk.avatars.getInitials(name);
     },
 
+    fetchUserPosts: (page: number, published: boolean) => {
+        const profileId = get(profileStore)?.$id;
 
-    fetchPosts: (limit: number, offset: number, queries: string[]) => {
+        if (!profileId) {
+            throw new Error("Profile not found!");
+        }
+
         return sdk.database.listDocuments<Post>(
             postsCollection,
-            queries,
-            limit,
-            offset,
+            [Query.equal("profileId", profileId), Query.equal('published', published)],
+            25,
+            (page - 1) * 25,
             undefined,
             undefined,
-            ["created_at"],
+            ["createdAt"],
             ["DESC"]
         );
     },
+
+    fetchPosts: (page: number, published: boolean) => {
+        return sdk.database.listDocuments<Post>(
+            postsCollection,
+            [Query.equal('published', published)],
+            25,
+            (page - 1) * 25,
+            undefined,
+            undefined,
+            ["createdAt"],
+            ["DESC"]
+        );
+    },
+
+    uploadFile: async (file: File) => {
+        return await sdk.storage.createFile(bucketId, 'unique()', file, ['role:all']); // Write permissions to user given automatically
+    }
 }

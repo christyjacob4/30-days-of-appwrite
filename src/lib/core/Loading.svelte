@@ -1,5 +1,9 @@
+<script lang="ts">
+	export let small: boolean = false;
+</script>
+
 <svg
-	class="w-5 h-5 animate-spin"
+	class={`animate-spin ${small ? 'w-4 h-4' : 'w-5 h-5'}`}
 	xmlns="http://www.w3.org/2000/svg"
 	fill="none"
 	viewBox="0 0 24 24"

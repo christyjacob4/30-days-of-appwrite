@@ -5,6 +5,7 @@
 	export let color: 'primary' | 'secondary' = 'primary';
 	export let icon: 'google' | undefined = undefined;
 	export let title: string;
+	export let name: string | undefined = undefined;
 	export let loading: boolean = false;
 
 	$: classes =
@@ -16,6 +17,7 @@
 <button
 	on:click
 	{type}
+	{name}
 	class={`py-4 px-6 w-full rounded-md flex space-x-1 items-center justify-center font-semibold text-base ${classes}`}
 >
 	{#if !loading}

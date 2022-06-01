@@ -17,11 +17,11 @@
 
 	// Guards (middlewares)
 	const pagesWithSession = ['/create-profile'];
-	const pagesWithProfile = ['/profile', '/my-teams'];
+	const pagesWithProfile = ['/profile', '/my-teams', '/create-post'];
 	const pagesWithoutSession = ['/login', '/register'];
 
 	// Layout changes
-	const pagesWithoutFooter = ['/login', '/register', '/create-profile'];
+	const pagesWithoutFooter = ['/login', '/register', '/create-profile', '/create-post'];
 
 	const profilePromise = async () => {
 		try {
@@ -33,7 +33,7 @@
 		}
 
 		try {
-			await AppwriteService.getProfile();
+			await AppwriteService.getSelfProfile();
 		} catch (err: any) {
 			alertStore.warning(err.message);
 			goto('/create-profile');
@@ -51,13 +51,12 @@
 		}
 
 		try {
-			const profile = await AppwriteService.getProfile();
+			const profile = await AppwriteService.getSelfProfile();
 			if (profile) {
-				throw new Error('You already have a profile.');
+				alertStore.warning('You already have a profile.');
+				goto('/profile');
 			}
 		} catch (err: any) {
-			alertStore.warning(err.message);
-			goto('/profile');
 			return;
 		}
 	};

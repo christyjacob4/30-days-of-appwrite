@@ -20,11 +20,19 @@
 			await AppwriteService.register(email, password, name);
 			modalStore.close();
 			alertStore.close();
-			goto('/profile');
+			goto('/create-profile');
 		} catch (err: any) {
 			alertStore.warning(err.message);
 		} finally {
 			loading = false;
+		}
+	}
+
+	async function onLoginGoogle() {
+		try {
+			await AppwriteService.loginWithGoogle();
+		} catch (err: any) {
+			alertStore.warning(err.message);
 		}
 	}
 </script>
@@ -59,5 +67,11 @@
 	/>
 
 	<Button {loading} type="submit" title="Register" color="primary" />
-	<Button type="button" title="Register with Google" color="secondary" icon="google" />
+	<Button
+		on:click={onLoginGoogle}
+		type="button"
+		title="Register with Google"
+		color="secondary"
+		icon="google"
+	/>
 </form>

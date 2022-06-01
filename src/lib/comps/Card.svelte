@@ -2,46 +2,35 @@
 	import { goto } from '$app/navigation';
 
 	import { AppwriteService, type Post, type Profile } from '$lib/appwrite';
+	import { getVerboseDate } from '$lib/util';
 
-	export let size: 'sm' | 'md' | 'lg';
+	export let size: 'sm' | 'md' | 'lg' | 'admin';
 	export let index: number;
 	export let document: Post;
 	export let profiles: Profile[];
 
 	$: position = index + 1 < 10 ? `0${index + 1}` : index + 1;
-	$: profile = profiles.find((p) => p.user === document.user_id);
-
-	function getVerboseDate(timestamp: number) {
-		const monthNames = [
-			'Jan',
-			'Feb',
-			'Mar',
-			'Apr',
-			'May',
-			'Jun',
-			'Jul',
-			'Aug',
-			'Sep',
-			'Oct',
-			'Nov',
-			'Dec'
-		];
-
-		const date = new Date(timestamp);
-
-		return `${monthNames[date.getMonth()]} ${date.getDate()}`;
-	}
+	$: profile = profiles.find((p) => p.$id === document.profileId);
 
 	function onCardClick() {
-		if (size !== 'lg') {
+		if (size !== 'lg' && size !== 'admin') {
 			goto(`/posts/${document.$id}`);
 		}
+	}
+
+	function deletePost() {
+		// Only for admin cards
+
+		// TODO: Implement
+		alert('Delete');
 	}
 </script>
 
 <div
 	on:click={onCardClick}
-	class={`bg-generic-0 shadow-small p-8 rounded-2xl ${size !== 'lg' ? 'cursor-pointer' : ''}`}
+	class={`bg-generic-0 shadow-small p-8 rounded-2xl ${
+		size !== 'lg' && size !== 'admin' ? 'cursor-pointer' : ''
+	}`}
 >
 	<!-- This helps Svelte Kit Crawler to discover our post page during SSG -->
 	<a href={`/posts/${document.$id}`} class="hidden">[SSG_LINK]</a>
@@ -53,7 +42,7 @@
 			<div>
 				<div class="flex items-center justify-start space-x-2 mb-1">
 					<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">
-						{getVerboseDate(document.created_at)}
+						{getVerboseDate(document.createdAt)}
 					</p>
 					<div class="w-[1px] h-4 bg-neutral-10" />
 					<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">
@@ -86,7 +75,7 @@
 			<div class="w-full">
 				<div class="flex items-center justify-start space-x-2 mb-1">
 					<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">
-						{getVerboseDate(document.created_at)}
+						{getVerboseDate(document.createdAt)}
 					</p>
 					<div class="w-[1px] h-4 bg-neutral-10" />
 					<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">
@@ -108,6 +97,38 @@
 				<p class="line-clamp-1 pt-6 font-normal text-sm text-[#827F7F]">{document.text}</p>
 			</div>
 		</div>
+	{:else if size === 'admin'}
+		<div class="flex items-start justify-start space-x-6">
+			{#if document.cover}
+				<img
+					class="flex-shrink-0 w-full max-w-[150px] h-auto rounded-lg"
+					src={AppwriteService.getThumbnail(document.cover, 1000, 600).toString()}
+					alt="Article cover"
+				/>
+			{/if}
+
+			<div class="w-full flex items-start justify-start space-x-6">
+				<div class="w-full">
+					<h3 class="line-clamp-2 font-poppins text-lg font-medium text-neutral-200 mb-2">
+						{document.title}
+					</h3>
+
+					<div class="flex items-center justify-start space-x-2 mb-1">
+						<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">
+							posted {getVerboseDate(document.createdAt)}
+						</p>
+					</div>
+				</div>
+				<div class="flex-shrink-0">
+					<div class="flex items-center justify-start space-x-2">
+						<a href={`/posts/${document.$id}/edit`}><img src="/icons/edit.svg" alt="Edit icon" /></a
+						>
+						<div class="w-[1px] h-4 bg-neutral-10" />
+						<button on:click={deletePost}><img src="/icons/delete.svg" alt="Delete icon" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
 	{:else if size === 'lg'}
 		<div class="grid grid-cols-12 gap-6">
 			{#if document.cover}
@@ -123,7 +144,7 @@
 			<div class="col-span-6">
 				<div class="flex items-center justify-start space-x-2 mb-1">
 					<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">
-						{getVerboseDate(document.created_at)}
+						{getVerboseDate(document.createdAt)}
 					</p>
 					<div class="w-[1px] h-4 bg-neutral-10" />
 					<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">

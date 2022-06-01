@@ -6,6 +6,16 @@ export const InputValidators = {
 
         return { type: 'success', msg: 'This is a good name!' };
     },
+    title: (value: string) => {
+        if (value.length > 128) {
+            return { type: 'warning', msg: 'Title must be shorter 128 characters long at most.' };
+        }
+
+        return { type: 'success', msg: 'This is a good title!' };
+    },
+    none: (value: string) => {
+        return;
+    },
     nickname: (value: string) => {
         if (value.length > 128) {
             return { type: 'warning', msg: 'Nickname must be shorter 128 characters long at most.' };

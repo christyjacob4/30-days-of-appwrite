@@ -37,6 +37,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"appwrite": "^8.0.1"
+		"appwrite": "^8.0.1",
+		"easymde": "^2.15.0"
 	}
 }

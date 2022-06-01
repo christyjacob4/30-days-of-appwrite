@@ -3,18 +3,16 @@
 
 	export async function load() {
 		// TODO: Button to load more
-		const { documents: posts } = await AppwriteService.fetchPosts(25, 0, [
-			Query.equal('published', true)
-		]);
+		const { documents: posts } = await AppwriteService.fetchPosts(1, true);
 
 		const promoted = posts[0];
 		const featured = posts.slice(1, 5);
 		const latest = posts.slice(5);
 
-		const profileIds = [...new Set(posts.map((p) => p.user_id))];
+		const profileIds = [...new Set(posts.map((p) => p.profileId))];
 		const profiles = await Promise.all(
 			profileIds.map(async (id) => {
-				return AppwriteService.getProfile(id);
+				return AppwriteService.getProfileById(id);
 			})
 		);
 
