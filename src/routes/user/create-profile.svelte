@@ -25,7 +25,7 @@
 		try {
 			await AppwriteService.createProfile($authStore.$id, nickname);
 			alertStore.close();
-			goto('/profile');
+			goto('/writer/profile');
 		} catch (err: any) {
 			console.log('NOW$11');
 			alertStore.warning(err.message);

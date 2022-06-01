@@ -1,16 +1,14 @@
 <script lang="ts">
-	import '../../node_modules/easymde/dist/easymde.min.css';
+	import '../../../node_modules/easymde/dist/easymde.min.css';
 	import { InputValidators } from '$lib/core/Input';
 	import Input from '$lib/core/Input.svelte';
 	import { onMount } from 'svelte';
 	import Button from '$lib/core/Button.svelte';
 	import { AppwriteService } from '$lib/appwrite';
 	import { alertStore } from '$lib/stores/alert';
-	import { authStore } from '$lib/stores/auth';
 	import { goto } from '$app/navigation';
 	import Loading from '$lib/core/Loading.svelte';
 	import { profileStore } from '$lib/stores/profile';
-	import { get } from 'svelte/store';
 	import Post from '$lib/comps/Post.svelte';
 
 	let EasyMDELibrary: any;
@@ -63,7 +61,7 @@
 				cover: file.$id,
 				text: content,
 				published: type === 'publish',
-				profileId: get(profileStore)?.$id,
+				profileId: $profileStore?.$id,
 				createdAt: Date.now(),
 				readingTime: `${readTime} min`
 			});
@@ -94,7 +92,7 @@
 <form class="mx-auto w-full max-w-[770px]" on:submit|preventDefault={onPublish}>
 	<div class={preview ? 'hidden' : 'block'}>
 		<section class="flex items-center justify-between space-x-10">
-			<a href="/profile" class="flex items-center space-x-1">
+			<a href="/writer/profile" class="flex items-center space-x-1">
 				<img src="/icons/back.svg" alt="Back arrow" />
 				<span class="underline text-sm text-generic-100">Back</span>
 			</a>

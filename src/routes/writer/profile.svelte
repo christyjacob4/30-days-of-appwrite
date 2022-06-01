@@ -2,11 +2,12 @@
 	import Button from '$lib/core/Button.svelte';
 	import Loading from '$lib/core/Loading.svelte';
 	import { alertStore } from '$lib/stores/alert';
-	import { authStore } from '$lib/stores/auth';
-	import { profileStore } from '$lib/stores/profile';
 	import { AppwriteService, type Post, type Profile } from '$lib/appwrite';
 	import { onMount } from 'svelte';
 	import Card from '$lib/comps/Card.svelte';
+	import { goto } from '$app/navigation';
+	import { authStore } from '$lib/stores/auth';
+	import { profileStore } from '$lib/stores/profile';
 
 	export let draftPosts: Post[];
 	export let publishedPosts: Post[];
@@ -71,7 +72,7 @@
 		</div>
 
 		<div>
-			<a href="/create-post"><Button type="button" title="Create post" color="primary" /></a>
+			<a href="/writer/create-post"><Button type="button" title="Create post" color="primary" /></a>
 		</div>
 	</div>
 

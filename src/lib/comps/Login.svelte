@@ -19,7 +19,7 @@
 			await AppwriteService.login(email, password);
 			modalStore.close();
 			alertStore.close();
-			goto('/profile');
+			goto('/writer/profile');
 		} catch (err: any) {
 			console.log('NOW$2');
 			alertStore.warning(err.message);

@@ -20,7 +20,7 @@
 			await AppwriteService.register(email, password, name);
 			modalStore.close();
 			alertStore.close();
-			goto('/create-profile');
+			goto('/user/create-profile');
 		} catch (err: any) {
 			console.log('NOW$6');
 			alertStore.warning(err.message);

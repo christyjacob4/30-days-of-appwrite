@@ -39,7 +39,7 @@
 
 <header class="bg-generic-0">
 	<div class="max-w-[870px] mx-auto py-8 flex justify-between items-center">
-		<a href="/">
+		<a href="/" sveltekit:prefetch>
 			<h1 class="uppercase text-primary-120 font-semibold tracking-widest">30 days of appwrite</h1>
 		</a>
 
@@ -48,10 +48,10 @@
 		{:then}
 			{#if $authStore}
 				<nav class="flex items-center justify-end space-x-3">
-					<a href="/my-teams" class="px-3 text-generic-100 font-semibold">My Teams</a>
+					<a href="/writer/my-teams" class="px-3 text-generic-100 font-semibold">My Teams</a>
 					<button on:click={onLogout} class="px-3 text-generic-100 font-semibold">Log Out</button>
 
-					<a href="/profile">
+					<a href="/writer/profile">
 						<img
 							class="w-8 rounded-full"
 							src={AppwriteService.getAvatar($authStore.name).toString()}
