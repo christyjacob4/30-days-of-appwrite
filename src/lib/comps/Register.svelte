@@ -22,6 +22,7 @@
 			alertStore.close();
 			goto('/create-profile');
 		} catch (err: any) {
+			console.log('NOW$6');
 			alertStore.warning(err.message);
 		} finally {
 			loading = false;
@@ -32,6 +33,7 @@
 		try {
 			await AppwriteService.loginWithGoogle();
 		} catch (err: any) {
+			console.log('NOW$5');
 			alertStore.warning(err.message);
 		}
 	}

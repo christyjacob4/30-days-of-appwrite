@@ -27,6 +27,7 @@
 			alertStore.close();
 			goto('/profile');
 		} catch (err: any) {
+			console.log('NOW$11');
 			alertStore.warning(err.message);
 		} finally {
 			loading = false;

@@ -35,6 +35,7 @@
 				})
 			);
 		} catch (err: any) {
+			console.log('NOW$12');
 			alertStore.warning(err.message);
 		}
 	});
@@ -48,6 +49,7 @@
 			await AppwriteService.createVerification();
 			alertStore.success('Verification email has been send. Please check your inbox.');
 		} catch (err: any) {
+			console.log('NOW$13');
 			alertStore.warning(err.message);
 		} finally {
 			emailLoading = false;

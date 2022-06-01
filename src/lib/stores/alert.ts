@@ -1,3 +1,4 @@
+import { browser } from "$app/env";
 import { writable } from "svelte/store";
 
 function createStore() {
@@ -10,16 +11,20 @@ function createStore() {
         subscribe: typeStore.subscribe,
         close: () => typeStore.set(undefined),
         warning: (message: string) => {
-            typeStore.set({
-                msg: message,
-                type: "warning"
-            });
+            if (browser) {
+                typeStore.set({
+                    msg: message,
+                    type: "warning"
+                });
+            }
         },
         success: (message: string) => {
-            typeStore.set({
-                msg: message,
-                type: "success"
-            });
+            if (browser) {
+                typeStore.set({
+                    msg: message,
+                    type: "success"
+                });
+            }
         }
     };
 }

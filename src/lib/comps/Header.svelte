@@ -23,6 +23,7 @@
 			goto('/login');
 			alertStore.success('Successfully logged out.');
 		} catch (err: any) {
+			console.log('NOW$1');
 			alertStore.warning(err.message);
 		}
 	}

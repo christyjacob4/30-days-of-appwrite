@@ -27,6 +27,7 @@
 		try {
 			await AppwriteService.getAccount();
 		} catch (err: any) {
+			console.log('NOW$28');
 			alertStore.warning(err.message);
 			goto('/');
 			return;
@@ -35,9 +36,10 @@
 		try {
 			await AppwriteService.getSelfProfile();
 		} catch (err: any) {
+			console.log('NOW$26');
 			alertStore.warning(err.message);
 			goto('/create-profile');
-			return;
+			throw err;
 		}
 	};
 
@@ -45,16 +47,19 @@
 		try {
 			await AppwriteService.getAccount();
 		} catch (err: any) {
+			console.log('NOW$24');
 			alertStore.warning(err.message);
 			goto('/');
-			return;
+			throw err;
 		}
 
 		try {
 			const profile = await AppwriteService.getSelfProfile();
 			if (profile) {
+				console.log('NOW$22');
 				alertStore.warning('You already have a profile.');
 				goto('/profile');
+				throw new Error();
 			}
 		} catch (err: any) {
 			return;
@@ -65,11 +70,11 @@
 		try {
 			const account = await AppwriteService.getAccount();
 			if (account) {
-				throw new Error('You are already logged in.');
+				alertStore.warning('You are already logged in.');
+				goto('/');
+				throw new Error();
 			}
 		} catch (err: any) {
-			alertStore.warning(err.message);
-			goto('/');
 			return;
 		}
 	};
