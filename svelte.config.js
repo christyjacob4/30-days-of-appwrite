@@ -11,15 +11,15 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			pages: 'dist',
-			assets: 'dist',
+			pages: 'build',
+			assets: 'build',
 			fallback: null,
 			precompress: false
 		}),
 		prerender: {
-			default: true
+			// default: true
 		},
-		trailingSlash: 'always'
+		// trailingSlash: 'always'
 	},
 };
 
