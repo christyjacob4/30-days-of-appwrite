@@ -2,7 +2,9 @@
 	import { goto } from '$app/navigation';
 
 	import { AppwriteService, type Post, type Profile } from '$lib/appwrite';
-	import { getVerboseDate } from '$lib/util';
+	import { modalStore } from '$lib/stores/modal';
+	import { getVerboseDate, markdownToText } from '$lib/util';
+	import Post from './Post.svelte';
 
 	export let size: 'sm' | 'md' | 'lg' | 'admin';
 	export let index: number;
@@ -18,11 +20,10 @@
 		}
 	}
 
-	function deletePost() {
-		// Only for admin cards
-
-		// TODO: Implement
-		alert('Delete');
+	function deletePost(document: Post) {
+		return () => {
+			modalStore.open('delete-post', document);
+		};
 	}
 </script>
 
@@ -94,7 +95,9 @@
 					<p class="text-neutral-190 font-normal text-sm">{profile?.name}</p>
 				</div>
 
-				<p class="line-clamp-1 pt-6 font-normal text-sm text-[#827F7F]">{document.text}</p>
+				<p class="line-clamp-1 pt-6 font-normal text-sm text-[#827F7F]">
+					{markdownToText(document.text)}
+				</p>
 			</div>
 		</div>
 	{:else if size === 'admin'}
@@ -124,7 +127,9 @@
 						<a href={`/posts/${document.$id}/edit`}><img src="/icons/edit.svg" alt="Edit icon" /></a
 						>
 						<div class="w-[1px] h-4 bg-neutral-10" />
-						<button on:click={deletePost}><img src="/icons/delete.svg" alt="Delete icon" /></button>
+						<button on:click={deletePost(document)}
+							><img src="/icons/delete.svg" alt="Delete icon" /></button
+						>
 					</div>
 				</div>
 			</div>
@@ -163,7 +168,9 @@
 					<p class="text-neutral-190 font-normal text-sm">{profile?.name}</p>
 				</div>
 
-				<p class="line-clamp-3 py-6 font-normal text-base text-[#827F7F]">{document.text}</p>
+				<p class="line-clamp-3 py-6 font-normal text-base text-[#827F7F]">
+					{markdownToText(document.text)}
+				</p>
 
 				<a
 					href={`/posts/${document.$id}`}

@@ -73,7 +73,6 @@
 					goto(`/posts/${post.$id}`);
 				}
 			} catch (err: any) {
-				console.log('NOW$10');
 				alertStore.warning(err.message);
 			} finally {
 				loading = false;

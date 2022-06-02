@@ -6,7 +6,7 @@
 	export let type: string;
 </script>
 
-{#if $modalStore === type}
+{#if $modalStore?.type === type}
 	<div
 		transition:fade
 		class="fixed inset-0 bg-[#C4C4C4] bg-opacity-50 flex flex-col space-y-10 items-center justify-center"

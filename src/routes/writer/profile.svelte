@@ -8,15 +8,38 @@
 	import { goto } from '$app/navigation';
 	import { authStore } from '$lib/stores/auth';
 	import { profileStore } from '$lib/stores/profile';
+	import Modal from '$lib/core/Modal.svelte';
+	import { modalStore } from '$lib/stores/modal';
+	import { page } from '$app/stores';
+	import { get } from 'svelte/store';
 
-	export let draftPosts: Post[];
-	export let publishedPosts: Post[];
+	export let draftPosts: Post[] | undefined;
+	export let publishedPosts: Post[] | undefined;
 
 	let profiles: Profile[] = [];
 
-	onMount(async () => {
-		console.log('Running on mount');
+	let deleteLoading = false;
+	function deletePost(document: Post) {
+		return async () => {
+			deleteLoading = true;
+			try {
+				await AppwriteService.deletePost(document);
+				alertStore.success('Post deleted successfully.');
+				modalStore.close();
+				loadPage();
+			} catch (err: any) {
+				alertStore.warning(err.message);
+			} finally {
+				deleteLoading = false;
+			}
+		};
+	}
+
+	const loadPage = async () => {
 		try {
+			draftPosts = undefined;
+			publishedPosts = undefined;
+
 			const publishedResponse = await AppwriteService.fetchUserPosts(1, true);
 			const draftsResponse = await AppwriteService.fetchUserPosts(1, false);
 
@@ -36,9 +59,35 @@
 				})
 			);
 		} catch (err: any) {
-			console.log('NOW$12');
 			alertStore.warning(err.message);
 		}
+	};
+
+	async function confirmEmail(userId: string, secret: string) {
+		try {
+			await AppwriteService.verifyProfile(userId, secret);
+			alertStore.success('Account verified successfully.');
+			loadPage();
+		} catch (err: any) {
+			alertStore.warning(err.message);
+		}
+	}
+
+	onMount(async () => {
+		await Promise.all([
+			loadPage(),
+			(async () => {
+				const userId = $page.url.searchParams.get('userId');
+				const secret = $page.url.searchParams.get('secret');
+				if (userId && secret) {
+					confirmEmail(userId, secret);
+
+					// TODO: Delete does not work
+					$page.url.searchParams.delete('userId');
+					$page.url.searchParams.delete('secret');
+				}
+			})()
+		]);
 	});
 
 	let emailLoading = false;
@@ -50,7 +99,6 @@
 			await AppwriteService.createVerification();
 			alertStore.success('Verification email has been send. Please check your inbox.');
 		} catch (err: any) {
-			console.log('NOW$13');
 			alertStore.warning(err.message);
 		} finally {
 			emailLoading = false;
@@ -143,3 +191,26 @@
 		{/if}
 	</div>
 </div>
+
+<Modal title="Delete post" type="delete-post">
+	<p class="text-neutral-100 mb-6">
+		Are you sure you want to delete <span class="font-semibold">{$modalStore?.data?.title}</span>?
+	</p>
+
+	<div class="flex items-center justify-center space-x-6">
+		<button
+			on:click={modalStore.close}
+			class="w-full py-4 px-6 text-neutral-100 font-semibold bg-generic-0 border border-generic-0 rounded-md"
+			>Cancel</button
+		>
+		<button
+			on:click={deletePost($modalStore?.data)}
+			class="flex items-center justify-center space-x-2  w-full py-4 px-6 text-neutral-100 font-semibold bg-neutral-0 border border-neutral-10 rounded-md"
+		>
+			{#if deleteLoading}
+				<Loading />
+			{/if}
+			<span>Delete</span>
+		</button>
+	</div>
+</Modal>

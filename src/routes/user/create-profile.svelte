@@ -27,7 +27,6 @@
 			alertStore.close();
 			goto('/writer/profile');
 		} catch (err: any) {
-			console.log('NOW$11');
 			alertStore.warning(err.message);
 		} finally {
 			loading = false;

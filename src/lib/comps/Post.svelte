@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AppwriteService, type Profile } from '$lib/appwrite';
-	import { getVerboseDate } from '$lib/util';
+	import { getVerboseDate, markdownToHTML } from '$lib/util';
 
 	export let profile: Profile | undefined;
 	export let content: string;
@@ -38,7 +38,9 @@
 			<p class="text-neutral-190 text-base font-normal">{profile?.name}</p>
 		</div>
 
-		<p class="line-clamp-1 pt-6 font-normal text-base text-[#827F7F]">{content}</p>
+		<p class="line-clamp-1 pt-6 font-normal text-base text-[#827F7F]">
+			{@html markdownToHTML(content)}
+		</p>
 	</section>
 
 	<section class="mt-10 flex items-center justify-start space-x-6">

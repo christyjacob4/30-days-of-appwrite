@@ -31,7 +31,7 @@ sdk
 
 export const AppwriteService = {
     createVerification: async () => {
-        return await sdk.account.createVerification(`${window.location.origin}/profile`);
+        return await sdk.account.createVerification(`${window.location.origin}/writer/profile`);
     },
 
     completeEmailVerification: async (userId: string, secret: string) => {
@@ -45,6 +45,10 @@ export const AppwriteService = {
             data,
             ["role:all"], // Write permissions to user given automatically
         );
+    },
+
+    verifyProfile: async (userId: string, secret: string) => {
+        return await sdk.account.updateVerification(userId, secret);
     },
 
     createProfile: async (id: string, name: string) => {
@@ -187,6 +191,14 @@ export const AppwriteService = {
             ["createdAt"],
             ["DESC"]
         );
+    },
+
+    deletePost: async (document: Post) => {
+        if (document.cover) {
+            await sdk.storage.deleteFile(bucketId, document.cover);
+        }
+
+        await sdk.database.deleteDocument(postsCollection, document.$id);
     },
 
     uploadFile: async (file: File) => {
