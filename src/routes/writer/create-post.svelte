@@ -46,39 +46,39 @@
 		return readingTime;
 	}
 
-	async function onPublish() {
-		let type = 'publish'; // TODO: Figure out type from button (publish/draft)
+	function onPublish(type = 'publish') {
+		return async () => {
+			loading = true;
 
-		loading = true;
+			try {
+				fetchContent();
 
-		try {
-			fetchContent();
+				const file = await AppwriteService.uploadFile(files[0]);
 
-			const file = await AppwriteService.uploadFile(files[0]);
+				const post = await AppwriteService.createPost({
+					title,
+					cover: file.$id,
+					text: content,
+					published: type === 'publish',
+					profileId: $profileStore?.$id,
+					createdAt: Date.now(),
+					readingTime: `${readTime} min`
+				});
 
-			const post = await AppwriteService.createPost({
-				title,
-				cover: file.$id,
-				text: content,
-				published: type === 'publish',
-				profileId: $profileStore?.$id,
-				createdAt: Date.now(),
-				readingTime: `${readTime} min`
-			});
-
-			if (type === 'draft') {
-				alertStore.success('Draft saved successfully.');
-				goto(`/posts/${post.$id}/edit`);
-			} else if (type === 'publish') {
-				alertStore.success('Post published successfully.');
-				goto(`/posts/${post.$id}`);
+				if (type === 'draft') {
+					alertStore.success('Draft saved successfully.');
+					goto(`/posts/${post.$id}/edit`);
+				} else if (type === 'publish') {
+					alertStore.success('Post published successfully.');
+					goto(`/posts/${post.$id}`);
+				}
+			} catch (err: any) {
+				console.log('NOW$10');
+				alertStore.warning(err.message);
+			} finally {
+				loading = false;
 			}
-		} catch (err: any) {
-			console.log('NOW$10');
-			alertStore.warning(err.message);
-		} finally {
-			loading = false;
-		}
+		};
 	}
 
 	onMount(async () => {
@@ -89,7 +89,7 @@
 	});
 </script>
 
-<form class="mx-auto w-full max-w-[770px]" on:submit|preventDefault={onPublish}>
+<form class="mx-auto w-full max-w-[770px]" on:submit|preventDefault={onPublish('publish')}>
 	<div class={preview ? 'hidden' : 'block'}>
 		<section class="flex items-center justify-between space-x-10">
 			<a href="/writer/profile" class="flex items-center space-x-1">
@@ -99,8 +99,8 @@
 
 			<div class="flex items-center space-x-4">
 				<button
-					type="submit"
-					name="draft"
+					type="button"
+					on:click={onPublish('draft')}
 					class="flex items-center justify-center space-x-2 py-4 px-5 text-neutral-100 font-semibold border border-neutral-10 border-opacity-0 rounded-md"
 				>
 					{#if loading}
@@ -111,7 +111,6 @@
 				<button
 					on:click={togglePreview}
 					type="button"
-					name="preview"
 					class="flex items-center justify-center space-x-2  py-4 px-5 text-neutral-100 font-semibold border border-neutral-10 rounded-md"
 				>
 					<span>Preview</span>
@@ -156,7 +155,7 @@
 				</div>
 			</div>
 
-			<Button {loading} name="publish" type="submit" title="Publish" color="primary" />
+			<Button {loading} type="submit" title="Publish" color="primary" />
 		</div>
 	</div>
 	<div class={!preview ? 'hidden' : 'block'}>
@@ -168,8 +167,8 @@
 
 			<div class="flex items-center space-x-4">
 				<button
-					type="submit"
-					name="draft"
+					type="button"
+					on:click={onPublish('draft')}
 					class="flex items-center justify-center space-x-2 py-4 px-5 text-neutral-100 font-semibold border border-neutral-10 border-opacity-0 rounded-md"
 				>
 					{#if loading}
@@ -178,11 +177,13 @@
 					<span>Save Draft</span>
 				</button>
 				<button
-					on:click={() => (preview = true)}
 					type="button"
-					name="preview"
+					on:click={onPublish('publish')}
 					class="flex items-center justify-center space-x-2  py-4 px-5 text-generic-0 font-semibold border border-primary-120 bg-primary-110 rounded-md"
 				>
+					{#if loading}
+						<Loading />
+					{/if}
 					<span>Publish</span>
 				</button>
 			</div>
