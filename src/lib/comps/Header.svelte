@@ -39,10 +39,6 @@
 
 <header class="bg-generic-0">
 	<div class="max-w-[870px] mx-auto py-8 flex justify-between items-center">
-		<a href="/">
-			<h1 class="uppercase text-primary-120 font-semibold tracking-widest">30 days of appwrite</h1>
-		</a>
-
 		{#await getAccount()}
 			<Loading />
 		{:then}
