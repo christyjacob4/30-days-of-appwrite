@@ -17,9 +17,9 @@ const config = {
 			precompress: false
 		}),
 		prerender: {
-			default: true
+			// default: true
 		},
-		trailingSlash: 'always'
+		// trailingSlash: 'always'
 	},
 };
 
