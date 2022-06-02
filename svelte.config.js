@@ -11,7 +11,6 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			// default options are shown
 			pages: 'dist',
 			assets: 'dist',
 			fallback: null,
@@ -20,7 +19,7 @@ const config = {
 		prerender: {
 			default: true
 		},
-		// trailingSlash: 'always'
+		trailingSlash: 'always'
 	},
 };
 
