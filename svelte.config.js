@@ -18,10 +18,9 @@ const config = {
 			precompress: false
 		}),
 		prerender: {
-			// This can be false if you're using a fallback (i.e. SPA mode)
 			default: true
 		},
-		trailingSlash: 'always'
+		// trailingSlash: 'always'
 	},
 };
 
