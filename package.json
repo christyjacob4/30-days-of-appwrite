@@ -2,7 +2,7 @@
 	"name": "30-days-of-appwrite",
 	"version": "0.0.1",
 	"engines": {
-		"node": ">=18"
+		"node": ">=16"
 	},
 	"scripts": {
 		"dev": "svelte-kit dev",
