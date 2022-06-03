@@ -73,14 +73,46 @@
 			newTeamName = team.name;
 		};
 	}
+
+	let scrollY = 0;
+	let isLoadingPage = false;
+	let currentPage = 2;
+	let isEnd = false;
+
+	$: {
+		if (scrollY + window.innerHeight + 100 >= document.body.scrollHeight && !isEnd) {
+			loadNextPage();
+		}
+	}
+
+	async function loadNextPage() {
+		if (isLoadingPage || !teams) {
+			return;
+		}
+
+		isLoadingPage = true;
+
+		try {
+			const newTeams = (await AppwriteService.fetchTeams(currentPage)).teams;
+			teams.push(...newTeams);
+			teams = teams;
+			currentPage++;
+		} catch (err: any) {
+			isEnd = true;
+		} finally {
+			isLoadingPage = false;
+		}
+	}
 </script>
+
+<svelte:window bind:scrollY />
 
 <div class="w-full max-w-[770px] mx-auto flex flex-col space-y-10">
 	<div class="flex items-center justify-between">
 		<div class="flex items-center justify-start space-x-2">
 			<img
 				class="w-10 rounded-full"
-				src={AppwriteService.getAvatar($authStore?.name).toString()}
+				src={AppwriteService.getAvatar($profileStore?.name).toString()}
 				alt="Author profile"
 			/>
 			<h1 class="text-center font-poppins text-3xl font-semibold text-generic-100">

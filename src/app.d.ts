@@ -8,3 +8,5 @@ declare namespace App {
 	// interface Session {}
 	// interface Stuff {}
 }
+
+declare const __APP_NAME__: string

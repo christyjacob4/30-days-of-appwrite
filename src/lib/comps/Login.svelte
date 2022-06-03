@@ -55,7 +55,9 @@
 		title="Password"
 		required={true}
 	/>
-	<Button {loading} type="submit" title="Login" color="primary" />
+	<div class="pt-4">
+		<Button {loading} type="submit" title="Login" color="primary" />
+	</div>
 	<Button
 		on:click={onLoginGoogle}
 		type="button"

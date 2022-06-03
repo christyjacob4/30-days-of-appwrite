@@ -7,6 +7,7 @@
 
 	import { authStore } from '$lib/stores/auth';
 	import { modalStore } from '$lib/stores/modal';
+	import { profileStore } from '$lib/stores/profile';
 
 	function onRegister() {
 		modalStore.open('register');
@@ -53,7 +54,9 @@
 					<a href="/writer/profile">
 						<img
 							class="w-8 rounded-full"
-							src={AppwriteService.getAvatar($authStore.name).toString()}
+							src={AppwriteService.getAvatar(
+								$profileStore ? $profileStore.name : $authStore.name
+							).toString()}
 							alt="Author profile"
 						/></a
 					>

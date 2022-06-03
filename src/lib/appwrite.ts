@@ -183,8 +183,8 @@ export const AppwriteService = {
         return sdk.database.listDocuments<Post>(
             postsCollection,
             [Query.equal("profileId", profileId), Query.equal('published', published)],
-            25,
-            (page - 1) * 25,
+            100,
+            (page - 1) * 100,
             undefined,
             undefined,
             ["createdAt"],
@@ -235,5 +235,9 @@ export const AppwriteService = {
 
     updateTeam: async (teamId: string, name: string) => {
         return await sdk.teams.update(teamId, name);
+    },
+
+    getTeamById: async (teamId: string) => {
+        return await sdk.teams.get(teamId);
     }
 }

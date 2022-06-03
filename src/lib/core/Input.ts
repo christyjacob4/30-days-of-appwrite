@@ -13,6 +13,13 @@ export const InputValidators = {
 
         return { type: 'success', msg: 'This is a good team name!' };
     },
+    role: (value: string) => {
+        if (value.length > 128) {
+            return { type: 'warning', msg: 'Team role must be shorter 128 characters long at most.' };
+        }
+
+        return { type: 'success', msg: 'This is a good team role!' };
+    },
     title: (value: string) => {
         if (value.length > 128) {
             return { type: 'warning', msg: 'Title must be shorter 128 characters long at most.' };

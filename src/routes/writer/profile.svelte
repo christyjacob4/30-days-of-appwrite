@@ -93,7 +93,7 @@
 		<div class="flex items-center justify-start space-x-2">
 			<img
 				class="w-10 rounded-full"
-				src={AppwriteService.getAvatar($authStore?.name).toString()}
+				src={AppwriteService.getAvatar($profileStore?.name).toString()}
 				alt="Author profile"
 			/>
 			<h1 class="text-center font-poppins text-3xl font-semibold text-generic-100">

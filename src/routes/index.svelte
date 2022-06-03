@@ -31,12 +31,45 @@
 	import type { Post, Profile } from '$lib/appwrite';
 	import Card from '$lib/comps/Card.svelte';
 	import { Query } from 'appwrite';
+	import { browser } from '$app/env';
 
 	export let promoted: Post;
 	export let featured: Post[];
 	export let latest: Post[];
 	export let profiles: Profile[];
+
+	let scrollY = 0;
+	let isLoadingPage = false;
+	let currentPage = 2;
+	let isEnd = false;
+
+	$: {
+		if (browser && scrollY + window.innerHeight + 100 >= document.body.scrollHeight && !isEnd) {
+			loadNextPage();
+		}
+	}
+
+	async function loadNextPage() {
+		if (isLoadingPage) {
+			return;
+		}
+
+		isLoadingPage = true;
+
+		try {
+			const { documents: posts } = await AppwriteService.fetchPosts(currentPage, true);
+			latest.push(...posts);
+			latest = latest;
+			currentPage++;
+		} catch (err: any) {
+			isEnd = true;
+		} finally {
+			isLoadingPage = false;
+		}
+	}
 </script>
+
+<svelte:window bind:scrollY />
 
 <div class="flex flex-col space-y-10">
 	{#if promoted}

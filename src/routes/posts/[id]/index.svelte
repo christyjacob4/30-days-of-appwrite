@@ -43,14 +43,14 @@
 			<div class="flex items-center space-x-4">
 				<a
 					href={`/writer/posts/${documentId}/edit`}
-					class="flex items-center justify-center space-x-2 py-4 px-5 text-neutral-100 font-semibold border border-neutral-10 border-opacity-0 rounded-md"
+					class="flex items-center justify-center space-x-2 py-4 px-5 text-neutral-100 font-semibold border border-neutral-10 rounded-md"
 				>
 					<span>Edit post</span>
 				</a>
 				<button
 					type="button"
 					on:click={() => modalStore.open('delete-post', post)}
-					class="flex items-center justify-center space-x-2  py-4 px-5 text-neutral-100 font-semibold border border-neutral-10 rounded-md"
+					class="flex items-center justify-center space-x-2  py-4 px-5 text-neutral-0 font-semibold border border-neutral-10 bg-neutral-150 rounded-md"
 				>
 					<span>Delete</span>
 				</button>

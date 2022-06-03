@@ -66,7 +66,9 @@
 		title="Password"
 	/>
 
-	<Button {loading} type="submit" title="Register" color="primary" />
+	<div class="pt-4">
+		<Button {loading} type="submit" title="Register" color="primary" />
+	</div>
 	<Button
 		on:click={onLoginGoogle}
 		type="button"

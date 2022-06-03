@@ -16,12 +16,9 @@
 		? URL.createObjectURL(file)
 		: AppwriteService.getThumbnail(fileId || '', 1000, 500).toString();
 
-	var pageLink = browser ? window.location.href : undefined;
-	var pageTitle = title;
-
 	const fbs_click = () => {
 		window.open(
-			`http://www.facebook.com/sharer.php?u=${pageLink}&quote=${pageTitle}`,
+			`http://www.facebook.com/sharer.php?u=${window.location.href}&quote=${title}`,
 			'sharer',
 			'toolbar=0,status=0,width=626,height=436'
 		);
@@ -29,7 +26,7 @@
 	};
 	const tbs_click = () => {
 		window.open(
-			`https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageLink}`,
+			`https://twitter.com/intent/tweet?text=${title}&url=${window.location.href}`,
 			'sharer',
 			'toolbar=0,status=0,width=626,height=436'
 		);
@@ -37,7 +34,7 @@
 	};
 	const lbs_click = () => {
 		window.open(
-			`https://www.linkedin.com/sharing/share-offsite/?url=${pageLink}`,
+			`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`,
 			'sharer',
 			'toolbar=0,status=0,width=626,height=436'
 		);
@@ -45,7 +42,7 @@
 	};
 	const rbs_click = () => {
 		window.open(
-			`https://www.reddit.com/submit?url=${pageLink}&title=${pageTitle}`,
+			`https://www.reddit.com/submit?url=${window.location.href}&title=${title}`,
 			'sharer',
 			'toolbar=0,status=0,width=626,height=436'
 		);
@@ -53,7 +50,7 @@
 	};
 	const pbs_click = () => {
 		window.open(
-			`https://www.pinterest.com/pin/create/button/?&text=${pageTitle}&url=${pageLink}&description=${pageTitle}`,
+			`https://www.pinterest.com/pin/create/button/?&text=${title}&url=${window.location.href}&description=${title}`,
 			'sharer',
 			'toolbar=0,status=0,width=626,height=436'
 		);
@@ -94,7 +91,6 @@
 	</section>
 
 	<section class="mt-10 flex items-center justify-start space-x-6">
-		<!-- TODO: Functionality to these buttons below -->
 		<button on:click={fbs_click}> <img src="/icons/facebook.svg" alt="Facebook logo" /></button>
 		<button on:click={tbs_click}><img src="/icons/twitter.svg" alt="Twitter logo" /></button>
 		<button on:click={lbs_click}><img src="/icons/linkedin.svg" alt="LinkedIn logo" /></button>

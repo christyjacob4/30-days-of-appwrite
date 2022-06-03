@@ -151,14 +151,14 @@
 				<div class="bg-white rounded-2xl shadow-small p-8 ">
 					{#if post || (files && files[0])}
 						<img
-							class="rounded-2xl"
+							class="rounded-2xl mb-6"
 							src={files[0]
 								? URL.createObjectURL(files[0])
 								: AppwriteService.getThumbnail(post?.coverId || '', 1000, 600).toString()}
 							alt="Post cover"
 						/>
 					{/if}
-					<div class="mt-6 flex items-center justify-between space-x-3">
+					<div class="flex items-center justify-between space-x-3">
 						<input required={post ? false : true} type="file" bind:files bind:this={filesEl} />
 						<button type="button" on:click={clearFiles}
 							><img src="/icons/cross.svg" alt="Cross icon" /></button
@@ -203,7 +203,7 @@
 				<button
 					type="button"
 					on:click={onPublish('draft')}
-					class="flex items-center justify-center space-x-2 py-4 px-5 text-neutral-100 font-semibold border border-neutral-10 border-opacity-0 rounded-md"
+					class="flex items-center justify-center space-x-2 py-4 px-5 text-neutral-100 font-semibold border border-neutral-10 rounded-md"
 				>
 					{#if loading}
 						<Loading />
