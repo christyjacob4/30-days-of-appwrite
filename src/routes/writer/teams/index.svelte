@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { AppwriteService } from '$lib/appwrite';
+	import TeamDelete from '$lib/comps/TeamDelete.svelte';
 	import Button from '$lib/core/Button.svelte';
 	import { InputValidators } from '$lib/core/Input';
 	import Input from '$lib/core/Input.svelte';
@@ -27,8 +28,13 @@
 		await reload();
 	});
 
+	async function onTeamDelete() {
+		await reload();
+	}
+
 	let newTeamName = '';
 	let processingCreate = false;
+
 	async function onCreateTeam() {
 		processingCreate = true;
 
@@ -37,11 +43,35 @@
 			alertStore.success('Team created successfully.');
 			modalStore.close();
 			reload();
+			newTeamName = '';
 		} catch (err: any) {
 			alertStore.warning(err.message);
 		} finally {
 			processingCreate = false;
 		}
+	}
+
+	async function onEditSubmit() {
+		processingCreate = true;
+
+		try {
+			await AppwriteService.updateTeam($modalStore?.data.$id, newTeamName);
+			alertStore.success('Team updated successfully.');
+			modalStore.close();
+			reload();
+			newTeamName = '';
+		} catch (err: any) {
+			alertStore.warning(err.message);
+		} finally {
+			processingCreate = false;
+		}
+	}
+
+	function onEditTeam(team: Models.Team) {
+		return () => {
+			modalStore.open('edit-team', team);
+			newTeamName = team.name;
+		};
 	}
 </script>
 
@@ -81,8 +111,24 @@
 			</div>
 		{:else if teams.length > 0}
 			{#each teams as team}
-				<div class="shadow-small p-8 bg-generic-0 rounded-2xl">
-					<p class="text-neutral-100 text-base font-normal">{team.name}</p>
+				<div
+					class="shadow-small p-8 bg-generic-0 rounded-2xl flex items-center justify-between space-x-6"
+				>
+					<a
+						href={`/writer/teams/${team.$id}`}
+						class="text-neutral-100 text-base font-normal w-full hover:underline">{team.name}</a
+					>
+					<div class="flex-shrink-0">
+						<div class="flex items-center justify-start space-x-2">
+							<button on:click={onEditTeam(team)}
+								><img src="/icons/edit.svg" alt="Edit icon" /></button
+							>
+							<div class="w-[1px] h-4 bg-neutral-10" />
+							<button on:click={() => modalStore.open('delete-team', team)}
+								><img src="/icons/delete.svg" alt="Delete icon" /></button
+							>
+						</div>
+					</div>
 				</div>
 			{/each}
 		{/if}
@@ -104,3 +150,21 @@
 		<Button type="submit" color="primary" title="Create Team" loading={processingCreate} />
 	</form>
 </Modal>
+
+<Modal title="Edit Team" type="edit-team">
+	<form on:submit|preventDefault={onEditSubmit} class="flex flex-col space-y-8">
+		<Input
+			bind:value={newTeamName}
+			validator={InputValidators.team}
+			required={true}
+			id="team-name"
+			placeholder="Enter a Team name"
+			type="text"
+			title="Name your team"
+		/>
+
+		<Button type="submit" color="primary" title="Update Team" loading={processingCreate} />
+	</form>
+</Modal>
+
+<TeamDelete on:delete={onTeamDelete} />

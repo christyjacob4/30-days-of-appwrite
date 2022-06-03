@@ -227,5 +227,13 @@ export const AppwriteService = {
 
     createTeam: async (name: string) => {
         return await sdk.teams.create("unique()", name);
+    },
+
+    deleteTeam: async (teamId: string) => {
+        return await sdk.teams.delete(teamId);
+    },
+
+    updateTeam: async (teamId: string, name: string) => {
+        return await sdk.teams.update(teamId, name);
     }
 }

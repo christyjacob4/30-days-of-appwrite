@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { browser } from '$app/env';
+
 	import { AppwriteService, type Profile } from '$lib/appwrite';
 	import { getVerboseDate, markdownToHTML } from '$lib/util';
 
@@ -13,6 +15,50 @@
 	$: cover = file
 		? URL.createObjectURL(file)
 		: AppwriteService.getThumbnail(fileId || '', 1000, 500).toString();
+
+	var pageLink = browser ? window.location.href : undefined;
+	var pageTitle = title;
+
+	const fbs_click = () => {
+		window.open(
+			`http://www.facebook.com/sharer.php?u=${pageLink}&quote=${pageTitle}`,
+			'sharer',
+			'toolbar=0,status=0,width=626,height=436'
+		);
+		return false;
+	};
+	const tbs_click = () => {
+		window.open(
+			`https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageLink}`,
+			'sharer',
+			'toolbar=0,status=0,width=626,height=436'
+		);
+		return false;
+	};
+	const lbs_click = () => {
+		window.open(
+			`https://www.linkedin.com/sharing/share-offsite/?url=${pageLink}`,
+			'sharer',
+			'toolbar=0,status=0,width=626,height=436'
+		);
+		return false;
+	};
+	const rbs_click = () => {
+		window.open(
+			`https://www.reddit.com/submit?url=${pageLink}&title=${pageTitle}`,
+			'sharer',
+			'toolbar=0,status=0,width=626,height=436'
+		);
+		return false;
+	};
+	const pbs_click = () => {
+		window.open(
+			`https://www.pinterest.com/pin/create/button/?&text=${pageTitle}&url=${pageLink}&description=${pageTitle}`,
+			'sharer',
+			'toolbar=0,status=0,width=626,height=436'
+		);
+		return false;
+	};
 </script>
 
 <div class="bg-generic-0 shadow-small rounded-2xl p-8">
@@ -49,10 +95,10 @@
 
 	<section class="mt-10 flex items-center justify-start space-x-6">
 		<!-- TODO: Functionality to these buttons below -->
-		<button> <img src="/icons/facebook.svg" alt="Facebook logo" /></button>
-		<button><img src="/icons/twitter.svg" alt="Twitter logo" /></button>
-		<button><img src="/icons/linkedin.svg" alt="LinkedIn logo" /></button>
-		<button> <img src="/icons/pinterest.svg" alt="Pinterest logo" /></button>
-		<button> <img src="/icons/reddit.svg" alt="Reddit logo" /></button>
+		<button on:click={fbs_click}> <img src="/icons/facebook.svg" alt="Facebook logo" /></button>
+		<button on:click={tbs_click}><img src="/icons/twitter.svg" alt="Twitter logo" /></button>
+		<button on:click={lbs_click}><img src="/icons/linkedin.svg" alt="LinkedIn logo" /></button>
+		<button on:click={pbs_click}> <img src="/icons/pinterest.svg" alt="Pinterest logo" /></button>
+		<button on:click={rbs_click}> <img src="/icons/reddit.svg" alt="Reddit logo" /></button>
 	</section>
 </div>
