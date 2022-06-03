@@ -4,10 +4,11 @@ Everything you need to build a Svelte project, powered by [`create-svelte`](http
 
 ## Appwrite Setup
 
-1. Create Appwrite project with ID `607dd16494c6b`
-2. `appwrite deploy collection` (you might need to install AppwriteCLI, do `appwrite client --endpoint YOUR_ENDPOINT` and `appwrite login`)
-3. Manually create `postThumbnails` Storage Bucket with 10MB max size, extensions `png jpg jpeg` and `file-level` permissions
-4. Enable `Google` OAuth in Users settings
+1. Rename `_appwrite.json` to `appwrite.json`
+2. Create Appwrite project with ID `607dd16494c6b`
+3. `appwrite deploy collection` (you might need to install AppwriteCLI, do `appwrite client --endpoint YOUR_ENDPOINT` and `appwrite login`)
+4. Manually create `postThumbnails` Storage Bucket with 10MB max size, extensions `png jpg jpeg` and `file-level` permissions
+5. Enable `Google` OAuth in Users settings
 
 ## Creating a project
 
