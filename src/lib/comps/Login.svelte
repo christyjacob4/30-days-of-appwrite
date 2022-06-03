@@ -64,7 +64,8 @@
 		icon="google"
 	/>
 
-	<!-- <button type="button" class="underline text-neutral-150 font-normal text-base text-left"
-			>Forgot password?</button
-		> -->
+	<!-- TODO: Implement -->
+	<button type="button" class="underline text-neutral-150 font-normal text-base text-left"
+		>Forgot password?</button
+	>
 </form>

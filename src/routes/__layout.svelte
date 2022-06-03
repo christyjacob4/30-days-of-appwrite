@@ -27,9 +27,27 @@
 	import Modal from '$lib/core/Modal.svelte';
 	import { fade } from 'svelte/transition';
 
-	// Layout changes
-	const pagesWithoutFooter = ['/login', '/register', '/user/create-profile', '/writer/create-post'];
+	function isWithoutFooter(page: string) {
+		const pagesWithoutFooter = [
+			'/login',
+			'/register',
+			'/user/create-profile',
+			'/writer/create-post'
+		];
+		if (pagesWithoutFooter.includes(page)) {
+			return true;
+		}
+
+		if (page.endsWith('/edit')) {
+			// writer/posts/[id]/edit
+			return true;
+		}
+	}
 </script>
+
+<svelte:head>
+	<title>{__APP_NAME__}</title>
+</svelte:head>
 
 <div class="fixed top-8 left-0 w-full pointer-events-none z-50">
 	{#if $alertStore}
@@ -45,14 +63,14 @@
 
 <div
 	style="border: 1px solid rgba(232, 233, 240, 0.49);"
-	class={`py-8 ${pagesWithoutFooter.includes($page.url.pathname) ? '!border-b-0' : ''}`}
+	class={`py-8 ${isWithoutFooter($page.url.pathname) ? '!border-b-0' : ''}`}
 >
 	<div class="max-w-[870px] mx-auto">
 		<slot />
 	</div>
 </div>
 
-{#if !pagesWithoutFooter.includes($page.url.pathname)}
+{#if !isWithoutFooter($page.url.pathname)}
 	<Footer />
 {/if}
 

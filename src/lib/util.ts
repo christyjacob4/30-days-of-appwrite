@@ -22,11 +22,11 @@ export function getVerboseDate(timestamp: number) {
 }
 
 export function markdownToText(markdown: string) {
-    // TODO: Logic
-    return markdown;
+    let html = marked.parse(markdown);
+    html = html.split('&#39;').join("'");
+    return html.replace(/<[^>]*>?/gm, '');
 }
 
 export function markdownToHTML(markdown: string) {
-    // TODO: Logic
-    return markdown;
+    return marked.parse(markdown);
 }

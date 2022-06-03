@@ -50,8 +50,11 @@
 						{document.readingTime} read
 					</p>
 				</div>
-
-				<h3 class="font-poppins text-lg font-medium text-neutral-200 mb-2">{document.title}</h3>
+				<div class="mb-2">
+					<h3 class="font-poppins line-clamp-1 text-lg font-medium text-neutral-200">
+						{document.title}
+					</h3>
+				</div>
 
 				<div class="flex items-center justify-start space-x-2">
 					<img
@@ -65,13 +68,11 @@
 		</div>
 	{:else if size === 'md'}
 		<div class="flex items-start justify-start space-x-6">
-			{#if document.cover}
-				<img
-					class="flex-shrink-0 w-full max-w-[150px] h-auto rounded-lg"
-					src={AppwriteService.getThumbnail(document.cover, 1000, 1000).toString()}
-					alt="Article cover"
-				/>
-			{/if}
+			<img
+				class="flex-shrink-0 w-full max-w-[150px] h-auto rounded-lg"
+				src={AppwriteService.getThumbnail(document.coverId, 1000, 1000).toString()}
+				alt="Article cover"
+			/>
 
 			<div class="w-full">
 				<div class="flex items-center justify-start space-x-2 mb-1">
@@ -84,7 +85,11 @@
 					</p>
 				</div>
 
-				<h3 class="font-poppins text-lg font-medium text-neutral-200 mb-2">{document.title}</h3>
+				<div class="mb-2">
+					<h3 class="font-poppins line-clamp-1 text-lg font-medium text-neutral-200 ">
+						{document.title}
+					</h3>
+				</div>
 
 				<div class="flex items-center justify-start space-x-2">
 					<img
@@ -95,27 +100,28 @@
 					<p class="text-neutral-190 font-normal text-sm">{profile?.name}</p>
 				</div>
 
-				<p class="line-clamp-1 pt-6 font-normal text-sm text-[#827F7F]">
-					{markdownToText(document.text)}
-				</p>
+				<div class="pt-6">
+					<p class="line-clamp-1  font-normal text-sm text-[#827F7F]">
+						{markdownToText(document.text)}
+					</p>
+				</div>
 			</div>
 		</div>
 	{:else if size === 'admin'}
 		<div class="flex items-start justify-start space-x-6">
-			{#if document.cover}
-				<img
-					class="flex-shrink-0 w-full max-w-[150px] h-auto rounded-lg"
-					src={AppwriteService.getThumbnail(document.cover, 1000, 600).toString()}
-					alt="Article cover"
-				/>
-			{/if}
+			<img
+				class="flex-shrink-0 w-full max-w-[150px] h-auto rounded-lg"
+				src={AppwriteService.getThumbnail(document.coverId, 1000, 600).toString()}
+				alt="Article cover"
+			/>
 
 			<div class="w-full flex items-start justify-start space-x-6">
 				<div class="w-full">
-					<h3 class="line-clamp-2 font-poppins text-lg font-medium text-neutral-200 mb-2">
-						{document.title}
-					</h3>
-
+					<div class="mb-2">
+						<h3 class="line-clamp-2 font-poppins text-lg font-medium text-neutral-200 ">
+							{document.title}
+						</h3>
+					</div>
 					<div class="flex items-center justify-start space-x-2 mb-1">
 						<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">
 							posted {getVerboseDate(document.createdAt)}
@@ -124,7 +130,8 @@
 				</div>
 				<div class="flex-shrink-0">
 					<div class="flex items-center justify-start space-x-2">
-						<a href={`/posts/${document.$id}/edit`}><img src="/icons/edit.svg" alt="Edit icon" /></a
+						<a href={`/writer/posts/${document.$id}/edit`}
+							><img src="/icons/edit.svg" alt="Edit icon" /></a
 						>
 						<div class="w-[1px] h-4 bg-neutral-10" />
 						<button on:click={deletePost(document)}
@@ -136,15 +143,13 @@
 		</div>
 	{:else if size === 'lg'}
 		<div class="grid grid-cols-12 gap-6">
-			{#if document.cover}
-				<div class="col-span-6 h-full w-full rounded-2xl overflow-hidden">
-					<img
-						class="w-full h-full object-cover object-center"
-						src={AppwriteService.getThumbnail(document.cover, 1000, 550).toString()}
-						alt="Article cover"
-					/>
-				</div>
-			{/if}
+			<div class="col-span-6 h-full w-full rounded-2xl overflow-hidden">
+				<img
+					class="w-full h-full object-cover object-center"
+					src={AppwriteService.getThumbnail(document.coverId, 1000, 550).toString()}
+					alt="Article cover"
+				/>
+			</div>
 
 			<div class="col-span-6">
 				<div class="flex items-center justify-start space-x-2 mb-1">
@@ -157,7 +162,11 @@
 					</p>
 				</div>
 
-				<h3 class="font-poppins text-lg font-medium text-neutral-200 mb-2">{document.title}</h3>
+				<div class="mb-2">
+					<h3 class="font-poppins line-clamp-1 text-lg font-medium text-neutral-200">
+						{document.title}
+					</h3>
+				</div>
 
 				<div class="flex items-center justify-start space-x-2">
 					<img
@@ -168,9 +177,11 @@
 					<p class="text-neutral-190 font-normal text-sm">{profile?.name}</p>
 				</div>
 
-				<p class="line-clamp-3 py-6 font-normal text-base text-[#827F7F]">
-					{markdownToText(document.text)}
-				</p>
+				<div class="py-6">
+					<p class="line-clamp-3 font-normal text-base text-[#827F7F]">
+						{markdownToText(document.text)}
+					</p>
+				</div>
 
 				<a
 					href={`/posts/${document.$id}`}

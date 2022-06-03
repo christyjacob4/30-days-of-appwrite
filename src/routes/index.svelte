@@ -39,7 +39,9 @@
 </script>
 
 <div class="flex flex-col space-y-10">
-	<Card size="lg" {profiles} document={promoted} index={0} />
+	{#if promoted}
+		<Card size="lg" {profiles} document={promoted} index={0} />
+	{/if}
 
 	<section class="flex flex-col space-y-6">
 		<h2 class="uppercase font-semibold text-base tracking-widest text-generic-100">popular</h2>
@@ -50,6 +52,11 @@
 					<Card size="sm" {profiles} {document} {index} />
 				</div>
 			{/each}
+			{#if !featured || featured.length <= 0}
+				<p class="col-span-12 text-neutral-50 font-normal text-base text-left w-full">
+					There are no featured posts yet.
+				</p>
+			{/if}
 		</div>
 	</section>
 
@@ -62,6 +69,11 @@
 					<Card size="md" {profiles} {document} {index} />
 				</div>
 			{/each}
+			{#if !featured || featured.length <= 0}
+				<p class="col-span-12 text-neutral-50 font-normal text-base text-left w-full">
+					There are no recent posts yet.
+				</p>
+			{/if}
 		</div>
 	</section>
 </div>

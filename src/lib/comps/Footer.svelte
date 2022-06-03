@@ -8,7 +8,7 @@
 
 		<nav class="flex space-x-8">
 			<a href="/" class="hover:text-neutral-200 text-neutral-150 font-normal text-sm underline"
-				>30 Days of Appwrite</a
+				>{__APP_NAME__}</a
 			>
 			<div class="w-[1px] h-4 bg-neutral-10" />
 

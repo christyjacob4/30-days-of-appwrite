@@ -68,15 +68,40 @@
 
 <fieldset class="flex flex-col space-y-1">
 	<label class="text-neutral-150 text-base font-normal" for={id}>{title}</label>
-	<input
-		on:change={onChange}
-		on:input={onInput}
-		class={`hover:border-neutral-30 rounded-md bg-generic-0 border border-neutral-5 px-4 py-3 text-neutral-120 placeholder-neutral-100 font-normal text-base outline-secondary-100 focus:ring-secondary-100 focus:ring focus:ring-opacity-25 ring-opacity-25 ${errorClasses}`}
-		{id}
-		{required}
-		{type}
-		{placeholder}
-	/>
+	{#if type === 'password'}
+		<input
+			on:change={onChange}
+			on:input={onInput}
+			bind:value
+			class={`hover:border-neutral-30 rounded-md bg-generic-0 border border-neutral-5 px-4 py-3 text-neutral-120 placeholder-neutral-100 font-normal text-base outline-secondary-100 focus:ring-secondary-100 focus:ring focus:ring-opacity-25 ring-opacity-25 ${errorClasses}`}
+			{id}
+			{required}
+			type="password"
+			{placeholder}
+		/>
+	{:else if type === 'email'}
+		<input
+			on:change={onChange}
+			on:input={onInput}
+			bind:value
+			class={`hover:border-neutral-30 rounded-md bg-generic-0 border border-neutral-5 px-4 py-3 text-neutral-120 placeholder-neutral-100 font-normal text-base outline-secondary-100 focus:ring-secondary-100 focus:ring focus:ring-opacity-25 ring-opacity-25 ${errorClasses}`}
+			{id}
+			{required}
+			type="email"
+			{placeholder}
+		/>
+	{:else}
+		<input
+			on:change={onChange}
+			on:input={onInput}
+			bind:value
+			class={`hover:border-neutral-30 rounded-md bg-generic-0 border border-neutral-5 px-4 py-3 text-neutral-120 placeholder-neutral-100 font-normal text-base outline-secondary-100 focus:ring-secondary-100 focus:ring focus:ring-opacity-25 ring-opacity-25 ${errorClasses}`}
+			{id}
+			{required}
+			type="text"
+			{placeholder}
+		/>
+	{/if}
 
 	{#if touched && hadProblem}
 		<div class="pt-1 flex items-center justify-start space-x-1">

@@ -6,9 +6,13 @@
 	export let content: string;
 	export let readTime: number;
 	export let title: string;
-	export let file: File;
 
-	$: cover = file ? URL.createObjectURL(file) : undefined;
+	export let file: File | undefined = undefined;
+	export let fileId: string | undefined = undefined;
+
+	$: cover = file
+		? URL.createObjectURL(file)
+		: AppwriteService.getThumbnail(fileId || '', 1000, 500).toString();
 </script>
 
 <div class="bg-generic-0 shadow-small rounded-2xl p-8">
@@ -38,9 +42,9 @@
 			<p class="text-neutral-190 text-base font-normal">{profile?.name}</p>
 		</div>
 
-		<p class="line-clamp-1 pt-6 font-normal text-base text-[#827F7F]">
+		<div class="prose pt-6 font-normal text-base text-[#827F7F]">
 			{@html markdownToHTML(content)}
-		</p>
+		</div>
 	</section>
 
 	<section class="mt-10 flex items-center justify-start space-x-6">

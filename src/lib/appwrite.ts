@@ -4,9 +4,9 @@ import { authStore } from './stores/auth';
 import { get } from 'svelte/store';
 import { profileStore } from './stores/profile';
 
-const profilesCollection = "60851dd82cf5c";
-const postsCollection = "60851e144f170";
-const bucketId = "default";
+const profilesCollection = "profiles";
+const postsCollection = "posts";
+const bucketId = "postThumbnails";
 
 export type Post = {
     title: string,
@@ -14,12 +14,12 @@ export type Post = {
     published: boolean,
     createdAt: number,
     profileId: string,
-    cover?: string,
-    readingTime?: string,
+    coverId: string,
+    readingTime: string,
 } & Models.Document;
 
 export type Profile = {
-    user: string,
+    userId: string,
     name: string,
 } & Models.Document;
 
@@ -47,6 +47,14 @@ export const AppwriteService = {
         );
     },
 
+    updatePost: async (postId: string, data: any) => {
+        return await sdk.database.updateDocument(
+            postsCollection,
+            postId,
+            data
+        );
+    },
+
     verifyProfile: async (userId: string, secret: string) => {
         return await sdk.account.updateVerification(userId, secret);
     },
@@ -56,7 +64,7 @@ export const AppwriteService = {
             profilesCollection,
             "unique()",
             {
-                user: id,
+                userId: id,
                 name: name,
             },
             ["role:all"],
@@ -74,7 +82,7 @@ export const AppwriteService = {
 
             const { documents: profiles } = await sdk.database.listDocuments<Profile>(
                 profilesCollection,
-                [Query.equal("user", id)],
+                [Query.equal("userId", id)],
                 1
             );
 
@@ -111,6 +119,10 @@ export const AppwriteService = {
         }
     },
 
+    getPostById: async (documentId: string) => {
+        return await sdk.database.getDocument<Post>(postsCollection, documentId);
+    },
+
     getAccount: async () => {
         try {
             const account = await sdk.account.get();
@@ -125,7 +137,7 @@ export const AppwriteService = {
     loginWithGoogle: async () => {
         sdk.account.createOAuth2Session(
             "google",
-            window.location.origin + '/profile',
+            window.location.origin + '/writer/profile',
             window.location.origin + '/login'
         );
     },
@@ -193,9 +205,13 @@ export const AppwriteService = {
         );
     },
 
+    fetchTeams: async (page: number) => {
+        return await sdk.teams.list(undefined, 25, (page - 1) * 25, undefined, undefined, "DESC");
+    },
+
     deletePost: async (document: Post) => {
-        if (document.cover) {
-            await sdk.storage.deleteFile(bucketId, document.cover);
+        if (document.coverId) {
+            await sdk.storage.deleteFile(bucketId, document.coverId);
         }
 
         await sdk.database.deleteDocument(postsCollection, document.$id);
@@ -203,5 +219,13 @@ export const AppwriteService = {
 
     uploadFile: async (file: File) => {
         return await sdk.storage.createFile(bucketId, 'unique()', file, ['role:all']); // Write permissions to user given automatically
+    },
+
+    deleteFile: async (fileId: string) => {
+        await sdk.storage.deleteFile(bucketId, fileId);
+    },
+
+    createTeam: async (name: string) => {
+        return await sdk.teams.create("unique()", name);
     }
 }

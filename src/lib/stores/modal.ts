@@ -9,7 +9,7 @@ function createStore() {
     return {
         subscribe: typeStore.subscribe,
         close: () => typeStore.set(undefined),
-        open: (type: string, data: any | undefined) => typeStore.set({ type, data })
+        open: (type: string, data?: any | undefined) => typeStore.set({ type, data })
     };
 }
 

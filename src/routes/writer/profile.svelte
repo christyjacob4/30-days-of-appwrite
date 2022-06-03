@@ -12,34 +12,19 @@
 	import { modalStore } from '$lib/stores/modal';
 	import { page } from '$app/stores';
 	import { get } from 'svelte/store';
+	import PostDelete from '$lib/comps/PostDelete.svelte';
 
 	export let draftPosts: Post[] | undefined;
 	export let publishedPosts: Post[] | undefined;
 
 	let profiles: Profile[] = [];
 
-	let deleteLoading = false;
-	function deletePost(document: Post) {
-		return async () => {
-			deleteLoading = true;
-			try {
-				await AppwriteService.deletePost(document);
-				alertStore.success('Post deleted successfully.');
-				modalStore.close();
-				loadPage();
-			} catch (err: any) {
-				alertStore.warning(err.message);
-			} finally {
-				deleteLoading = false;
-			}
-		};
-	}
-
 	const loadPage = async () => {
 		try {
 			draftPosts = undefined;
 			publishedPosts = undefined;
 
+			// TODO: Pagination
 			const publishedResponse = await AppwriteService.fetchUserPosts(1, true);
 			const draftsResponse = await AppwriteService.fetchUserPosts(1, false);
 
@@ -81,10 +66,7 @@
 				const secret = $page.url.searchParams.get('secret');
 				if (userId && secret) {
 					confirmEmail(userId, secret);
-
-					// TODO: Delete does not work
-					$page.url.searchParams.delete('userId');
-					$page.url.searchParams.delete('secret');
+					window.history.pushState({}, document.title, window.location.pathname);
 				}
 			})()
 		]);
@@ -160,9 +142,9 @@
 	</div>
 
 	<div class="flex flex-col space-y-8">
-		<h2 class="font-poppins text-2xl font-medium text-generic-100">My posts</h2>
+		<h2 class="font-poppins text-2xl font-medium text-generic-100">My Posts</h2>
 
-		{#if draftPosts === undefined}
+		{#if draftPosts === undefined || publishedPosts === undefined}
 			<Loading />
 		{:else if draftPosts.length <= 0 && publishedPosts.length <= 0}
 			<div class="shadow-small p-8 bg-generic-0 rounded-2xl">
@@ -192,25 +174,4 @@
 	</div>
 </div>
 
-<Modal title="Delete post" type="delete-post">
-	<p class="text-neutral-100 mb-6">
-		Are you sure you want to delete <span class="font-semibold">{$modalStore?.data?.title}</span>?
-	</p>
-
-	<div class="flex items-center justify-center space-x-6">
-		<button
-			on:click={modalStore.close}
-			class="w-full py-4 px-6 text-neutral-100 font-semibold bg-generic-0 border border-generic-0 rounded-md"
-			>Cancel</button
-		>
-		<button
-			on:click={deletePost($modalStore?.data)}
-			class="flex items-center justify-center space-x-2  w-full py-4 px-6 text-neutral-100 font-semibold bg-neutral-0 border border-neutral-10 rounded-md"
-		>
-			{#if deleteLoading}
-				<Loading />
-			{/if}
-			<span>Delete</span>
-		</button>
-	</div>
-</Modal>
+<PostDelete on:delete={loadPage} />

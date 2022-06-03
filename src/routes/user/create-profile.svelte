@@ -24,6 +24,7 @@
 
 		try {
 			await AppwriteService.createProfile($authStore.$id, nickname);
+			await AppwriteService.getSelfProfile();
 			alertStore.close();
 			goto('/writer/profile');
 		} catch (err: any) {
