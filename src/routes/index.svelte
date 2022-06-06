@@ -16,7 +16,7 @@
 				promoted,
 				featured,
 				latest,
-				profiles
+				profiles: profiles.documents
 			}
 		};
 	}
