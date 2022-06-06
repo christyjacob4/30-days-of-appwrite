@@ -178,6 +178,14 @@ export const AppwriteService = {
         return account;
     },
 
+    listTeamMembers: async (teamId: string, page: number) => {
+        return await sdk.teams.getMemberships(teamId, undefined, 25, (page - 1) * 25);
+    },
+
+    deleteTeamMembership: async (teamId: string, membershipId: string) => {
+        return await sdk.teams.deleteMembership(teamId, membershipId);
+    },
+
     logout: async () => {
         await sdk.account.deleteSession("current");
 

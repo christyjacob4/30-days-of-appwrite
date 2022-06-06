@@ -90,16 +90,16 @@
 			return;
 		}
 
-		currentPage++;
 		isLoadingPage = true;
 
 		try {
-			const newTeams = (await AppwriteService.fetchTeams(currentPage)).teams;
+			const newTeams = (await AppwriteService.fetchTeams(currentPage + 1)).teams;
 			teams.push(...newTeams);
 			teams = teams;
+
+			currentPage++;
 		} catch (err: any) {
 			isEnd = true;
-			currentPage--;
 		} finally {
 			isLoadingPage = false;
 		}

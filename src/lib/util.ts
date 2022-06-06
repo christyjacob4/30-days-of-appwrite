@@ -1,6 +1,6 @@
 import { marked } from "marked";
 
-export function getVerboseDate(timestamp: number) {
+export function getVerboseDate(timestamp: number, long = false) {
     const monthNames = [
         'Jan',
         'Feb',
@@ -17,6 +17,10 @@ export function getVerboseDate(timestamp: number) {
     ];
 
     const date = new Date(timestamp);
+
+    if (long) {
+        return date.toString();
+    }
 
     return `${monthNames[date.getMonth()]} ${date.getDate()}`;
 }

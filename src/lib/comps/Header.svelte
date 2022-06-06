@@ -20,9 +20,8 @@
 	async function onLogout() {
 		try {
 			await AppwriteService.logout();
-			alertStore.close();
-			goto('/auth/login');
 			alertStore.success('Successfully logged out.');
+			goto('/auth/login');
 		} catch (err: any) {
 			alertStore.warning(err.message);
 		}

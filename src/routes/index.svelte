@@ -72,16 +72,16 @@
 			return;
 		}
 
-		currentPage++;
 		isLoadingPage = true;
 
 		try {
-			const { documents: posts } = await AppwriteService.fetchPosts(currentPage, true);
+			const { documents: posts } = await AppwriteService.fetchPosts(currentPage + 1, true);
 			latest.push(...posts);
 			latest = latest;
+
+			currentPage++;
 		} catch (err: any) {
 			isEnd = true;
-			currentPage--;
 		} finally {
 			isLoadingPage = false;
 		}
