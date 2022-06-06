@@ -105,7 +105,9 @@
 
 <div class="w-full max-w-[770px] mx-auto flex flex-col space-y-10">
 	{#if team}
-		<div class="flex items-center justify-between">
+		<div
+			class="flex flex-col items-start space-y-4 md:space-y-0 md:space-x-4 md:items-center justify-between"
+		>
 			<div class="flex items-center justify-start space-x-2 w-full">
 				<h1 class="line-clamp-1 text-center font-poppins text-3xl font-semibold text-generic-100">
 					{team.name}
@@ -135,8 +137,10 @@
 
 			{#if members}
 				{#each members as member}
-					<div class="bg-white rounded-2xl shadow-sm p-8 flex flex-col space-y-6">
-						<div class="flex items-center justify-between space-x-3">
+					<div class="bg-generic-0 rounded-2xl shadow-sm p-8 flex flex-col space-y-6">
+						<div
+							class="flex flex-col md:flex-row space-y-3 md:space-y-0 items-start md:items-center justify-between md:space-x-3"
+						>
 							<div class="flex items-center justify-start space-x-2">
 								<img
 									class="w-10 rounded-full"

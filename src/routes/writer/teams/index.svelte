@@ -109,7 +109,9 @@
 <svelte:window bind:scrollY />
 
 <div class="w-full max-w-[770px] mx-auto flex flex-col space-y-10">
-	<div class="flex items-center justify-between">
+	<div
+		class="flex flex-col items-start space-y-4 md:space-y-0 md:space-x-4 md:items-center justify-between"
+	>
 		<div class="flex items-center justify-start space-x-2">
 			<img
 				class="w-10 rounded-full"

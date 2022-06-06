@@ -157,7 +157,9 @@
 <svelte:window bind:scrollY />
 
 <div class="mx-auto w-full max-w-[770px]">
-	<section class="flex items-center justify-between space-x-10">
+	<section
+		class="flex flex-col md:flex-row space-y-6 md:space-y-0 items-center justify-between md:space-x-6"
+	>
 		<a href="/" class="flex items-center space-x-1">
 			<img src="/icons/back.svg" alt="Back arrow" />
 			<span class="underline text-sm text-generic-100">Back</span>
@@ -195,7 +197,10 @@
 	<div class="mt-10 flex flex-col space-y-6">
 		<h3 class="uppercase text-generic-100 tracking-widest font-semibold">Comments</h3>
 
-		<form on:submit|preventDefault={onSubmitComment} class="bg-white shadow-small rounded-2xl p-8">
+		<form
+			on:submit|preventDefault={onSubmitComment}
+			class="bg-generic-0 shadow-small rounded-2xl p-8"
+		>
 			<h4 class="text-xl font-medium text-neutral-150 font-poppins mb-4">Leave a comment</h4>
 
 			<div class="mb-6">
@@ -218,7 +223,7 @@
 		{#if comments && comments.length > 0}
 			<section class="flex flex-col space-y-6">
 				{#each comments as comment (comment.$id)}
-					<div class="bg-white rounded-2xl p-8 shadow-small">
+					<div class="bg-generic-0 rounded-2xl p-8 shadow-small">
 						<div>
 							<div class="flex items-center justify-start space-x-2 mb-1">
 								<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">
@@ -245,7 +250,7 @@
 				{/each}
 			</section>
 		{:else}
-			<div class="bg-white rounded-2xl p-8 shadow-small">
+			<div class="bg-generic-0 rounded-2xl p-8 shadow-small">
 				<p class="text-neutral-100 text-base font-normal">There are no comments yet.</p>
 			</div>
 		{/if}

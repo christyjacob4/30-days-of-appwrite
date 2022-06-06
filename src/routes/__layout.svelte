@@ -53,7 +53,7 @@
 
 <div class="fixed top-8 left-0 w-full pointer-events-none z-50">
 	{#if $alertStore}
-		<div transition:fade class="w-full max-w-[770px] mx-auto">
+		<div transition:fade class="w-full px-3 max-w-[770px] mx-auto">
 			<div class="w-full pointer-events-auto">
 				<Alert message={$alertStore.msg} type={$alertStore.type} />
 			</div>
@@ -67,7 +67,7 @@
 	style="border: 1px solid rgba(232, 233, 240, 0.49);"
 	class={`py-8 ${isWithoutFooter($page.url.pathname) ? '!border-b-0' : ''}`}
 >
-	<div class="max-w-[870px] mx-auto">
+	<div class="max-w-[870px] px-3 mx-auto">
 		<slot />
 	</div>
 </div>

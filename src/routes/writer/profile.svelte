@@ -89,7 +89,9 @@
 </script>
 
 <div class="w-full max-w-[770px] mx-auto flex flex-col space-y-10">
-	<div class="flex items-center justify-between">
+	<div
+		class="flex flex-col items-start space-y-4 md:space-y-0 md:space-x-4 md:items-center justify-between"
+	>
 		<div class="flex items-center justify-start space-x-2">
 			<img
 				class="w-10 rounded-full"
@@ -107,13 +109,13 @@
 	</div>
 
 	<div class="grid grid-cols-12 shadow-small p-8 bg-generic-0 rounded-2xl gap-6">
-		<div class=" col-span-6 flex flex-col space-y-1">
+		<div class="col-span-12 md:col-span-6 flex flex-col space-y-1">
 			<b class="text-base font-bold text-neutral-200">Name</b>
 			<p class="font-normal text-base text-neutral-100">{$authStore?.name}</p>
 		</div>
-		<div class=" col-span-6 flex flex-col space-y-1">
+		<div class="col-span-12 md:col-span-6 flex flex-col space-y-1">
 			<b class="text-base font-bold text-neutral-200">Email</b>
-			<div class="flex items-center space-x-4">
+			<div class="flex flex-col items-start sm:flex-row space-y-4 sm:items-center sm:space-x-4">
 				<p class="font-normal text-base text-neutral-100 flex-shrink line-clamp-1">
 					{$authStore?.email}
 				</p>

@@ -13,7 +13,7 @@
 		on:click={modalStore.close}
 	>
 		<section
-			class="w-full max-w-[442px] mx-auto bg-generic-0 shadow-large rounded-2xl p-8"
+			class="h-[100vh] sm:h-[fit-content] w-full max-w-[442px] mx-auto bg-generic-0 shadow-large rounded-2xl p-8"
 			on:click|stopPropagation
 		>
 			<header class="flex items-center justify-between">

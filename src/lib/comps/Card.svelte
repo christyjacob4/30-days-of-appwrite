@@ -66,9 +66,9 @@
 			</div>
 		</div>
 	{:else if size === 'md'}
-		<div class="flex items-start justify-start space-x-6">
+		<div class="flex flex-col space-y-6 md:flex-row items-start justify-start md:space-x-6">
 			<img
-				class="flex-shrink-0 w-full max-w-[150px] h-auto rounded-lg"
+				class="flex-shrink-0 w-full md:max-w-[150px] h-auto rounded-lg"
 				src={AppwriteService.getThumbnail(document.coverId, 1000, 1000).toString()}
 				alt="Article cover"
 			/>
@@ -107,9 +107,9 @@
 			</div>
 		</div>
 	{:else if size === 'admin'}
-		<div class="flex items-start justify-start space-x-6">
+		<div class="flex flex-col space-y-6 md:flex-row items-start justify-start md:space-x-6">
 			<img
-				class="flex-shrink-0 w-full max-w-[150px] h-auto rounded-lg"
+				class="flex-shrink-0 w-full md:max-w-[150px] h-auto rounded-lg"
 				src={AppwriteService.getThumbnail(document.coverId, 1000, 600).toString()}
 				alt="Article cover"
 			/>
@@ -142,7 +142,7 @@
 		</div>
 	{:else if size === 'lg'}
 		<div class="grid grid-cols-12 gap-6">
-			<div class="col-span-6 h-full w-full rounded-2xl overflow-hidden">
+			<div class="col-span-12 md:col-span-6 h-full w-full rounded-2xl overflow-hidden">
 				<img
 					class="w-full h-full object-cover object-center"
 					src={AppwriteService.getThumbnail(document.coverId, 1000, 550).toString()}
@@ -150,7 +150,7 @@
 				/>
 			</div>
 
-			<div class="col-span-6">
+			<div class="col-span-12 md:col-span-6">
 				<div class="flex items-center justify-start space-x-2 mb-1">
 					<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">
 						{getVerboseDate(document.createdAt)}

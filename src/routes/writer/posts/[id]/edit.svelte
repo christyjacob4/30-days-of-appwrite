@@ -23,7 +23,7 @@
 {#if post === undefined}
 	<Loading />
 {:else if post === null}
-	<p class=" text-neutral-50 font-normal text-base text-left w-full">
+	<p class="text-neutral-50 font-normal text-base text-left w-full">
 		Error occured when loading the post.
 	</p>
 {:else}

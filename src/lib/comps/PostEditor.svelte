@@ -114,7 +114,9 @@
 
 <form class="mx-auto w-full max-w-[770px]" on:submit|preventDefault={onPublish('publish')}>
 	<div class={preview ? 'hidden' : 'block'}>
-		<section class="flex items-center justify-between space-x-10">
+		<section
+			class="flex flex-col md:flex-row space-y-6 md:space-y-0 items-center justify-between md:space-x-6"
+		>
 			<a href="/writer/profile" class="flex items-center space-x-1">
 				<img src="/icons/back.svg" alt="Back arrow" />
 				<span class="underline text-sm text-generic-100">Back</span>
@@ -148,7 +150,7 @@
 
 			<div class="flex flex-col space-y-6">
 				<h2 class="uppercase text-generic-100 tracking-widest font-semibold">Cover image</h2>
-				<div class="bg-white rounded-2xl shadow-small p-8 ">
+				<div class="bg-generic-0 rounded-2xl shadow-small p-8 ">
 					{#if post || (files && files[0])}
 						<img
 							class="rounded-2xl mb-6"
@@ -169,7 +171,7 @@
 
 			<div class="flex flex-col space-y-6">
 				<h2 class="uppercase text-generic-100 tracking-widest font-semibold">Title</h2>
-				<div class="bg-white rounded-2xl shadow-small p-8">
+				<div class="bg-generic-0 rounded-2xl shadow-small p-8">
 					<Input
 						bind:value={title}
 						validator={InputValidators.title}
@@ -184,7 +186,7 @@
 
 			<div class="flex flex-col space-y-6">
 				<h2 class="uppercase text-generic-100 tracking-widest font-semibold">Content</h2>
-				<div class="bg-white rounded-2xl shadow-small p-8">
+				<div class="bg-generic-0 rounded-2xl shadow-small p-8">
 					<textarea id="markdown-input" />
 				</div>
 			</div>
@@ -193,7 +195,9 @@
 		</div>
 	</div>
 	<div class={!preview ? 'hidden' : 'block'}>
-		<section class="flex items-center justify-between space-x-10">
+		<section
+			class="flex flex-col md:flex-row space-y-6 md:space-y-0 items-center justify-between md:space-x-6"
+		>
 			<button type="button" on:click={togglePreview} class="flex items-center space-x-1">
 				<img src="/icons/back.svg" alt="Back arrow" />
 				<span class="underline text-sm text-generic-100">Continue editing</span>

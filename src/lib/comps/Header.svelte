@@ -37,7 +37,9 @@
 </script>
 
 <header class="bg-generic-0">
-	<div class="max-w-[870px] mx-auto py-8 flex justify-between items-center">
+	<div
+		class="max-w-[870px] px-3 mx-auto py-8 flex flex-col space-y-4 sm:flex-row sm:space-y-0 justify-between items-center"
+	>
 		<a href="/">
 			<h1 class="uppercase text-primary-120 font-semibold tracking-widest">{__APP_NAME__}</h1>
 		</a>
