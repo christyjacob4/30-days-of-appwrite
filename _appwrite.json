@@ -20,6 +20,33 @@
                     "default": null
                 },
                 {
+                    "key": "text",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 65535,
+                    "default": null
+                },
+                {
+                    "key": "profileId",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "readingTime",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
                     "key": "published",
                     "type": "boolean",
                     "status": "available",
@@ -37,40 +64,13 @@
                     "default": null
                 },
                 {
-                    "key": "profileId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "text",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 65535,
-                    "default": null
-                },
-                {
-                    "key": "readingTime",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
                     "key": "createdAt",
-                    "type": "double",
+                    "type": "integer",
                     "status": "available",
                     "required": true,
                     "array": false,
-                    "min": -1.7976931348623157e+308,
-                    "max": 1.7976931348623157e+308,
+                    "min": -9223372036854776000,
+                    "max": 9223372036854776000,
                     "default": null
                 }
             ],
@@ -166,25 +166,6 @@
             "permission": "collection",
             "attributes": [
                 {
-                    "key": "postId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "createdAt",
-                    "type": "double",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "min": -1.7976931348623157e+308,
-                    "max": 1.7976931348623157e+308,
-                    "default": null
-                },
-                {
                     "key": "text",
                     "type": "string",
                     "status": "available",
@@ -194,12 +175,31 @@
                     "default": null
                 },
                 {
+                    "key": "postId",
+                    "type": "string",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
                     "key": "profileId",
                     "type": "string",
                     "status": "available",
                     "required": true,
                     "array": false,
                     "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "createdAt",
+                    "type": "integer",
+                    "status": "available",
+                    "required": true,
+                    "array": false,
+                    "min": -9223372036854776000,
+                    "max": 9223372036854776000,
                     "default": null
                 }
             ],

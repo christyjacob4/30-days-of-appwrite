@@ -109,7 +109,7 @@
 					<Card size="md" {profiles} {document} {index} />
 				</div>
 			{/each}
-			{#if !featured || featured.length <= 0}
+			{#if !latest || latest.length <= 0}
 				<p class="col-span-12 text-neutral-50 font-normal text-base text-left w-full">
 					There are no recent posts yet.
 				</p>
