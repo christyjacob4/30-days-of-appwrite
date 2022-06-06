@@ -61,6 +61,8 @@
 	{/if}
 </div>
 
+<!-- TODO: Overall responsivity -->
+
 <Header />
 
 <div

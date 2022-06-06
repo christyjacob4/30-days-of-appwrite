@@ -30,10 +30,26 @@
 
 	let memberName = '';
 	let memberEmail = '';
-	let memberRole = '';
+	let memberRole = 'member';
 	let processingMemberCreate = false;
 
-	function onAddMember() {}
+	async function onAddMember() {
+		if (processingMemberCreate || !team) {
+			return;
+		}
+
+		processingMemberCreate = true;
+
+		try {
+			await AppwriteService.inviteTeamMember(team.$id, memberEmail, [memberRole], memberName);
+			alertStore.success('Team invitation created successfully.');
+			modalStore.close();
+		} catch (err: any) {
+			alertStore.warning(err.message ? err.message : err);
+		} finally {
+			processingMemberCreate = false;
+		}
+	}
 </script>
 
 <div class="w-full max-w-[770px] mx-auto flex flex-col space-y-10">
@@ -66,6 +82,8 @@
 		<div class="flex flex-col space-y-8">
 			<h3 class="uppercase text-generic-100 tracking-widest font-semibold">Members</h3>
 		</div>
+
+		<!-- TODO: Member list, deleting members -->
 	{:else}
 		<Loading />
 	{/if}
@@ -93,15 +111,20 @@
 			type="text"
 			title="Email"
 		/>
-		<Input
-			bind:value={memberRole}
-			validator={InputValidators.role}
-			required={true}
-			id="role"
-			placeholder="Enter role"
-			type="text"
-			title="Role"
-		/>
+
+		<fieldset class="flex flex-col space-y-1">
+			<label class="text-neutral-150 text-base font-normal" for="role">Enter role</label>
+
+			<select
+				class={`hover:border-neutral-30 rounded-md bg-generic-0 border border-neutral-5 px-4 py-3 text-neutral-120 placeholder-neutral-100 font-normal text-base outline-secondary-100 focus:ring-secondary-100 focus:ring focus:ring-opacity-25 ring-opacity-25`}
+				id="role"
+				bind:value={memberRole}
+				required={true}
+			>
+				<option value="member" selected={true}>Member</option>
+				<option value="owner">Owner</option>
+			</select>
+		</fieldset>
 
 		<div class="pt-4">
 			<Button loading={processingMemberCreate} type="submit" title="Add Member" color="primary" />

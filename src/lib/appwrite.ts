@@ -252,6 +252,14 @@ export const AppwriteService = {
         return await sdk.teams.create("unique()", name);
     },
 
+    inviteTeamMember: async (teamId: string, email: string, roles: string[], name: string) => {
+        return await sdk.teams.createMembership(teamId, email, roles, window.location.origin, name);
+    },
+
+    acceptTeamInvitation: async (teamId: string, membershipId: string, userId: string, secret: string) => {
+        return await sdk.teams.updateMembershipStatus(teamId, membershipId, userId, secret);
+    },
+
     deleteTeam: async (teamId: string) => {
         return await sdk.teams.delete(teamId);
     },

@@ -29,6 +29,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { modalStore } from '$lib/stores/modal';
+	import { alertStore } from '$lib/stores/alert';
 
 	export let promoted: Post;
 	export let featured: Post[];
@@ -48,9 +49,20 @@
 
 	onMount(async () => {
 		let userId = $page.url.searchParams.get('userId');
+		let membershipId = $page.url.searchParams.get('membershipId');
+		let teamId = $page.url.searchParams.get('teamId');
 		let secret = $page.url.searchParams.get('secret');
 
-		if (userId && secret) {
+		if (userId && secret && teamId && membershipId) {
+			try {
+				await AppwriteService.acceptTeamInvitation(teamId, membershipId, userId, secret);
+				alertStore.success('You have been added to a team.');
+				await AppwriteService.getAccount(); // Forcefully update store
+				window.history.pushState({}, document.title, window.location.pathname);
+			} catch (err: any) {
+				alertStore.warning(err.message ? err.message : err);
+			}
+		} else if (userId && secret) {
 			modalStore.open('forgot-password-finish');
 		}
 	});
