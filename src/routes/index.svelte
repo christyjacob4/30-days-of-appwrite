@@ -2,7 +2,6 @@
 	import { AppwriteService } from '$lib/appwrite';
 
 	export async function load() {
-		// TODO: Button to load more
 		const { documents: posts } = await AppwriteService.fetchPosts(1, true);
 
 		const promoted = posts[0];
@@ -10,11 +9,7 @@
 		const latest = posts.slice(5);
 
 		const profileIds = [...new Set(posts.map((p) => p.profileId))];
-		const profiles = await Promise.all(
-			profileIds.map(async (id) => {
-				return AppwriteService.getProfileById(id);
-			})
-		);
+		const profiles = await AppwriteService.getProfilesByIds(profileIds);
 
 		return {
 			props: {
@@ -30,8 +25,10 @@
 <script lang="ts">
 	import type { Post, Profile } from '$lib/appwrite';
 	import Card from '$lib/comps/Card.svelte';
-	import { Query } from 'appwrite';
 	import { browser } from '$app/env';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import { modalStore } from '$lib/stores/modal';
 
 	export let promoted: Post;
 	export let featured: Post[];
@@ -40,7 +37,7 @@
 
 	let scrollY = 0;
 	let isLoadingPage = false;
-	let currentPage = 2;
+	let currentPage = 1;
 	let isEnd = false;
 
 	$: {
@@ -49,20 +46,30 @@
 		}
 	}
 
+	onMount(async () => {
+		let userId = $page.url.searchParams.get('userId');
+		let secret = $page.url.searchParams.get('secret');
+
+		if (userId && secret) {
+			modalStore.open('forgot-password-finish');
+		}
+	});
+
 	async function loadNextPage() {
-		if (isLoadingPage) {
+		if (isLoadingPage || isEnd) {
 			return;
 		}
 
+		currentPage++;
 		isLoadingPage = true;
 
 		try {
 			const { documents: posts } = await AppwriteService.fetchPosts(currentPage, true);
 			latest.push(...posts);
 			latest = latest;
-			currentPage++;
 		} catch (err: any) {
 			isEnd = true;
+			currentPage--;
 		} finally {
 			isLoadingPage = false;
 		}

@@ -34,6 +34,10 @@
 			alertStore.warning(err.message);
 		}
 	}
+
+	function onFogotPassword() {
+		modalStore.open('forgot-password');
+	}
 </script>
 
 <form on:submit|preventDefault={onLogin} class="flex flex-col space-y-4">
@@ -66,8 +70,9 @@
 		icon="google"
 	/>
 
-	<!-- TODO: Implement -->
-	<button type="button" class="underline text-neutral-150 font-normal text-base text-left"
-		>Forgot password?</button
+	<button
+		on:click={onFogotPassword}
+		type="button"
+		class="underline text-neutral-150 font-normal text-base text-left">Forgot password?</button
 	>
 </form>

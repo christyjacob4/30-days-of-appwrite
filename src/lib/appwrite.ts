@@ -6,6 +6,7 @@ import { profileStore } from './stores/profile';
 
 const profilesCollection = "profiles";
 const postsCollection = "posts";
+const commentsCollection = "comments";
 const bucketId = "postThumbnails";
 
 export type Post = {
@@ -16,6 +17,13 @@ export type Post = {
     profileId: string,
     coverId: string,
     readingTime: string,
+} & Models.Document;
+
+export type Comment = {
+    text: string,
+    createdAt: number,
+    profileId: string,
+    postId: string
 } & Models.Document;
 
 export type Profile = {
@@ -39,7 +47,8 @@ export const AppwriteService = {
     },
 
     createPost: async (data: any) => {
-        return await sdk.database.createDocument(
+        // TODO: Security issue possible
+        return await sdk.database.createDocument<Post>(
             postsCollection,
             "unique()",
             data,
@@ -48,7 +57,7 @@ export const AppwriteService = {
     },
 
     updatePost: async (postId: string, data: any) => {
-        return await sdk.database.updateDocument(
+        return await sdk.database.updateDocument<Post>(
             postsCollection,
             postId,
             data
@@ -60,7 +69,8 @@ export const AppwriteService = {
     },
 
     createProfile: async (id: string, name: string) => {
-        return await sdk.database.createDocument(
+        // TODO: Security issue possible
+        return await sdk.database.createDocument<Profile>(
             profilesCollection,
             "unique()",
             {
@@ -119,6 +129,19 @@ export const AppwriteService = {
         }
     },
 
+    getProfilesByIds: async (ids: string[]) => {
+        try {
+            const profiles = await sdk.database.listDocuments<Profile>(
+                profilesCollection,
+                [Query.equal("$id", ids)]
+            );
+
+            return profiles;
+        } catch (err) {
+            throw err;
+        }
+    },
+
     getPostById: async (documentId: string) => {
         return await sdk.database.getDocument<Post>(postsCollection, documentId);
     },
@@ -138,7 +161,7 @@ export const AppwriteService = {
         sdk.account.createOAuth2Session(
             "google",
             window.location.origin + '/writer/profile',
-            window.location.origin + '/login'
+            window.location.origin + '/auth/login'
         );
     },
 
@@ -239,5 +262,29 @@ export const AppwriteService = {
 
     getTeamById: async (teamId: string) => {
         return await sdk.teams.get(teamId);
+    },
+
+    resetPassword: async (email: string) => {
+        return await sdk.account.createRecovery(email, window.location.origin);
+    },
+
+    resetPasswordFinish: async (userId: string, secret: string, password: string, passwordAgain: string) => {
+        return await sdk.account.updateRecovery(userId, secret, password, passwordAgain);
+    },
+
+    addComment: async (postId: string, profileId: string, text: string) => {
+        // TODO: Security issue possible
+        return await sdk.database.createDocument<Comment>(commentsCollection, "unique()", {
+            postId,
+            profileId,
+            text,
+            createdAt: Date.now() / 1000
+        })
+    },
+
+    getComments: async (postId: string, page: number) => {
+        return await sdk.database.listDocuments<Comment>(commentsCollection, [
+            Query.equal("postId", postId)
+        ], 25, (page - 1) * 25, undefined, undefined, ["createdAt"], ["DESC"]);
     }
 }

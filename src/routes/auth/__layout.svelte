@@ -5,11 +5,11 @@
 	import { profileStore } from '$lib/stores/profile';
 	import { onMount } from 'svelte';
 
-	$: isAllowed = $authStore && !$profileStore;
+	$: isAllowed = !$authStore;
 
 	onMount(() => {
 		if (!isAllowed) {
-			goto('/auth/login');
+			goto('/writer/profile');
 		}
 	});
 </script>

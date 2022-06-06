@@ -76,7 +76,7 @@
 
 	let scrollY = 0;
 	let isLoadingPage = false;
-	let currentPage = 2;
+	let currentPage = 1;
 	let isEnd = false;
 
 	$: {
@@ -86,19 +86,20 @@
 	}
 
 	async function loadNextPage() {
-		if (isLoadingPage || !teams) {
+		if (isLoadingPage || !teams || isEnd) {
 			return;
 		}
 
+		currentPage++;
 		isLoadingPage = true;
 
 		try {
 			const newTeams = (await AppwriteService.fetchTeams(currentPage)).teams;
 			teams.push(...newTeams);
 			teams = teams;
-			currentPage++;
 		} catch (err: any) {
 			isEnd = true;
+			currentPage--;
 		} finally {
 			isLoadingPage = false;
 		}

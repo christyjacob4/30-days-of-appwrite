@@ -21,7 +21,7 @@
 		try {
 			await AppwriteService.logout();
 			alertStore.close();
-			goto('/login');
+			goto('/auth/login');
 			alertStore.success('Successfully logged out.');
 		} catch (err: any) {
 			alertStore.warning(err.message);

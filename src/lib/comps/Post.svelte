@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { browser } from '$app/env';
-
 	import { AppwriteService, type Profile } from '$lib/appwrite';
 	import { getVerboseDate, markdownToHTML } from '$lib/util';
 
 	export let profile: Profile | undefined;
 	export let content: string;
-	export let readTime: number;
+	export let readTime: string;
 	export let title: string;
 
 	export let file: File | undefined = undefined;

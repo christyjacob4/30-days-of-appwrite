@@ -26,6 +26,8 @@
 	import { page } from '$app/stores';
 	import Modal from '$lib/core/Modal.svelte';
 	import { fade } from 'svelte/transition';
+	import ForgotPassword from '$lib/comps/ForgotPassword.svelte';
+	import ForgotPasswordFinish from '$lib/comps/ForgotPasswordFinish.svelte';
 
 	function isWithoutFooter(page: string) {
 		const pagesWithoutFooter = [
@@ -78,5 +80,7 @@
 <div class="z-40">
 	<Modal title="Register" type="register"><Register /></Modal>
 	<Modal title="Login" type="login"><Login /></Modal>
+	<Modal title="Forgot Password" type="forgot-password"><ForgotPassword /></Modal>
+	<Modal title="Reset Password" type="forgot-password-finish"><ForgotPasswordFinish /></Modal>
 </div>
 <!-- MODALS END -->
