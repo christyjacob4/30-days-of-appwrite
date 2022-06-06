@@ -31,8 +31,8 @@
 
 	function isWithoutFooter(page: string) {
 		const pagesWithoutFooter = [
-			'/login',
-			'/register',
+			'/auth/login',
+			'/auth/register',
 			'/user/create-profile',
 			'/writer/create-post'
 		];
