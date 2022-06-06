@@ -66,7 +66,7 @@
 						text: content,
 						published: type === 'publish',
 						profileId: $profileStore?.$id,
-						createdAt: Date.now() / 1000,
+						createdAt: Math.round(Date.now() / 1000),
 						readingTime: `${readTime} min`
 					});
 				} else {

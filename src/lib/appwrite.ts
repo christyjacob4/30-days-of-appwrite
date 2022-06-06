@@ -278,7 +278,7 @@ export const AppwriteService = {
             postId,
             profileId,
             text,
-            createdAt: Date.now() / 1000
+            createdAt: Math.round(Date.now() / 1000)
         })
     },
 
