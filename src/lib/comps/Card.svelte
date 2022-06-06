@@ -4,7 +4,6 @@
 	import { AppwriteService, type Post, type Profile } from '$lib/appwrite';
 	import { modalStore } from '$lib/stores/modal';
 	import { getVerboseDate, markdownToText } from '$lib/util';
-	import Post from './Post.svelte';
 
 	export let size: 'sm' | 'md' | 'lg' | 'admin';
 	export let index: number;
