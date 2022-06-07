@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { AppwriteService, type Post } from '$lib/appwrite';
+	import { AppwriteService } from '$lib/appwrite';
 	import { createEventDispatcher } from 'svelte';
 
 	import Loading from '$lib/core/Loading.svelte';
 	import Modal from '$lib/core/Modal.svelte';
 	import { alertStore } from '$lib/stores/alert';
 	import { modalStore } from '$lib/stores/modal';
-	import type { Models } from 'appwrite';
 
 	const dispatch = createEventDispatcher();
 

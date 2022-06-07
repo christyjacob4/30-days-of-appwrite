@@ -7,7 +7,6 @@
 	import Loading from '$lib/core/Loading.svelte';
 	import Modal from '$lib/core/Modal.svelte';
 	import { alertStore } from '$lib/stores/alert';
-	import { authStore } from '$lib/stores/auth';
 	import { modalStore } from '$lib/stores/modal';
 	import { profileStore } from '$lib/stores/profile';
 	import type { Models } from 'appwrite';

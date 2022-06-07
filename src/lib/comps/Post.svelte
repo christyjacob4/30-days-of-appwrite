@@ -8,7 +8,7 @@
 	export let title: string;
 	export let createdAt: number;
 
-	export let file: File | undefined = undefined;
+	export let file: File | null | undefined = undefined;
 	export let fileId: string | undefined = undefined;
 
 	$: cover = file

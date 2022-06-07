@@ -18,7 +18,7 @@
 	let title: string = post ? post.title : '';
 
 	let filesEl: HTMLInputElement;
-	let files: any[] = [];
+	let files: FileList | null | undefined = null;
 
 	let preview = false;
 	let loading = false;
@@ -30,7 +30,7 @@
 
 	function clearFiles() {
 		filesEl.value = '';
-		files = [];
+		files = null;
 	}
 
 	function fetchContent() {
@@ -52,6 +52,10 @@
 
 	function onPublish(type = 'publish') {
 		return async () => {
+			if (!files) {
+				return;
+			}
+
 			loading = true;
 
 			try {
@@ -154,7 +158,7 @@
 					{#if post || (files && files[0])}
 						<img
 							class="rounded-2xl mb-6"
-							src={files[0]
+							src={files && files[0]
 								? URL.createObjectURL(files[0])
 								: AppwriteService.getThumbnail(post?.coverId || '', 1000, 600).toString()}
 							alt="Post cover"
@@ -230,11 +234,11 @@
 		<div class="flex flex-col space-y-10 mt-10">
 			<Post
 				createdAt={Date.now()}
-				file={files[0]}
+				file={files && files[0]}
 				fileId={post?.coverId}
 				{content}
 				{title}
-				{readTime}
+				readTime={`${readTime} min`}
 				profile={$profileStore}
 			/>
 		</div>

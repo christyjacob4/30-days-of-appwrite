@@ -40,7 +40,6 @@
 	import { alertStore } from '$lib/stores/alert';
 	import { getVerboseDate, markdownToHTML } from '$lib/util';
 	import { browser } from '$app/env';
-	import { comment } from 'postcss';
 
 	let EasyMDELibrary: any;
 	let easyMDE: any;

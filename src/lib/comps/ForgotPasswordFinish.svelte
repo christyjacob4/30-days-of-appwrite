@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { AppwriteService } from '$lib/appwrite';
 	import Button from '$lib/core/Button.svelte';

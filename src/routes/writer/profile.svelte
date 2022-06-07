@@ -5,13 +5,9 @@
 	import { AppwriteService, type Post, type Profile } from '$lib/appwrite';
 	import { onMount } from 'svelte';
 	import Card from '$lib/comps/Card.svelte';
-	import { goto } from '$app/navigation';
 	import { authStore } from '$lib/stores/auth';
 	import { profileStore } from '$lib/stores/profile';
-	import Modal from '$lib/core/Modal.svelte';
-	import { modalStore } from '$lib/stores/modal';
 	import { page } from '$app/stores';
-	import { get } from 'svelte/store';
 	import PostDelete from '$lib/comps/PostDelete.svelte';
 
 	export let draftPosts: Post[] | undefined;

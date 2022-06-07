@@ -22,7 +22,7 @@
 	let errorType: 'success' | 'warning' | undefined;
 
 	// Valid only if there is no error, or not yet touched
-	$: valid = !touched || errorType === 'success';
+	// $: valid = !touched || errorType === 'success';
 
 	// Error classes only if touched, and had problem. Success can also be a state that shows green success message.
 	$: errorClasses =

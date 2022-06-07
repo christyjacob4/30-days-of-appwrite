@@ -1,232 +1,202 @@
 {
-    "projectId": "607dd16494c6b",
-    "projectName": "30DaysOfAppwrite",
-    "collections": [
-        {
-            "$id": "posts",
-            "$read": [],
-            "$write": [],
-            "name": "Posts",
-            "enabled": true,
-            "permission": "document",
-            "attributes": [
-                {
-                    "key": "title",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "text",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 65535,
-                    "default": null
-                },
-                {
-                    "key": "profileId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "readingTime",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "published",
-                    "type": "boolean",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "default": null
-                },
-                {
-                    "key": "coverId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "createdAt",
-                    "type": "integer",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "min": -9223372036854776000,
-                    "max": 9223372036854776000,
-                    "default": null
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "published",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "published"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "profileIndex",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "profileId",
-                        "published"
-                    ],
-                    "orders": [
-                        "ASC",
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "createdAt",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "createdAt"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
-        },
-        {
-            "$id": "profiles",
-            "$read": [],
-            "$write": [],
-            "name": "Profiles",
-            "enabled": true,
-            "permission": "document",
-            "attributes": [
-                {
-                    "key": "name",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "userId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "userIndex",
-                    "type": "unique",
-                    "status": "available",
-                    "attributes": [
-                        "userId"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
-        },
-        {
-            "$id": "comments",
-            "$read": [
-                "role:all"
-            ],
-            "$write": [
-                "role:member"
-            ],
-            "name": "Comments",
-            "enabled": true,
-            "permission": "collection",
-            "attributes": [
-                {
-                    "key": "text",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 65535,
-                    "default": null
-                },
-                {
-                    "key": "postId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "profileId",
-                    "type": "string",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "createdAt",
-                    "type": "integer",
-                    "status": "available",
-                    "required": true,
-                    "array": false,
-                    "min": -9223372036854776000,
-                    "max": 9223372036854776000,
-                    "default": null
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "postId",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "postId"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                },
-                {
-                    "key": "createdAt",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "createdAt"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
-        }
-    ]
+	"projectId": "607dd16494c6b",
+	"projectName": "30DaysOfAppwrite",
+	"collections": [
+		{
+			"$id": "posts",
+			"$read": [],
+			"$write": [],
+			"name": "Posts",
+			"enabled": true,
+			"permission": "document",
+			"attributes": [
+				{
+					"key": "title",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 255,
+					"default": null
+				},
+				{
+					"key": "text",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 65535,
+					"default": null
+				},
+				{
+					"key": "profileId",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 255,
+					"default": null
+				},
+				{
+					"key": "readingTime",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 255,
+					"default": null
+				},
+				{
+					"key": "published",
+					"type": "boolean",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"default": null
+				},
+				{
+					"key": "coverId",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 255,
+					"default": null
+				},
+				{
+					"key": "createdAt",
+					"type": "integer",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"min": -9223372036854776000,
+					"max": 9223372036854776000,
+					"default": null
+				}
+			],
+			"indexes": [
+				{
+					"key": "published",
+					"type": "key",
+					"status": "available",
+					"attributes": ["published"],
+					"orders": ["ASC"]
+				},
+				{
+					"key": "profileIndex",
+					"type": "key",
+					"status": "available",
+					"attributes": ["profileId", "published"],
+					"orders": ["ASC", "ASC"]
+				},
+				{
+					"key": "createdAt",
+					"type": "key",
+					"status": "available",
+					"attributes": ["createdAt"],
+					"orders": ["ASC"]
+				}
+			]
+		},
+		{
+			"$id": "profiles",
+			"$read": [],
+			"$write": [],
+			"name": "Profiles",
+			"enabled": true,
+			"permission": "document",
+			"attributes": [
+				{
+					"key": "name",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 255,
+					"default": null
+				},
+				{
+					"key": "userId",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 255,
+					"default": null
+				}
+			],
+			"indexes": [
+				{
+					"key": "userIndex",
+					"type": "unique",
+					"status": "available",
+					"attributes": ["userId"],
+					"orders": ["ASC"]
+				}
+			]
+		},
+		{
+			"$id": "comments",
+			"$read": ["role:all"],
+			"$write": ["role:member"],
+			"name": "Comments",
+			"enabled": true,
+			"permission": "collection",
+			"attributes": [
+				{
+					"key": "text",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 65535,
+					"default": null
+				},
+				{
+					"key": "postId",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 255,
+					"default": null
+				},
+				{
+					"key": "profileId",
+					"type": "string",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"size": 255,
+					"default": null
+				},
+				{
+					"key": "createdAt",
+					"type": "integer",
+					"status": "available",
+					"required": true,
+					"array": false,
+					"min": -9223372036854776000,
+					"max": 9223372036854776000,
+					"default": null
+				}
+			],
+			"indexes": [
+				{
+					"key": "postId",
+					"type": "key",
+					"status": "available",
+					"attributes": ["postId"],
+					"orders": ["ASC"]
+				},
+				{
+					"key": "createdAt",
+					"type": "key",
+					"status": "available",
+					"attributes": ["createdAt"],
+					"orders": ["ASC"]
+				}
+			]
+		}
+	]
 }

@@ -6,7 +6,7 @@ const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
 	preprocess: preprocess({
-		postcss: true,
+		postcss: true
 	}),
 
 	kit: {
@@ -24,7 +24,7 @@ const config = {
 			// instead of creating a single one for the entire app
 			split: false
 		})
-	},
+	}
 };
 
 export default config;
