@@ -48,7 +48,7 @@
 </script>
 
 <svelte:head>
-	<title>{__APP_NAME__}</title>
+	<title>30 Days of Appwrite</title>
 </svelte:head>
 
 <div class="fixed top-8 left-0 w-full pointer-events-none z-50">

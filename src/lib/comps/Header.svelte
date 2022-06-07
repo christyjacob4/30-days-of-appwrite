@@ -41,7 +41,7 @@
 		class="max-w-[870px] px-3 mx-auto py-8 flex flex-col space-y-4 sm:flex-row sm:space-y-0 justify-between items-center"
 	>
 		<a href="/">
-			<h1 class="uppercase text-primary-120 font-semibold tracking-widest">{__APP_NAME__}</h1>
+			<h1 class="uppercase text-primary-120 font-semibold tracking-widest">30 Days of Appwrite</h1>
 		</a>
 
 		{#await getAccount()}
