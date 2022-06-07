@@ -6,6 +6,7 @@
 	export let content: string;
 	export let readTime: string;
 	export let title: string;
+	export let createdAt: number;
 
 	export let file: File | undefined = undefined;
 	export let fileId: string | undefined = undefined;
@@ -64,7 +65,7 @@
 	<section class="mt-8">
 		<div class="flex items-center justify-start space-x-2 mb-2">
 			<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">
-				{getVerboseDate(Date.now())}
+				{getVerboseDate(createdAt)}
 			</p>
 			<div class="w-[1px] h-4 bg-neutral-10" />
 			<p class="uppercase text-neutral-120 text-xs font-medium tracking-widest">

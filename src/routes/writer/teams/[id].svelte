@@ -106,7 +106,7 @@
 <div class="w-full max-w-[770px] mx-auto flex flex-col space-y-10">
 	{#if team}
 		<div
-			class="flex flex-col items-start space-y-4 md:space-y-0 md:space-x-4 md:items-center justify-between"
+			class="flex flex-col items-start space-y-4 md:space-y-0 md:space-x-4 md:items-center justify-between md:flex-row"
 		>
 			<div class="flex items-center justify-start space-x-2 w-full">
 				<h1 class="line-clamp-1 text-center font-poppins text-3xl font-semibold text-generic-100">

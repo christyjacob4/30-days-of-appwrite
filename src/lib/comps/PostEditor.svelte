@@ -229,6 +229,7 @@
 
 		<div class="flex flex-col space-y-10 mt-10">
 			<Post
+				createdAt={Date.now()}
 				file={files[0]}
 				fileId={post?.coverId}
 				{content}

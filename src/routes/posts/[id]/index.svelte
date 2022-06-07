@@ -129,6 +129,10 @@
 		}
 	}
 
+	function clearComment() {
+		easyMDE.value('');
+	}
+
 	async function reload() {
 		if (isLoadingPage) {
 			return;
@@ -189,6 +193,7 @@
 			fileId={post.coverId}
 			content={post.text}
 			title={post.title}
+			createdAt={post.createdAt}
 			readTime={post.readingTime}
 			{profile}
 		/>
@@ -208,7 +213,7 @@
 			</div>
 
 			<div class="flex items-center justify-end space-x-4">
-				<Button size="sm" full={false} color="secondary" title="Cancel" />
+				<Button on:click={clearComment} size="sm" full={false} color="secondary" title="Cancel" />
 				<Button
 					loading={processingComment}
 					type="submit"

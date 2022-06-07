@@ -43,7 +43,7 @@
 <form on:submit|preventDefault={onLogin} class="flex flex-col space-y-4">
 	<Input
 		bind:value={email}
-		validator={InputValidators.email}
+		validator={InputValidators.none}
 		id="email"
 		placeholder="Enter your email"
 		type="text"
@@ -52,7 +52,7 @@
 	/>
 	<Input
 		bind:value={password}
-		validator={InputValidators.password}
+		validator={InputValidators.none}
 		id="password"
 		placeholder="Enter your password"
 		type="password"

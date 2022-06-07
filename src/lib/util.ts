@@ -16,7 +16,7 @@ export function getVerboseDate(timestamp: number, long = false) {
         'Dec'
     ];
 
-    const date = new Date(timestamp);
+    const date = new Date(timestamp * 1000);
 
     if (long) {
         return date.toString();
