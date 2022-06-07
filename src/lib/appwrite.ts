@@ -175,6 +175,7 @@ export const AppwriteService = {
         const account = await sdk.account.create("unique()", mail, pass, name);
         await AppwriteService.login(mail, pass);
         await AppwriteService.getAccount(); // Forcefully update store
+        await AppwriteService.getSelfProfile(); // Forcefully update store
         return account;
     },
 
