@@ -1,7 +1,6 @@
 import { browser } from "$app/env";
 import { writable } from "svelte/store";
 
-let interval: any;
 
 function createStore() {
     const typeStore = writable<{
@@ -9,13 +8,17 @@ function createStore() {
         type: string;
     } | undefined>(undefined);
 
+    let interval: any = null;
+
     return {
         subscribe: typeStore.subscribe,
-        close: () => () => {
-            typeStore.set(undefined);
+        close: () => {
+            if (browser) {
+                typeStore.set(undefined);
 
-            if (interval) {
-                clearTimeout(interval);
+                if (interval) {
+                    clearTimeout(interval);
+                }
             }
         },
         warning: (message: string) => {
