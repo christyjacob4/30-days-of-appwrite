@@ -1,4 +1,4 @@
-import { Appwrite, Query } from 'appwrite';
+import { Query, Client, Databases, Storage, Account, Locale, Teams, Avatars } from 'appwrite';
 import type { Models } from 'appwrite';
 import { authStore } from './stores/auth';
 import { get } from 'svelte/store';
@@ -8,6 +8,7 @@ const profilesCollection = 'profiles';
 const postsCollection = 'posts';
 const commentsCollection = 'comments';
 const bucketId = 'postThumbnails';
+const databaseId = 'default';
 
 export type Post = {
 	title: string;
@@ -31,24 +32,31 @@ export type Profile = {
 	name: string;
 } & Models.Document;
 
-const sdk = new Appwrite();
+const client = new Client();
 
-sdk
+client
 	.setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
 	.setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
 
+const account = new Account(client);
+const teams = new Teams(client);
+const locale = new Locale(client);
+const database = new Databases(client, databaseId);
+const storage = new Storage(client);
+const avatars = new Avatars(client);
+
 export const AppwriteService = {
 	createVerification: async () => {
-		return await sdk.account.createVerification(`${window.location.origin}/writer/profile`);
+		return await account.createVerification(`${window.location.origin}/writer/profile`);
 	},
 
 	completeEmailVerification: async (userId: string, secret: string) => {
-		return await sdk.account.updateVerification(userId, secret);
+		return await account.updateVerification(userId, secret);
 	},
 
 	createPost: async (data: any) => {
 		// TODO: Security issue possible
-		return await sdk.database.createDocument<Post>(
+		return await database.createDocument<Post>(
 			postsCollection,
 			'unique()',
 			data,
@@ -57,16 +65,16 @@ export const AppwriteService = {
 	},
 
 	updatePost: async (postId: string, data: any) => {
-		return await sdk.database.updateDocument<Post>(postsCollection, postId, data);
+		return await database.updateDocument<Post>(postsCollection, postId, data);
 	},
 
 	verifyProfile: async (userId: string, secret: string) => {
-		return await sdk.account.updateVerification(userId, secret);
+		return await account.updateVerification(userId, secret);
 	},
 
 	createProfile: async (id: string, name: string) => {
 		// TODO: Security issue possible
-		return await sdk.database.createDocument<Profile>(
+		return await database.createDocument<Profile>(
 			profilesCollection,
 			'unique()',
 			{
@@ -86,7 +94,7 @@ export const AppwriteService = {
 				throw new Error('Account not found.');
 			}
 
-			const { documents: profiles } = await sdk.database.listDocuments<Profile>(
+			const { documents: profiles } = await database.listDocuments<Profile>(
 				profilesCollection,
 				[Query.equal('userId', id)],
 				1
@@ -110,7 +118,7 @@ export const AppwriteService = {
 
 	getProfileById: async (id: string) => {
 		try {
-			const profile = await sdk.database.getDocument<Profile>(profilesCollection, id);
+			const profile = await database.getDocument<Profile>(profilesCollection, id);
 
 			if (!profile) {
 				throw new Error('Profile not found.');
@@ -124,7 +132,7 @@ export const AppwriteService = {
 
 	getProfilesByIds: async (ids: string[]) => {
 		try {
-			const profiles = await sdk.database.listDocuments<Profile>(profilesCollection, [
+			const profiles = await database.listDocuments<Profile>(profilesCollection, [
 				Query.equal('$id', ids)
 			]);
 
@@ -135,14 +143,14 @@ export const AppwriteService = {
 	},
 
 	getPostById: async (documentId: string) => {
-		return await sdk.database.getDocument<Post>(postsCollection, documentId);
+		return await database.getDocument<Post>(postsCollection, documentId);
 	},
 
 	getAccount: async () => {
 		try {
-			const account = await sdk.account.get();
-			authStore.login(account);
-			return account;
+			const response = await account.get();
+			authStore.login(response);
+			return response;
 		} catch (err) {
 			authStore.logout();
 			throw err;
@@ -150,7 +158,7 @@ export const AppwriteService = {
 	},
 
 	loginWithGoogle: async () => {
-		sdk.account.createOAuth2Session(
+		account.createOAuth2Session(
 			'google',
 			window.location.origin + '/writer/profile',
 			window.location.origin + '/auth/login'
@@ -158,29 +166,29 @@ export const AppwriteService = {
 	},
 
 	login: async (mail: string, pass: string) => {
-		const session = await sdk.account.createSession(mail, pass);
+		const session = await account.createEmailSession(mail, pass);
 		await AppwriteService.getAccount(); // Forcefully update store
 		return session;
 	},
 
 	register: async (mail: string, pass: string, name: string) => {
-		const account = await sdk.account.create('unique()', mail, pass, name);
+		const response = await account.create('unique()', mail, pass, name);
 		await AppwriteService.login(mail, pass);
 		await AppwriteService.getAccount(); // Forcefully update store
 		await AppwriteService.getSelfProfile(); // Forcefully update store
-		return account;
+		return response;
 	},
 
 	listTeamMembers: async (teamId: string, page: number) => {
-		return await sdk.teams.getMemberships(teamId, undefined, 25, (page - 1) * 25);
+		return await teams.getMemberships(teamId, undefined, 25, (page - 1) * 25);
 	},
 
 	deleteTeamMembership: async (teamId: string, membershipId: string) => {
-		return await sdk.teams.deleteMembership(teamId, membershipId);
+		return await teams.deleteMembership(teamId, membershipId);
 	},
 
 	logout: async () => {
-		await sdk.account.deleteSession('current');
+		await account.deleteSession('current');
 
 		try {
 			await AppwriteService.getAccount(); // Forcefully update store
@@ -190,11 +198,11 @@ export const AppwriteService = {
 	},
 
 	getThumbnail: (id: string, width: number, height: number) => {
-		return sdk.storage.getFilePreview(bucketId, id, width, height);
+		return storage.getFilePreview(bucketId, id, width, height);
 	},
 
 	getAvatar: (name: string = 'Unnamed') => {
-		return sdk.avatars.getInitials(name);
+		return avatars.getInitials(name);
 	},
 
 	fetchUserPosts: (page: number, published: boolean) => {
@@ -204,7 +212,7 @@ export const AppwriteService = {
 			throw new Error('Profile not found!');
 		}
 
-		return sdk.database.listDocuments<Post>(
+		return database.listDocuments<Post>(
 			postsCollection,
 			[Query.equal('profileId', profileId), Query.equal('published', published)],
 			100,
@@ -217,7 +225,7 @@ export const AppwriteService = {
 	},
 
 	fetchPosts: (page: number, published: boolean) => {
-		return sdk.database.listDocuments<Post>(
+		return database.listDocuments<Post>(
 			postsCollection,
 			[Query.equal('published', published)],
 			25,
@@ -230,31 +238,31 @@ export const AppwriteService = {
 	},
 
 	fetchTeams: async (page: number) => {
-		return await sdk.teams.list(undefined, 25, (page - 1) * 25, undefined, undefined, 'DESC');
+		return await teams.list(undefined, 25, (page - 1) * 25, undefined, undefined, 'DESC');
 	},
 
 	deletePost: async (document: Post) => {
 		if (document.coverId) {
-			await sdk.storage.deleteFile(bucketId, document.coverId);
+			await storage.deleteFile(bucketId, document.coverId);
 		}
 
-		await sdk.database.deleteDocument(postsCollection, document.$id);
+		await database.deleteDocument(postsCollection, document.$id);
 	},
 
 	uploadFile: async (file: File) => {
-		return await sdk.storage.createFile(bucketId, 'unique()', file, ['role:all']); // Write permissions to user given automatically
+		return await storage.createFile(bucketId, 'unique()', file, ['role:all']); // Write permissions to user given automatically
 	},
 
 	deleteFile: async (fileId: string) => {
-		await sdk.storage.deleteFile(bucketId, fileId);
+		await storage.deleteFile(bucketId, fileId);
 	},
 
 	createTeam: async (name: string) => {
-		return await sdk.teams.create('unique()', name);
+		return await teams.create('unique()', name);
 	},
 
 	inviteTeamMember: async (teamId: string, email: string, roles: string[], name: string) => {
-		return await sdk.teams.createMembership(teamId, email, roles, window.location.origin, name);
+		return await teams.createMembership(teamId, email, roles, window.location.origin, name);
 	},
 
 	acceptTeamInvitation: async (
@@ -263,23 +271,23 @@ export const AppwriteService = {
 		userId: string,
 		secret: string
 	) => {
-		return await sdk.teams.updateMembershipStatus(teamId, membershipId, userId, secret);
+		return await teams.updateMembershipStatus(teamId, membershipId, userId, secret);
 	},
 
 	deleteTeam: async (teamId: string) => {
-		return await sdk.teams.delete(teamId);
+		return await teams.delete(teamId);
 	},
 
 	updateTeam: async (teamId: string, name: string) => {
-		return await sdk.teams.update(teamId, name);
+		return await teams.update(teamId, name);
 	},
 
 	getTeamById: async (teamId: string) => {
-		return await sdk.teams.get(teamId);
+		return await teams.get(teamId);
 	},
 
 	resetPassword: async (email: string) => {
-		return await sdk.account.createRecovery(email, window.location.origin);
+		return await account.createRecovery(email, window.location.origin);
 	},
 
 	resetPasswordFinish: async (
@@ -288,12 +296,12 @@ export const AppwriteService = {
 		password: string,
 		passwordAgain: string
 	) => {
-		return await sdk.account.updateRecovery(userId, secret, password, passwordAgain);
+		return await account.updateRecovery(userId, secret, password, passwordAgain);
 	},
 
 	addComment: async (postId: string, profileId: string, text: string) => {
 		// TODO: Security issue possible
-		return await sdk.database.createDocument<Comment>(commentsCollection, 'unique()', {
+		return await database.createDocument<Comment>(commentsCollection, 'unique()', {
 			postId,
 			profileId,
 			text,
@@ -302,7 +310,7 @@ export const AppwriteService = {
 	},
 
 	getComments: async (postId: string, page: number) => {
-		return await sdk.database.listDocuments<Comment>(
+		return await database.listDocuments<Comment>(
 			commentsCollection,
 			[Query.equal('postId', postId)],
 			25,
